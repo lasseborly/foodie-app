@@ -5,6 +5,9 @@ import ReactDOM from "react-dom";
 // MODULES
 import App from "./js/app";
 
+// SERVICE WORKER BRIDGE
+import './js/services/serviceWorkerBridge'
+
 // HMR
 if (module.hot) {
   module.hot.accept();

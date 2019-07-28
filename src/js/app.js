@@ -9,6 +9,8 @@ import PullToRefresh from './ui/pullToRefresh'
 
 import Header from './layouts/header'
 
+import '../img/original/apple.png'
+
 const ContainerApp = styled.div({
   display: "flex",
   overscrollBehavior: "contain",

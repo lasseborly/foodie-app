@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const CopyPlugin = require('copy-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /* ------------------------------------------------------ */
@@ -104,7 +105,10 @@ const config = {
     ]),
     new HtmlWebpackPlugin({
       template: "src/index.html" // Duplicating and injecting script tags for our output files
-    })
+    }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'src/sw.js'),
+    }),
   ]
 };
 
