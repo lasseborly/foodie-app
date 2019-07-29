@@ -6,13 +6,17 @@ export default {
         padding: 0,
         width: "100%",
         position: "fixed",
+        overflow: "hidden",
         display: "flex"
     },
 
     '#root': {
         flex: 1,
-        height: "100%",
-        minHeight: "100vh"
+        minHeight: "100vh",
+        width: "100vw",
+        height: "100vh",
+        overflowY: "scroll",
+        // "-webkit-overflow-scrolling": "touch",
     }
 
 }

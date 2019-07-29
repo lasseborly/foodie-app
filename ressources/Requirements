@@ -1,0 +1,57 @@
+Goals:
+1. Demo / prototype i salgsøjemed
+2. Muligheder begrænsninger ift. native app eller react-native
+3. Præsentation af findings internt; udadtil; SoMo; blogspot; evt. video
+
+
+--
+
+
+Technical features:
+1. Offline capabilities
+2. Native 'like' (vibration, homescreen. butter smooth 60fps)
+3. Push notification
+4. UI gestures (pinching, swapping, dragging, pulling, etc.)
+5. SVG morphing icons
+6. IndexDB or alternative way to persist state 
+7. Pull to refresh behavior (https://developers.google.com/web/updates/2017/11/overscroll-behavior)
+8. Drag and drop behavior
+9. Async. work and syncronisation 
+10. Fluid transition?
+11. Card slider
+12. Routing (transition?)
+13. Loading screen
+14. Camera with image recognition (upload capability)
+
+Problems:
+1. Safe zones
+2. Browser vs in-app mode
+3. Phone distinction
+4. Scroll hijack switching (while dragging, disable scroll down, etc.)
+
+--
+
+
+Learnings:
+1. Clear distinction of where and how pwa excels compared to native and reverse
+
+
+--
+
+
+1. Food app (consisting of fruits, nuts, vegetables, milky products, meat)
+2. Detail page (with food declaration)
+3. List page (different food options in groups, sorting, filtering, search)
+4. Profile page with credit card settings, and delivery information
+5. Opskrifter (samvirke)
+
+--
+
+- DrawIO tree routing structure
+- Figma mock up
+- Routing, icons, responsive styles for mobile
+- Fooding scraping / constructing food object,  
+
+
+
+

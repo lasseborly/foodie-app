@@ -22,22 +22,31 @@ const ContainerDrawer = styled.div({
     display: "flex",
     flexDirection: "column",
     border: "1px solid black",
-    width: "80%"
+    width: "80%",
+    overflow: "hidden"
+})
+
+const Item = styled.div({
+    display: "flex",
+    width: "100%",
+    borderBottom: "1px solid red"
 })
 
 
-class Drawers extends React.Component {
+class PullToRefresh extends React.Component {
 
     render () {
         return (
             <ContainerDrawer>
                 <Interactable.View
-                style={{height: "100%"}}
+                    style={{height: "100%"}}
                     snapPoints={[{x: 0}, {x: -230}]}
-                    boundaries={{right: 0}}
-                    horizontalOnly={true}>
+                    // boundaries={{right: 0}}
+                    verticalOnly={true}>
                     <div style={styles.cover}>
-                        <span style={styles.label}>Drawer with limits</span>
+                        {
+                            Array(50).fill().map((item, i) => <Item key={i}>{i}</Item> )
+                        }
                     </div>
                 </Interactable.View>
             </ContainerDrawer>
@@ -45,4 +54,4 @@ class Drawers extends React.Component {
     }
 }
 
-export default Drawers
+export default PullToRefresh
