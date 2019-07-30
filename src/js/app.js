@@ -44,7 +44,7 @@ const NavBottom = () => {
 const Main = styled.div({
   flex: 1,
   overflowY: "auto",
-  "-webkit-overflow-scrolling": "touch",
+  // "-webkit-overflow-scrolling": "touch",
 })
 
 class App extends React.Component {
@@ -67,11 +67,11 @@ class App extends React.Component {
         <NavTop  />
         {/* <Sliders /> */}
         {/* <Drawer /> */}
-        {/* <PullToRefresh /> */}
         <Main>
-          {
+         <PullToRefresh />
+          {/* {
             Array(50).fill().map((item, i) => <Item key={i}>{i}</Item> )
-          }
+          } */}
         </Main>
         <NavBottom />
       </ContainerApp>

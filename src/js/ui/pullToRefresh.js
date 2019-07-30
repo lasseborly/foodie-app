@@ -1,16 +1,13 @@
 import React from "react";
 import Interactable from 'react-interactable/noNative'
 import styled from '@emotion/styled'
+import { Animated } from 'animated';
 
 const styles = {
     cover: {
-      left: 0,
-      right: 0,
-      height: 75,
+      height: "100%",
       backgroundColor: '#e0e0e0',
-      justifyContent: 'center',
       width: "100%",
-      height: "100%"
     },
     label: {
       textAlign: 'center',
@@ -21,7 +18,7 @@ const styles = {
 const ContainerDrawer = styled.div({
     display: "flex",
     flexDirection: "column",
-    border: "1px solid black",
+    border: "3px solid black",
     width: "80%",
     overflow: "hidden"
 })
@@ -34,14 +31,23 @@ const Item = styled.div({
 
 
 class PullToRefresh extends React.Component {
-
+    // _deltaX = new Animated.Value(0);
+    
+    componentDidMount() {
+        setInterval(() => {
+            // console.log(this._deltaY)
+        }, 100)
+    }
     render () {
+        console.log(Animated)
         return (
             <ContainerDrawer>
                 <Interactable.View
-                    style={{height: "100%"}}
-                    snapPoints={[{x: 0}, {x: -230}]}
-                    // boundaries={{right: 0}}
+                    onDrag={(e) => console.log(e)}
+                    style={{border: "1px solid red"}}
+                    snapPoints={[{y: 0}]}
+                    boundaries={{bottom: 200}}
+                    // animatedValueY={this._deltaY}
                     verticalOnly={true}>
                     <div style={styles.cover}>
                         {
