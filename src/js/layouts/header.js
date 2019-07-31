@@ -17,7 +17,7 @@ class Header extends React.Component {
     render () {
         return (
             <ContainerHeader>
-                <h1 style={{fontSize: "20px", fontFamily: "Roboto", fontWeight: "700"}}>Foodie</h1>
+                <h1 style={{fontSize: "1rem", fontFamily: "Roboto", fontWeight: "700"}}>Foodie</h1>
             </ContainerHeader>
         )
     }

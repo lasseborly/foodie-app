@@ -1,15 +1,21 @@
 import React from "react";
 import styled from '@emotion/styled'
-import { Global, css } from '@emotion/core'
+import { Global } from '@emotion/core'
+import { Route, Switch } from "react-router-dom";
 
 import globalStyles from '../style/globalStyles'
-import Sliders from './ui/sliders'
-import Drawer from './ui/drawers'
-import PullToRefresh from './ui/pullToRefresh'
 
-import Header from './layouts/header'
+import NavBottom from './layouts/navBottom'
+import NavTop from './layouts/navTop'
 
-import '../img/original/apple.png'
+import Home from './pages/home'
+import Order from "./pages/order";
+import Profile from "./pages/profile";
+import List from "./pages/list";
+
+import Recipes from './pages/recipes'
+
+import Page404 from './pages/page404'
 
 const ContainerApp = styled.div({
   display: "flex",
@@ -19,28 +25,6 @@ const ContainerApp = styled.div({
   flexDirection: "column"
 })
 
-const Item = styled.div({
-  display: "flex",
-  width: "100%",
-  borderBottom: "1px solid red"
-})
-
-
-const NavTop = () => {
-  return <div style={{height: "40px", display: "flex", backgroundColor: "red"}}>
-    TOP
-  </div>
-}
-
-const NavBottom = () => {
-  return <div style={{height: "40px", display: "flex", backgroundColor: "orange", justifyContent: "space-between"}}>
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-  </div>
-}
-
 const Main = styled.div({
   flex: 1,
   overflowY: "auto",
@@ -48,30 +32,20 @@ const Main = styled.div({
 })
 
 class App extends React.Component {
-  state = {
-    g: globalStyles
-  }
-  componentDidMount() {
-    setTimeout(() => {
-      console.log(this.state)
-      const newState = {...this.state.g}
-      newState.body.backgroundColor = "blue"
-      this.setState(newState)
-      console.log("done")
-    }, 3000)  
-  }
   render() {
     return (
       <ContainerApp>
-        <Global styles={this.state.g} />
+        <Global styles={globalStyles} />
         <NavTop  />
-        {/* <Sliders /> */}
-        {/* <Drawer /> */}
         <Main>
-         <PullToRefresh />
-          {/* {
-            Array(50).fill().map((item, i) => <Item key={i}>{i}</Item> )
-          } */}
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/detail/recipes/:id" component={Recipes} />
+            <Route path="/profile" exact component={Profile} />
+            <Route path="/list" exact component={List} />
+            <Route path="/order" exact component={Order} />
+            <Route component={Page404}/>
+          </Switch>
         </Main>
         <NavBottom />
       </ContainerApp>
