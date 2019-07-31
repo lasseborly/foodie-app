@@ -1,7 +1,7 @@
 export default {
     'body': {
         backgroundColor: '#fe4a49',
-        fontSize: "30px",
+        fontSize: "16px",
         margin: 0,
         padding: 0,
         width: "100%",
@@ -17,6 +17,11 @@ export default {
         height: "100vh",
         overflowY: "scroll",
         // "-webkit-overflow-scrolling": "touch",
+    },
+
+    "a": {
+        textDecoration: "none",
+        color: "inherit"
     }
 
 }
