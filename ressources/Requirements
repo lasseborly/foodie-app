@@ -56,3 +56,9 @@ Learnings:
 
 
 
+----
+
+Limitation:
+- lock screen orientation
+- push notifications
+- missing popup hook for iOS app install

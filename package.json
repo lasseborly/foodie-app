@@ -43,12 +43,14 @@
     "animated": "^0.2.2",
     "babel-plugin-emotion": "^10.0.9",
     "browser-sync": "^2.26.7",
+    "emotion-theming": "^10.0.14",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-interactable": "^0.6.4",
     "react-panresponder-web": "^1.0.2",
     "react-router-dom": "^5.0.1",
     "react-spring": "^8.0.23",
-    "serviceworker-webpack-plugin": "^1.0.1"
+    "serviceworker-webpack-plugin": "^1.0.1",
+    "styled-system": "^5.0.16"
   }
 }

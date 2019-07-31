@@ -2,9 +2,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { ThemeProvider } from 'emotion-theming'
 
 // MODULES
 import App from "./js/app";
+import theme from './style/theme'
 
 // SERVICE WORKER BRIDGE
 import './js/services/serviceWorkerBridge'
@@ -17,7 +19,9 @@ if (module.hot) {
 const root = document.getElementById("root")
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>
+  <ThemeProvider theme={theme}>
+    <Router>
+      <App />
+    </Router>
+  </ThemeProvider>
 , root);

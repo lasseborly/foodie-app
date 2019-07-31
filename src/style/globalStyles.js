@@ -1,6 +1,9 @@
+import { colors } from './theme'
+
 export default {
     'body': {
-        backgroundColor: '#fe4a49',
+        backgroundColor: colors.themeRed1,
+        fontFamily: "Montserrat, sans-serif",
         fontSize: "16px",
         margin: 0,
         padding: 0,
@@ -19,9 +22,20 @@ export default {
         // "-webkit-overflow-scrolling": "touch",
     },
 
+    "*": { 
+        boxSizing: "border-box" 
+    }, 
+
     "a": {
         textDecoration: "none",
         color: "inherit"
-    }
+    },
+
+    "h1,h2,h3,h4,h5,h6": {
+        fontWeight: "normal",
+        fontStyle: "normal",
+        padding: 0,
+        margin: 0
+      }
 
 }

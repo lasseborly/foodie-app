@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { IconFruitBasket, IconHome, IconReciept, IconProfile } from '../../img/icons/Icons'
 
 import { buttonNav } from '../components/typography'
-import { colors, shadows } from '../../style/variableStyles'
+import { colors, shadows } from '../../style/theme'
 
 const NAVBOTTOM_HEIGHT = 50
 
@@ -40,7 +40,7 @@ const NavBottomLinks = ({to, icon, text}) => {
 const NavBottom = () => {
     const links = [
       {
-        to: "/list",
+        to: "/",
         icon: <IconHome />,
         text: "home"
       },

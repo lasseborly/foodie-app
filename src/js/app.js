@@ -28,7 +28,7 @@ const ContainerApp = styled.div({
 const Main = styled.div({
   flex: 1,
   overflowY: "auto",
-  // "-webkit-overflow-scrolling": "touch",
+  "-webkit-overflow-scrolling": "touch",
 })
 
 class App extends React.Component {
@@ -46,6 +46,7 @@ class App extends React.Component {
             <Route path="/order" exact component={Order} />
             <Route component={Page404}/>
           </Switch>
+          <div style={{height: "1000px"}}></div>
         </Main>
         <NavBottom />
       </ContainerApp>
