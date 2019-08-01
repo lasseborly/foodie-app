@@ -17,6 +17,8 @@ import Recipes from './pages/recipes'
 
 import Page404 from './pages/page404'
 
+import { colors } from '../style/theme'
+
 const ContainerApp = styled.div({
   display: "flex",
   overscrollBehavior: "contain",
@@ -28,7 +30,7 @@ const ContainerApp = styled.div({
 const Main = styled.div({
   flex: 1,
   overflowY: "auto",
-  backgroundColor: "black",
+  backgroundColor: colors.themeRed1,
   "-webkit-overflow-scrolling": "touch",
 })
 

@@ -2,10 +2,11 @@ import React from "react";
 import styled from '@emotion/styled'
 import { Div, P } from '../../layouts/layout'
 import { headerCardPrimary, headerCardSecondary, headerCardTiny, headerSliderNavigation, textDefault, buttonDefault } from '../../components/typography'
-import imgDessert from '../../../img/images/dessert1.png'
 import { colors, shadows } from '../../../style/theme'
 import { IconKcal, IconHeart, IconPeople } from '../../../img/icons/Icons'
 import { Link } from 'react-router-dom'
+
+import imgDessert from '../../../img/images/dessert8.png'
 
 const Button = styled.button({
   backgroundColor: colors.themeRed3,
@@ -28,7 +29,7 @@ const HomeWeeklyRecipes = () => {
       <Div p="4" mb="4" flexWrap="wrap">
         <P mb="4" style={headerSliderNavigation}>Ugens opskrift</P>
         <Div py="4" bg="white" borderRadius="20px" flexWrap="wrap" justifyContent="center" style={{boxShadow: shadows.sectionShadow}}>
-          <img src={imgDessert} style={{width: "200px", height: "200px"}} alt=""/>
+          <img src={imgDessert} style={{height: "150px", objectFit: "contain"}} alt=""/>
           <Div flexDirection="column" mt="3" width="100%">
             <Div p="4" flexWrap="wrap">
               <P style={headerCardPrimary}>{"Honey salat with almonds"}</P>

@@ -2,10 +2,13 @@ import React from "react";
 import styled from '@emotion/styled'
 import { Div, P } from '../../layouts/layout'
 import { headerCardPrimary, headerCardSecondary, headerCardTiny, headerSliderNavigation } from '../../components/typography'
-import imgDessert from '../../../img/images/dessert1.png'
 import { colors, shadows } from '../../../style/theme'
 import { IconKcal } from '../../../img/icons/Icons'
 import { Link } from 'react-router-dom'
+
+import imgDessert1 from '../../../img/images/dessert1.png'
+import imgDessert2 from '../../../img/images/dessert2.png'
+import imgDessert3 from '../../../img/images/dessert3.png'
 
 
 const SliderNavigationItem = styled(Link)({
@@ -79,30 +82,30 @@ const sliderItemData = [
     header: "Strawberry Cream Waffles",
     price: "$7.0",
     kcal: 274,
-    img: imgDessert
+    img: imgDessert1
   },
   {
-    header: "Strawberry Cream Waffles",
-    price: "$7.0",
-    kcal: 274,
-    img: imgDessert
+    header: "Croissant blue berry fruit",
+    price: "$17.0",
+    kcal: 351,
+    img: imgDessert2
   },{
-    header: "Strawberry Cream Waffles",
-    price: "$7.0",
-    kcal: 274,
-    img: imgDessert
+    header: "Chocolate lemon cupcake",
+    price: "$17.0",
+    kcal: 442,
+    img: imgDessert3
   },
   {
     header: "Strawberry Cream Waffles",
     price: "$7.0",
     kcal: 274,
-    img: imgDessert
+    img: imgDessert1
   },
   {
-    header: "Strawberry Cream Waffles",
-    price: "$7.0",
-    kcal: 274,
-    img: imgDessert
+    header: "Croissant blue berry fruit",
+    price: "$17.0",
+    kcal: 351,
+    img: imgDessert2
   }
 ]
 
@@ -128,7 +131,7 @@ const HomeSlider = () => {
             {
               sliderItemData.map((i,index) => {
                   return <SliderItem p={2} key={index}>
-                    <img src={i.img} style={{width: "100%"}} alt=""/>
+                    <img src={i.img} style={{width: "100%", height: "100px", objectFit: "cover"}} alt=""/>
                     <P style={headerCardPrimary}>{i.header}</P>
                     <P style={headerCardSecondary}>{i.price}</P>
                     <Div mt={1}>
