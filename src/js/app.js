@@ -1,7 +1,7 @@
 import React from "react";
 import styled from '@emotion/styled'
 import { Global } from '@emotion/core'
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 import globalStyles from '../style/globalStyles'
 
@@ -50,10 +50,10 @@ class App extends React.Component {
             <Route component={Page404}/>
           </Switch>
         </Main>
-        <NavBottom />
+        <NavBottom history={this.props.history}/>
       </ContainerApp>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

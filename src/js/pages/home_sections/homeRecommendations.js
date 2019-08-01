@@ -66,7 +66,7 @@ const HomeRecommendations = () => {
               <Div key={index} flexDirection="column" width={"calc(100% - 1.5rem)"} mb="3" alignItems="flex-end">
                 <RecommendationItem alignItems="center" p={3}>
                   <Div>
-                    <img src={i.img} style={{width: "100px", height: "100%", objectFit: "cover"}} alt=""/>
+                    <img src={i.img} style={{width: "100px", height: "100%", objectFit: "contain"}} alt=""/>
                   </Div>
                   <Div flexDirection="column" pl={4}>
                     <P style={headerCardPrimary}>{i.header}</P>
