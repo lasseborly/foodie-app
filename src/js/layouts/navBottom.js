@@ -14,7 +14,8 @@ const NavBottomContainer = styled.div({
   backgroundColor: colors.white, 
   justifyContent: "space-between",
   alignItems: "center",
-  boxShadow: shadows.bottomNavigationShadow
+  boxShadow: shadows.bottomNavigationShadow,
+  position: "relative" // otherwise, box-shadow isn't visible
 })
 
 const StyledLink = styled(Link)({

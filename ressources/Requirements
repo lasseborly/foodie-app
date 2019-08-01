@@ -62,3 +62,16 @@ Limitation:
 - lock screen orientation
 - push notifications
 - missing popup hook for iOS app install
+- transparency in statusbar (nice on pagescroll and full size images)
+
+
+--
+Todo:
+
+- navbottom farve skift active route
+- tjek størrelser og farve efter design, sammenhold
+- white gap iOS scroll up
+- bedre dummy data
+- body background color  (statusbar vs page)
+- gallery last picture
+- slider snap

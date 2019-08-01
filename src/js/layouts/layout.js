@@ -11,4 +11,14 @@ export const Div = styled.div(
     color, 
     flexbox,
     position 
-    )
+)
+
+export const P = styled.div(
+    border,
+    space, 
+    layout, 
+    typography, 
+    color, 
+    flexbox,
+    position 
+)

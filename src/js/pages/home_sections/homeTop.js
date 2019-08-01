@@ -40,7 +40,7 @@ const InputSearchField = styled.input({
 
 const HomeTop = () => {
     return (
-      <Div bg="themeRed2" pb={"60px"} flex="1" css={{borderBottomRightRadius: "70px"}}>
+      <Div bg="themeRed2" pb={"60px"} flex="1" css={{borderBottomRightRadius: "140px"}}>
         <Div 
           bg="themeRed1" flex="1" 
           height="150px"

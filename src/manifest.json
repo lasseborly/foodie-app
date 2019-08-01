@@ -1,8 +1,8 @@
 {
   "name": "Foodie for Everybody",
   "short_name": "Foodie",
-  "theme_color": "#2196f3",
-  "background_color": "#2196f3",
+  "theme_color": "#FF8B7C",
+  "background_color": "#FF8B7C",
   "display": "standalone",
   "orientation": "portrait",
   "start_url": "/",

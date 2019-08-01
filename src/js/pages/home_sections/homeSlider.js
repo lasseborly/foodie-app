@@ -1,49 +1,146 @@
 import React from "react";
 import styled from '@emotion/styled'
-import { Div } from '../../layouts/layout'
-import { headerHome, headerSearchField } from '../../components/typography'
+import { Div, P } from '../../layouts/layout'
+import { headerCardPrimary, headerCardSecondary, headerCardTiny, headerSliderNavigation } from '../../components/typography'
+import imgDessert from '../../../img/images/dessert1.png'
+import { colors, shadows } from '../../../style/theme'
+import { IconKcal } from '../../../img/icons/Icons'
+import { Link } from 'react-router-dom'
 
 
-const SliderItem = styled.input({
-  height: `130px`,
-  width: "100px",
-  borderRadius: "10px",
-  border: "1px solid red",
+const SliderNavigationItem = styled(Link)({
+  ...headerSliderNavigation,
+  marginRight: "20px",
+  paddingBottom: "8px",
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  whiteSpace: "nowrap" 
 })
+
+const SliderNavigationBar = styled(Div)(({active}) => ({
+  width: "60%",
+  height: "2px",
+  backgroundColor: active ? colors.themeRed2 : "transparent",
+  display: "block",
+  borderRadius: "4px"
+}))
+
+const SliderContainer = styled(Div)({
+  // scrollSnapType: "mandatory",
+  // scrollSnapPointsY: "repeat(300px)",
+  // scrollSnapType: "y mandatory",
+  display: "flex",
+  flex: 1
+})
+
+const SliderItem = styled(Div)({
+    display: "block",
+    width: "140px",
+    borderRadius: "10px",
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
+    marginRight: "20px",
+    backgroundColor: "white",
+})
+
+const sliderNavigationData= [
+  {
+    navName: "dessert", 
+    navUrl: "101"
+  },
+  {
+    navName: "smoothie", 
+    navUrl: "102"
+  },
+  {
+    navName: "barbecue", 
+    navUrl: "104"
+  },
+  {
+    navName: "vegan",
+    navUrl: "105"
+  },
+  {
+    navName: "paleo",
+    navUrl: "106"
+  },
+  {
+    navName: "sea snacks",
+    navUrl: "107"
+  },
+  {
+    navName: "plant based",
+    navUrl: "108"
+  },
+]
 
 const sliderItemData = [
   {
     header: "Strawberry Cream Waffles",
-    price: "7",
-    kcal: 274
+    price: "$7.0",
+    kcal: 274,
+    img: imgDessert
   },
   {
     header: "Strawberry Cream Waffles",
-    price: "7",
-    kcal: 274
+    price: "$7.0",
+    kcal: 274,
+    img: imgDessert
   },{
     header: "Strawberry Cream Waffles",
-    price: "7",
-    kcal: 274
+    price: "$7.0",
+    kcal: 274,
+    img: imgDessert
   },
   {
     header: "Strawberry Cream Waffles",
-    price: "7",
-    kcal: 274
+    price: "$7.0",
+    kcal: 274,
+    img: imgDessert
   },
   {
     header: "Strawberry Cream Waffles",
-    price: "7",
-    kcal: 274
+    price: "$7.0",
+    kcal: 274,
+    img: imgDessert
   }
 ]
 
 const HomeSlider = () => {
     return (
-      <Div border="1px solid red" pb={"60px"} flex="1">
-        {
-           sliderItemData.map(i => <SliderItem />)
-        }
+      <Div width="100vw"  flexDirection={"column"}>
+
+        <Div style={{overflow: "scroll"}} p={4} pb={0}>
+            {
+              sliderNavigationData.map(i => (
+                <SliderNavigationItem 
+                  key={i.navUrl}
+                  to={"/"}>
+                  <P pb={"6px"}>{i.navName}</P>
+                  <SliderNavigationBar active={i.navUrl === "101"} />
+                </SliderNavigationItem> 
+              ))
+            }
+        </Div>
+
+        <Div style={{overflow: "scroll"}}>
+          <SliderContainer p={4} pt={2}>
+            {
+              sliderItemData.map((i,index) => {
+                  return <SliderItem p={2} key={index}>
+                    <img src={i.img} style={{width: "100%"}} alt=""/>
+                    <P style={headerCardPrimary}>{i.header}</P>
+                    <P style={headerCardSecondary}>{i.price}</P>
+                    <Div mt={1}>
+                      <IconKcal />
+                      <P ml="5px" style={{...headerCardTiny, lineHeight: "16px"}}>{i.kcal + " kcal"}</P>
+                    </Div>
+                  </SliderItem>
+              })
+            }
+          </SliderContainer>
+        </Div>
+
       </Div>
     )
   }
