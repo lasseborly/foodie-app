@@ -14,6 +14,7 @@ import Profile from "./pages/profile";
 import List from "./pages/list";
 
 import Recipes from './pages/recipes'
+import Food from './pages/food'
 
 import Page404 from './pages/page404'
 
@@ -43,6 +44,7 @@ class App extends React.Component {
         <Main>
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/detail/food/:id" component={Food} />
             <Route path="/detail/recipes/:id" component={Recipes} />
             <Route path="/profile" exact component={Profile} />
             <Route path="/list" exact component={List} />

@@ -55,6 +55,12 @@ export const textDefault = {
     color: colors.themeDark1
 }
 
+export const textBadge = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.6rem",
+    color: colors.white
+}
+
 export const buttonDefault = {
     fontFamily: "Montserrat, sans-serif",
     fontSize: "0.8",

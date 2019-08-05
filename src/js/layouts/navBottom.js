@@ -6,7 +6,7 @@ import { IconFruitBasket, IconHome, IconHomeActive, IconReciept, IconProfile } f
 import { buttonNav } from '../components/typography'
 import { colors, shadows } from '../../style/theme'
 
-const NAVBOTTOM_HEIGHT = 50
+export const NAVBOTTOM_HEIGHT = 50
 
 const NavBottomContainer = styled.div({
   height: `${NAVBOTTOM_HEIGHT}px`, 
@@ -37,7 +37,7 @@ const links = [
     text: "home"
   },
   {
-    to: "/detail/recipes/10",
+    to: "/detail/food/10",
     icon: <IconFruitBasket />,
     text: "mad"
   },
@@ -63,7 +63,6 @@ const NavBottomLinks = ({to, icon, iconActive, text, active}) => {
 }
 
 const NavBottom = ({history}) => {
-
     return <NavBottomContainer>
       { links.map(i =>  <NavBottomLinks active={i.to === history.location.pathname} key={i.to} {...i} /> ) }
     </NavBottomContainer>

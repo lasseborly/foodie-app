@@ -1,28 +1,12 @@
 import React from "react";
 import styled from '@emotion/styled'
 import { Div, P } from '../../layouts/layout'
-import { headerCardPrimary, headerCardSecondary, headerCardTiny, headerSliderNavigation, textDefault, buttonDefault } from '../../components/typography'
-import { colors, shadows } from '../../../style/theme'
-import { IconKcal, IconHeart, IconPeople } from '../../../img/icons/Icons'
-import { Link } from 'react-router-dom'
+import { headerCardPrimary, headerSliderNavigation, textDefault } from '../../components/typography'
+import { shadows } from '../../../style/theme'
+
+import Button from '../../ui/button'
 
 import imgDessert from '../../../img/images/dessert8.png'
-
-const Button = styled.button({
-  backgroundColor: colors.themeRed3,
-  border: "none",
-  boxShadow: shadows.buttonShadow,
-  borderRadius: "20px",
-  height: "40px",
-  padding: "0px 20px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: "white",
-  ...buttonDefault
-})
-
-
 
 const HomeWeeklyRecipes = () => {
     return (

@@ -55,22 +55,20 @@ Learnings:
 
 
 
-
 ----
 
 Limitation:
-- lock screen orientation
-- push notifications
+- lock screen orientation (fix is some kind of splash screen)
+- push notifications (missing on iOS)
+- only install in safari (which are pretty hidden, and not known to the public)
 - missing popup hook for iOS app install
 - transparency in statusbar (nice on pagescroll and full size images)
+- 
 
 
 --
 Todo:
 
 - navbottom farve skift active route
-- tjek størrelser og farve efter design, sammenhold
-- white gap iOS scroll up
-- bedre dummy data
-- gallery last picture
-- slider snap
+- remove "focus" effect on a elements
+- scroll block debugging

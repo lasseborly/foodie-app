@@ -1,7 +1,0 @@
-1. Offline capabilities
-2. Native 'like' (vibration, homescreen. butter smooth 60fps)
-3. Push notification
-4. UI gestures (pinching, swapping, dragging, pulling, etc.)
-5. SVG morphing icons
-6. IndexDB? 
-7. Pull to refresh behavior (https://developers.google.com/web/updates/2017/11/overscroll-behavior)
