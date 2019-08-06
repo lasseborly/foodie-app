@@ -19,6 +19,7 @@ import Food from './pages/food'
 import Page404 from './pages/page404'
 
 import { colors } from '../style/theme'
+import { setStatusbarColor } from './utility/utility'
 
 const ContainerApp = styled.div({
   display: "flex",
@@ -28,15 +29,24 @@ const ContainerApp = styled.div({
   flexDirection: "column"
 })
 
-const Main = styled.div({
+const Main = styled.div(() => ({
   flex: 1,
   overflowY: "auto",
   backgroundColor: colors.themeRed1,
   "-webkit-overflow-scrolling": "touch",
+}))
+
+const Dummy = styled.div({
+  position: "fixed",
+  top: 0,
+  width: "100vw",
+  height: "300px",
+  backgroundColor: "red"
 })
 
 class App extends React.Component {
   render() {
+    setStatusbarColor("themeRed1")
     return (
       <ContainerApp>
         <Global styles={globalStyles} />
@@ -52,6 +62,7 @@ class App extends React.Component {
             <Route component={Page404}/>
           </Switch>
         </Main>
+        {/* <Dummy /> */}
         <NavBottom history={this.props.history}/>
       </ContainerApp>
     );

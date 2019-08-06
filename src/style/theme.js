@@ -1,3 +1,5 @@
+import chroma from 'chroma-js'
+
 export const colors = {
     white: "#FFFFFF",
     themeLight1: "#FFF5F0",
@@ -14,7 +16,7 @@ export const colors = {
 export const shadows = {
     bottomNavigationShadow: "0px -4px 4px rgba(0, 0, 0, 0.05)",
     sectionShadow: "0px 3px 4px rgba(0, 0, 0, 0.02)",
-    buttonShadow: "0px 4px 10px rgba(231, 47, 47, 0.25)",
+    // buttonShadow: (color = "231, 47, 47") => `0px 3px 8px ${chroma(color).rgba().alpha(0.2).css()}`,
     badgeShadow: `0px 3px 8px rgba(231, 47, 47, 0.15)`,
     uiCompOuterShadow: "0px 1px 1px rgba(0, 0, 0, 0.25)",
     uiCompShadow: "0px 1px 1px rgba(0, 0, 0, 0.5), inset 0px 1px 0.5px rgba(0, 0, 0, 0.02)"

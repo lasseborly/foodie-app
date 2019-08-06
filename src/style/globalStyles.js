@@ -2,7 +2,6 @@ import { colors } from './theme'
 
 export default {
     'body': {
-        backgroundColor: colors.themeRed1,
         fontFamily: "Montserrat, sans-serif",
         fontSize: "16px",
         margin: 0,
@@ -37,5 +36,4 @@ export default {
         padding: 0,
         margin: 0
       }
-
 }

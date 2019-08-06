@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 import { Div } from '../../layouts/layout'
-import { headerHome, headerSearchField } from '../../components/typography'
+import { headerFoodTitle, headerFoodSubTitle } from '../../components/typography'
 import { IconSearch } from '../../../img/icons/Icons'
 import Interactable from 'react-interactable/noNative'
 import { shadows, colors } from '../../../style/theme'
@@ -11,6 +11,7 @@ import { NAVBOTTOM_HEIGHT } from '../../layouts/navBottom'
 import { NAVTOP_HEIGHT } from './foodTop'
 import Badge from '../../components/badge'
 import Button from '../../ui/button'
+import { setStatusbarColor } from '../../utility/utility.js'
 
 const FoodDescriptionContainer = styled(Div)({
     position: "absolute",
@@ -28,12 +29,7 @@ const FoodDescriptionContent = styled(Div)({
   width: "100vw"
 })
 
-const FoodDescriptionItem = styled(Div)({
-    width: "100vw",
-    height: "150px",
-})
-
-const h1 = 100
+const h1 = 120
 const h2 = 250
 const h3 = window.innerHeight - h2 - h1 - NAVBOTTOM_HEIGHT
 const heightTotal = h1 + h2 + h3
@@ -50,8 +46,8 @@ const styleInteractable = (isFullscreen) => ({
 const FoodH1 = ({food}) => {
   return (
     <Div flexWrap="wrap">
-      <h1>{food.title}</h1>
-      <h5>{food.subTitle}</h5>
+      <h1 style={headerFoodTitle}>{food.title}</h1>
+      <h2 style={headerFoodSubTitle}>{food.subTitle}</h2>
     </Div>
   )
 } 
@@ -70,7 +66,12 @@ const FoodH2 = ({food}) => {
         </p>
       </Div>
       <Div mt="4">
-        <Button style={{minWidth: "200px", backgroundColor: colors.lightBrown2}}>Tilføj til kurv</Button>
+        <Button 
+          bgColor={colors.lightBrown2}
+          color={"black"}
+        >
+            Tilføj til kurv
+          </Button>
       </Div>
     </Div>
   )
@@ -87,7 +88,7 @@ const Underlay = styled.div(() => ({
 
 const FoodDescription = ({food}) => {
     let modalRef = null
-    const [sliderIndex, setStatus] = useState(false);
+    const [sliderIndex, setPosition] = useState(false);
 
     return (
     <FoodDescriptionContainer>
@@ -107,7 +108,7 @@ const FoodDescription = ({food}) => {
             ]}
             // boundaries={{top: 0}}
             onSnap={(e) => {
-                setStatus(e.index)
+                setPosition(e.index)
             }}
             initialPosition={{y: h3}}
             verticalOnly={true}>

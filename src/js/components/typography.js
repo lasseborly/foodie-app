@@ -49,6 +49,20 @@ export const headerCardTiny = {
     color: colors.themeDark1
 }
 
+export const headerFoodTitle = {
+    fontFamily: "FFTisa, sans-serif",
+    fontSize: "1.8rem",
+    fontWeight: 400,
+    color: "black"
+}
+
+export const headerFoodSubTitle = {
+    fontFamily: "FFTisa, sans-serif",
+    fontSize: "1rem",
+    fontWeight: 300,
+    color: "black"
+}
+
 export const textDefault = {
     fontFamily: "Montserrat, sans-serif",
     fontSize: "0.8rem",
@@ -62,8 +76,7 @@ export const textBadge = {
 }
 
 export const buttonDefault = {
-    fontFamily: "Montserrat, sans-serif",
-    fontSize: "0.8",
-    fontWeight: 600,
-    color: colors.white
+    fontFamily: "FFTisa",
+    fontSize: "0.8rem",
+    fontWeight: 600
 }
