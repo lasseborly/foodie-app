@@ -63,6 +63,14 @@ export const headerFoodSubTitle = {
     color: "black"
 }
 
+export const headerFoodDescription = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.8rem",
+    fontWeight: 300,
+    color: "black",
+    lineHeight: "1.2rem"
+}
+
 export const textDefault = {
     fontFamily: "Montserrat, sans-serif",
     fontSize: "0.8rem",
@@ -71,12 +79,17 @@ export const textDefault = {
 
 export const textBadge = {
     fontFamily: "Montserrat, sans-serif",
-    fontSize: "0.6rem",
-    color: colors.white
+    fontSize: "0.5rem",
+    color: colors.white,
+    textTransform: "uppercase",
+    fontWeight: 600,
+    paddingLeft: "2px",
+    paddingRight: "10px"
 }
 
 export const buttonDefault = {
     fontFamily: "FFTisa",
-    fontSize: "0.8rem",
-    fontWeight: 600
+    fontSize: "0.9rem",
+    fontWeight: 600,
+    lineHeight: "1.2rem"
 }

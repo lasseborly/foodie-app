@@ -43,10 +43,6 @@ const DetailsTop = ({food}) => {
     const { bgColor } = food 
     return (
       <HeroContainer bg={bgColor}>
-        <HeroTop justifyContent="space-between" px="4">
-          <div>back</div>
-          <div>cart</div>
-        </HeroTop>
         <Div alignSelf="flex-start" flexWrap="wrap" justifyContent="center">
           <HeroImg src={imgsrc}/>
           {/* <HeroShadow /> */}

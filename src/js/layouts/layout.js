@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { space, layout, typography, color, flexbox, border, position } from 'styled-system'
+import { space, layout, typography, color, flexbox, border, position, transform } from 'styled-system'
 
 
 export const Div = styled.div(
@@ -10,7 +10,8 @@ export const Div = styled.div(
     typography, 
     color, 
     flexbox,
-    position 
+    position,
+    transform
 )
 
 export const P = styled.div(

@@ -18,6 +18,8 @@ import Food from './pages/food'
 
 import Page404 from './pages/page404'
 
+import { Div } from './layouts/layout'
+
 import { colors } from '../style/theme'
 import { setStatusbarColor } from './utility/utility'
 
@@ -34,6 +36,7 @@ const Main = styled.div(() => ({
   overflowY: "auto",
   backgroundColor: colors.themeRed1,
   "-webkit-overflow-scrolling": "touch",
+  postion: "relative"
 }))
 
 const Dummy = styled.div({
@@ -50,7 +53,7 @@ class App extends React.Component {
     return (
       <ContainerApp>
         <Global styles={globalStyles} />
-        <NavTop  />
+        <NavTop />
         <Main>
           <Switch>
             <Route path="/" exact component={Home} />
@@ -62,6 +65,7 @@ class App extends React.Component {
             <Route component={Page404}/>
           </Switch>
         </Main>
+        
         {/* <Dummy /> */}
         <NavBottom history={this.props.history}/>
       </ContainerApp>

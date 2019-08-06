@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 import { Div } from '../../layouts/layout'
-import { headerFoodTitle, headerFoodSubTitle } from '../../components/typography'
+import { headerFoodTitle, headerFoodSubTitle, headerFoodDescription } from '../../components/typography'
 import { IconSearch } from '../../../img/icons/Icons'
 import Interactable from 'react-interactable/noNative'
 import { shadows, colors } from '../../../style/theme'
@@ -40,7 +40,9 @@ const styleInteractable = (isFullscreen) => ({
     transition: "border-radius 0.5s ease 0s",
     backgroundColor: "white",
     height: `${heightTotal}px`,
-    boxShadow: "0px -8px 5px 0px rgba(0,0,0,0.03)"
+    boxShadow: "0px -8px 5px 0px rgba(0,0,0,0.03)",
+    position: "relative",
+    zIndex: 2,
 })
 
 const FoodH1 = ({food}) => {
@@ -54,21 +56,23 @@ const FoodH1 = ({food}) => {
 
 const FoodH2 = ({food}) => {
   return (
-    <Div flexDirection="column">
-      <Div alignSelf="flex-start">
-        <Badge color={food.bgColor} text="organic" />
-        <Badge color={food.bgColor} text="fairtrade" />
-        <Badge color={food.bgColor} text="africa" />
-      </Div>
-      <Div mt="2">
-        <p>
-          {food.description}
-        </p>
+    <Div flexDirection="column" justifyContent="space-between">
+      <Div flexWrap="wrap">
+        <Div alignSelf="flex-start">
+          <Badge color={food.bgColor} text="organic" />
+          <Badge color={food.bgColor} text="fairtrade" />
+          <Badge color={food.bgColor} text="africa" />
+        </Div>
+        <Div mt="4">
+          <p style={headerFoodDescription}>
+            {food.description}
+          </p>
+        </Div>
       </Div>
       <Div mt="4">
         <Button 
           bgColor={colors.lightBrown2}
-          color={"black"}
+          color={colors.themeDark2}
         >
             Tilføj til kurv
           </Button>
@@ -85,6 +89,12 @@ const Underlay = styled.div(() => ({
   backgroundColor: "black",
   opacity: 0
 }))
+
+const FoodDescriptionItem = styled(Div)({
+  borderBottom: `1px solid ${colors.themeLight2}`, 
+  padding: "30px",
+  width: "100%"
+})
 
 const FoodDescription = ({food}) => {
     let modalRef = null
@@ -113,13 +123,15 @@ const FoodDescription = ({food}) => {
             initialPosition={{y: h3}}
             verticalOnly={true}>
             <FoodDescriptionContent>
-                <Div width="100%" height={`${h1}px`}style={{borderBottom: "1px solid lightgrey", padding: "30px"}}>
+                <FoodDescriptionItem height={`${h1}px`} >
                   <FoodH1 food={food} />
-                </Div>
-                <Div width="100%" height={`${h2}px`}style={{borderBottom: "1px solid lightgrey", padding: "30px"}} >
+                </FoodDescriptionItem>
+                <FoodDescriptionItem height={`${h2}px`} style={{paddingTop: "20px"}} >
                   <FoodH2 food={food} />
-                </Div>
-                <Div width="100%" height={`${h3 + 300}px`}style={{borderBottom: "1px solid lightgrey", padding: "30px", backgroundColor: "white"}} >250px</Div>
+                </FoodDescriptionItem>
+                <FoodDescriptionItem height={`${h3 + 300 }px`} backgroundColor={"white"}>
+                250px
+                </FoodDescriptionItem>
             </FoodDescriptionContent>
         </Interactable.View>
       </FoodDescriptionContainer>

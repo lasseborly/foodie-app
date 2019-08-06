@@ -16,12 +16,12 @@ const food = {
 
 const Food = () => {
   setStatusbarColor(food.bgColor)
-    return (
-      <Div flexDirection="column" bg={"white"} height="100%" position="relative">
-        <FoodTop food={food} />
-        <FoodDescription food={food} />
-      </Div>
-    )
+  return (
+    <Div flexDirection="column" bg={"white"} height="100%" position="relative">
+      <FoodTop food={food} />
+      <FoodDescription food={food} />
+    </Div>
+  )
   }
 
 export default Food

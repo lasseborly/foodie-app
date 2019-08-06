@@ -10,7 +10,7 @@ const Button = styled.button(({bgColor, color}) => {
     // boxShadow: shadows.buttonShadow(bgColor || colors.themeRed3),
     borderRadius: "16px",
     height: "45px",
-    padding: "0px 25px",
+    padding: "0px 18px",
     display: "flex",
     alignItems: "center",
     color: color || "white",

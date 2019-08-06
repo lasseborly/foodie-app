@@ -17,7 +17,7 @@ const BadgeContainer = styled(Div)({
 
 const Badge = ({text, color}) => {
     return (
-        <BadgeContainer mr="2" bg={"lightgrey"}>
+        <BadgeContainer mr="2" bg={"#876863"}>
             <span style={textBadge}>{ text }</span>
         </BadgeContainer>
     )
