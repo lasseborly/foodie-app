@@ -6,10 +6,12 @@ import { IconArrow, IconCart } from '../../img/icons/Icons'
 
 import { Link, withRouter } from 'react-router-dom'
 
+const NAVTOP_HEIGHT = 50
+
 const NavTopContainer = styled(Div)({
   position: "fixed",
   width: "100vw",
-  height: "50px",
+  height: `${NAVTOP_HEIGHT}px`,
   top: "0px",
   zIndex: 1,
   alignItems: "center",
@@ -17,10 +19,16 @@ const NavTopContainer = styled(Div)({
   transition: "0.3s"
 })
 
-const StyledLink = styled(Link)(({slideNavTop, showNavTop}) => {
+const StyledLink = styled(Link)(({to}) => {
+  const { slideNavTop,showNavTop } = to.state
   return {
     transform: `translateX(${slideNavTop})`,
-    transition: showNavTop ? "0.5s" : "0s"
+    transition: showNavTop ? "0.5s" : "0s",
+    height: `${NAVTOP_HEIGHT}px`,
+    width: `${NAVTOP_HEIGHT}px`,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   }
 })
 
@@ -28,19 +36,11 @@ const NavTop = ({history}) => {
   const showNavTop = history.location.pathname === "/detail/food/10"
   const slideNavTop = showNavTop ? "0px" : "100px"
   const iconColor = colors.themeDark3
-  return <NavTopContainer p="4">
-    <StyledLink 
-      to="/" 
-      showNavTop={showNavTop}
-      slideNavTop={"-" + slideNavTop}
-      >
+  return <NavTopContainer p="2">
+    <StyledLink to={{pathname: "/", state: {showNavTop, slideNavTop: "-" + slideNavTop}}}>
       <IconArrow stroke={iconColor} fill={iconColor} />
     </StyledLink>
-    <StyledLink 
-      to="/"
-      showNavTop={showNavTop}
-      slideNavTop={slideNavTop}
-      >
+    <StyledLink to={{pathname: "/", state: {showNavTop, slideNavTop}}}>
       <IconCart stroke={iconColor} fill={iconColor} />
     </StyledLink>
   </NavTopContainer>

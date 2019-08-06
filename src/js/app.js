@@ -36,6 +36,7 @@ const Main = styled.div(() => ({
   overflowY: "auto",
   backgroundColor: colors.themeRed1,
   "-webkit-overflow-scrolling": "touch"
+  // position: "relative",
 }))
 
 const Dummy = styled.div({
