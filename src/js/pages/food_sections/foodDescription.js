@@ -15,6 +15,9 @@ import { setStatusbarColor } from '../../utility/utility.js'
 import { Trail, animated } from 'react-spring/renderprops'
 import { useSpring, animated as animatedSpring } from 'react-spring'
 
+import { addProductToBasket } from '../../store/actions/action_basket'
+import { connect } from 'react-redux'
+
 const FoodDescriptionContainer = styled(Div)({
     position: "absolute",
     top: 0,
@@ -60,7 +63,8 @@ const FoodH1 = ({food}) => {
   )
 } 
 
-const FoodH2 = ({food}) => {
+
+const FoodH2 = ({food, addProductToBasket}) => {
   return (
     <Div flexDirection="column" justifyContent="space-between">
       <Div flexWrap="wrap">
@@ -76,7 +80,8 @@ const FoodH2 = ({food}) => {
         </Div>
       </Div>
       <Div mt="4" alignItems="center" justifyContent="space-between">
-        <Button 
+        <Button
+          onClick={addProductToBasket}
           bgColor={colors.lightBrown2}
           color={colors.themeDark2}
         > Tilføj til kurv </Button>
@@ -85,6 +90,8 @@ const FoodH2 = ({food}) => {
     </Div>
   )
 }
+
+const FoodH2Connect = connect (null, { addProductToBasket })(FoodH2)
 
 const dailyKcal = 2500
 const nutrition = {
@@ -162,10 +169,10 @@ class FoodH3 extends React.Component {
   render() {
       return (
         <Div width="100%" flexDirection="column">
-          <Div flexDirection="column" mb="3">
+          {/* <Div flexDirection="column" mb="3">
             <h2 style={foodNutritionHeader}>Nutrition for {this.props.food.title}</h2>
             <h5 style={foodNutritionSubHeader}>Consist of 18% of total energy</h5>
-          </Div>
+          </Div> */}
           <Trail 
             native 
             items={Object.entries(this.props.food.nutrition)} 
@@ -173,7 +180,6 @@ class FoodH3 extends React.Component {
             from={{ opacity: 0, x: 0 }}
             to={this.state.animateTo}>
           {item => ({ x, opacity }) => {
-            console.log(x)
             return <FoodNutritionItem item={item} opacity={opacity} x={x} />
           }}
           </Trail>
@@ -197,11 +203,10 @@ const FoodDescriptionItem = styled(Div)({
   width: "100%"
 })
 
-const FoodDescription = ({food}) => {
+const FoodDescription = ({food, addProductToBasket}) => {
     let menuRef = null
     const [sliderIndex, setPosition] = useState(1);
     useEffect(() => menuRef.snapTo({index: 1}), []);
-
     return (
     <FoodDescriptionContainer>
         <Underlay 
@@ -227,10 +232,13 @@ const FoodDescription = ({food}) => {
                   <FoodH1 food={food} />
                 </FoodDescriptionItem>
                 <FoodDescriptionItem height={`${h2}px`} style={{paddingTop: "20px"}} >
-                  <FoodH2 food={food} />
+                  <FoodH2Connect food={food} />
                 </FoodDescriptionItem>
                 <FoodDescriptionItem height={`${h3 + 300 }px`} backgroundColor={"white"}>
-                  <FoodH3 food={food} active={sliderIndex === 0} />
+                  <FoodH3 
+                    food={food} 
+                    active={sliderIndex === 0}
+                  />
                 </FoodDescriptionItem>
             </FoodDescriptionContent>
         </Interactable.View>

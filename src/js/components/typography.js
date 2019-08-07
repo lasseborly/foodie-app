@@ -120,3 +120,12 @@ export const foodNutritionAmount = {
     fontWeight: 600,
     color: colors.grey2
 }
+
+
+export const textBagdeCounter = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "8px",
+    fontWeight: 600,
+    color: "black",
+    lineHeight: "13px"
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from '@emotion/styled'
 import { Global } from '@emotion/core'
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, matchPath} from "react-router-dom";
 
 import globalStyles from '../style/globalStyles'
 
@@ -47,13 +47,22 @@ const Dummy = styled.div({
   backgroundColor: "red"
 })
 
+const navTopRoutesAllowed = ["/detail/food/10"]
+
 class App extends React.Component {
   render() {
     setStatusbarColor("themeRed1")
+    const currentRoute = this.props.history.location.pathname
+    const showNavTop = navTopRoutesAllowed.every(route => matchPath(route, {
+      path: currentRoute,
+      exact: true,
+      strict: false
+    }))
+
     return (
       <ContainerApp>
         <Global styles={globalStyles} />
-        <NavTop />
+        {showNavTop && <NavTop />}
         <Main>
           <Switch>
             <Route path="/" exact component={Home} />
