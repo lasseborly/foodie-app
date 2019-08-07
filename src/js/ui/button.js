@@ -13,6 +13,7 @@ const Button = styled.button(({bgColor, color}) => {
     padding: "0px 18px",
     display: "flex",
     alignItems: "center",
+    justifyContent: "space-between",
     color: color || "white",
     minWidth: "200px",
     ...buttonDefault

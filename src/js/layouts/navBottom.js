@@ -1,7 +1,7 @@
 import React from "react";
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
-import { IconFruitBasket, IconHome, IconHomeActive, IconReciept, IconProfile } from '../../img/icons/Icons'
+import { IconHome, IconHomeActive, IconReciept, IconRecieptActive, IconProfile, IconProfileActive, IconBasket, IconBasketActive  } from '../../img/icons/Icons'
 
 import { buttonNav } from '../components/typography'
 import { colors, shadows } from '../../style/theme'
@@ -38,17 +38,20 @@ const links = [
   },
   {
     to: "/detail/food/10",
-    icon: <IconFruitBasket />,
+    icon: <IconBasket />,
+    iconActive: <IconBasketActive />,
     text: "mad"
   },
   {
     to: "/order",
     icon: <IconReciept />,
+    iconActive: <IconRecieptActive />,
     text: "ordre"
   },
   {
     to: "/profile",
     icon: <IconProfile />,
+    iconActive: <IconProfileActive />,
     text: "profil"
   }
 ]

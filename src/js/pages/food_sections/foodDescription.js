@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 import { Div } from '../../layouts/layout'
 import { headerFoodTitle, headerFoodSubTitle, headerFoodDescription, foodNutritionType, foodNutritionAmount, foodNutritionHeader, foodNutritionSubHeader } from '../../components/typography'
-import { IconSearch } from '../../../img/icons/Icons'
+import { IconAddToBasket } from '../../../img/icons/Icons'
 import Interactable from 'react-interactable/noNative'
 import { shadows, colors } from '../../../style/theme'
 
@@ -84,7 +84,10 @@ const FoodH2 = ({food, addProductToBasket}) => {
           onClick={addProductToBasket}
           bgColor={colors.lightBrown2}
           color={colors.themeDark2}
-        > Tilføj til kurv </Button>
+        > 
+        Tilføj til kurv
+        <IconAddToBasket />
+         </Button>
         <h2 style={headerFoodTitle}>$6</h2>
       </Div>
     </Div>

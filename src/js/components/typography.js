@@ -88,7 +88,7 @@ export const textBadge = {
 }
 
 export const buttonDefault = {
-    fontFamily: "FFTisa",
+    fontFamily: "Montserrat, sans-serif",
     fontSize: "0.9rem",
     fontWeight: 600,
     lineHeight: "1.2rem"

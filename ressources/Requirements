@@ -63,7 +63,7 @@ Limitation:
 - only install in safari (which are pretty hidden, and not known to the public)
 - missing popup hook for iOS app install
 - transparency in statusbar (nice on pagescroll and full size images)
-- 
+- vibration on iOS
 
 
 --

@@ -68,7 +68,9 @@ const CartCounter = styled(Div)(({ count }) => ({
   position: "absolute",
   top: "5px",
   right: "5px",
-  overflow: "hidden"
+  overflow: "hidden",
+  transition: "transform 0.3s",
+  transform: count ? "scale(1)" : "scale(0)"
 }))
 
 const numbers = [0,1,2,3,4,5,6,7,8,9, 10]
@@ -99,7 +101,7 @@ const NavTop = (props) => {
     <CartMenu active={popout.active}>
       <Div style={{...styledLinks, position: "relative"}} onClick={() => history.push('/')}>
         <IconCart stroke={iconColor} fill={iconColor} />
-        <CartCounter>
+        <CartCounter count={totalItemsInBasket}>
           <Div 
             flexDirection="column" 
             position="absolute" 
