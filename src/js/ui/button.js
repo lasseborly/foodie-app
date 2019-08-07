@@ -8,7 +8,7 @@ const Button = styled.button(({bgColor, color}) => {
     backgroundColor: bgColor || colors.themeRed3,
     border: "none",
     // boxShadow: shadows.buttonShadow(bgColor || colors.themeRed3),
-    borderRadius: "16px",
+    borderRadius: "12px",
     height: "45px",
     padding: "0px 18px",
     display: "flex",

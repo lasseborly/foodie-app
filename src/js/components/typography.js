@@ -51,7 +51,7 @@ export const headerCardTiny = {
 
 export const headerFoodTitle = {
     fontFamily: "FFTisa, sans-serif",
-    fontSize: "1.8rem",
+    fontSize: "2rem",
     fontWeight: 400,
     color: "black"
 }
@@ -68,7 +68,7 @@ export const headerFoodDescription = {
     fontSize: "0.8rem",
     fontWeight: 300,
     color: "black",
-    lineHeight: "1.2rem"
+    lineHeight: "1.4rem",
 }
 
 export const textDefault = {
@@ -92,4 +92,31 @@ export const buttonDefault = {
     fontSize: "0.9rem",
     fontWeight: 600,
     lineHeight: "1.2rem"
+}
+
+export const foodNutritionHeader = {
+    fontFamily: "FFTisa",
+    fontSize: "1rem",
+    fontWeight: 600,
+}
+
+export const foodNutritionSubHeader = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.8rem",
+    fontWeight: 400,
+    color: colors.grey3
+}
+
+export const foodNutritionType = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.8rem",
+    fontWeight: 600,
+    textTransform: "capitalize"
+}
+
+export const foodNutritionAmount = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.8rem",
+    fontWeight: 600,
+    color: colors.grey2
 }

@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 import { Div } from '../../layouts/layout'
-import { headerFoodTitle, headerFoodSubTitle, headerFoodDescription } from '../../components/typography'
+import { headerFoodTitle, headerFoodSubTitle, headerFoodDescription, foodNutritionType, foodNutritionAmount, foodNutritionHeader, foodNutritionSubHeader } from '../../components/typography'
 import { IconSearch } from '../../../img/icons/Icons'
 import Interactable from 'react-interactable/noNative'
 import { shadows, colors } from '../../../style/theme'
@@ -12,6 +12,8 @@ import { NAVTOP_HEIGHT } from './foodTop'
 import Badge from '../../components/badge'
 import Button from '../../ui/button'
 import { setStatusbarColor } from '../../utility/utility.js'
+import { Trail, animated } from 'react-spring/renderprops'
+import { useSpring, animated as animatedSpring } from 'react-spring'
 
 const FoodDescriptionContainer = styled(Div)({
     position: "absolute",
@@ -30,7 +32,7 @@ const FoodDescriptionContent = styled(Div)({
 })
 
 const h1 = 120
-const h2 = 250
+const h2 = 235
 const h3 = window.innerHeight - h2 - h1 - NAVBOTTOM_HEIGHT
 const heightTotal = h1 + h2 + h3
 
@@ -46,10 +48,14 @@ const styleInteractable = (isFullscreen) => ({
 })
 
 const FoodH1 = ({food}) => {
+  const from = { transform: 'translate3d(0,20px,0)', opacity: 0 }
+  const to = { transform: 'translate3d(0,0,0)', opacity: 1 }
+  const [props, set, stop] = useSpring(() => ({transform: 'translate3d(0,20px,0)', opacity: 1 }))
+  set({transform: 'translate3d(0,0,0)', opacity: 1})
   return (
     <Div flexWrap="wrap">
-      <h1 style={headerFoodTitle}>{food.title}</h1>
-      <h2 style={headerFoodSubTitle}>{food.subTitle}</h2>
+      <animatedSpring.div style={props}><h1 style={headerFoodTitle}>{food.title}</h1></animatedSpring.div>
+      <animatedSpring.div style={props}><h1 style={headerFoodSubTitle}>{food.subTitle}</h1></animatedSpring.div>
     </Div>
   )
 } 
@@ -59,9 +65,9 @@ const FoodH2 = ({food}) => {
     <Div flexDirection="column" justifyContent="space-between">
       <Div flexWrap="wrap">
         <Div alignSelf="flex-start">
-          <Badge color={food.bgColor} text="organic" />
-          <Badge color={food.bgColor} text="fairtrade" />
-          <Badge color={food.bgColor} text="africa" />
+          {
+            ["organic", "fairtrade", "africa"].map(bagde => <Badge text={bagde} key={bagde}/>)
+          }
         </Div>
         <Div mt="4">
           <p style={headerFoodDescription}>
@@ -69,17 +75,112 @@ const FoodH2 = ({food}) => {
           </p>
         </Div>
       </Div>
-      <Div mt="4">
+      <Div mt="4" alignItems="center" justifyContent="space-between">
         <Button 
           bgColor={colors.lightBrown2}
           color={colors.themeDark2}
-        >
-            Tilføj til kurv
-          </Button>
+        > Tilføj til kurv </Button>
+        <h2 style={headerFoodTitle}>$6</h2>
       </Div>
     </Div>
   )
-} 
+}
+
+const dailyKcal = 2500
+const nutrition = {
+  protein: {
+    dailyMacronutrientPercentage: 0.2,
+    kcalPrGram: 4,
+    color: "red",
+  },
+  carb: {
+    dailyMacronutrientPercentage: 0.5,
+    kcalPrGram: 4,
+    color: "orange",
+  },
+  fat: {
+    dailyMacronutrientPercentage: 0.3,
+    kcalPrGram: 9,
+    color: "tomato",
+  }
+}
+
+function gramOfNutritionTypePerDay (key) {
+  const { dailyMacronutrientPercentage, kcalPrGram } = nutrition[key]
+  // const nutritionBarWidth = window.innerWidth - 60
+  return dailyKcal * dailyMacronutrientPercentage / kcalPrGram
+}
+
+const FoodNutritionItem = ({ item, x, opacity }) => {
+  const [ key, value ] = item
+  const gramOfNutrition = gramOfNutritionTypePerDay(key)
+  const barWidth = gramOfNutrition / 100 * value
+
+  return <Div flexDirection="column" position="relative" mb="3">
+    <Div justifyContent="space-between" mb="1">
+      <Div>
+        <span style={foodNutritionType }>{key}</span>
+        <span style={{...foodNutritionAmount, marginLeft: "10px"}}>{value} g</span>
+      </Div>
+      <span style={foodNutritionAmount}>
+        {Math.round(value / gramOfNutrition * 100 )} %
+      </span>
+    </Div>
+    <Div width="100%" height="4px" backgroundColor="lightgrey" opacity="0.5" borderRadius="2px" position="absolute" bottom="0px"/>
+    <animated.div
+      key={key}
+      style={{
+        borderRadius: "2px",
+        transformOrigin: "center left",
+        backgroundColor: nutrition[key]["color"],
+        width: `${barWidth}px`,
+        height: "4px",
+        opacity,
+        transform: x.interpolate(x => `scaleX(${x})`),
+      }}
+    />
+  </Div>
+}
+
+class FoodH3 extends React.Component {
+  state = { 
+    animatedStarted: false,
+    animateTo: { opacity: 0, x: 0 } 
+  }
+  
+  componentDidUpdate() {
+    if (this.props.active && this.state.animatedStarted === false) {
+    console.log("SETT")
+
+      this.setState({
+        animatedStarted: true,
+        animateTo: { opacity: 1, x: 1 } 
+      })
+    }
+  }
+
+  render() {
+      return (
+        <Div width="100%" flexDirection="column">
+          <Div flexDirection="column" mb="3">
+            <h2 style={foodNutritionHeader}>Nutrition for {this.props.food.title}</h2>
+            <h5 style={foodNutritionSubHeader}>Consist of 18% of total energy</h5>
+          </Div>
+          <Trail 
+            native 
+            items={Object.entries(this.props.food.nutrition)} 
+            keys={item => item[0]} 
+            from={{ opacity: 0, x: 0 }}
+            to={this.state.animateTo}>
+          {item => ({ x, opacity }) => {
+            console.log(x)
+            return <FoodNutritionItem item={item} opacity={opacity} x={x} />
+          }}
+          </Trail>
+        </Div>
+      )
+  }
+}
 
 const Underlay = styled.div(() => ({
   position: "fixed",
@@ -97,19 +198,20 @@ const FoodDescriptionItem = styled(Div)({
 })
 
 const FoodDescription = ({food}) => {
-    let modalRef = null
-    const [sliderIndex, setPosition] = useState(false);
+    let menuRef = null
+    const [sliderIndex, setPosition] = useState(1);
+    useEffect(() => menuRef.snapTo({index: 1}), []);
 
     return (
     <FoodDescriptionContainer>
         <Underlay 
           onClick={() => {
           if (sliderIndex === 1) {
-            modalRef.snapTo({index: 2})
+            menuRef.snapTo({index: 2})
           }
         }} />
         <Interactable.View
-            ref={ref => { modalRef = ref }}
+            ref={ref => { menuRef = ref }}
             style={styleInteractable(sliderIndex === 0)}
             snapPoints={[
                 {damping: 0.7, y: 0},
@@ -117,10 +219,8 @@ const FoodDescription = ({food}) => {
                 {damping: 0.7, y: h3 + h2}
             ]}
             // boundaries={{top: 0}}
-            onSnap={(e) => {
-                setPosition(e.index)
-            }}
-            initialPosition={{y: h3}}
+            onSnap={(e) => { setPosition(e.index) }}
+            initialPosition={{y: h3 + 100}}
             verticalOnly={true}>
             <FoodDescriptionContent>
                 <FoodDescriptionItem height={`${h1}px`} >
@@ -130,7 +230,7 @@ const FoodDescription = ({food}) => {
                   <FoodH2 food={food} />
                 </FoodDescriptionItem>
                 <FoodDescriptionItem height={`${h3 + 300 }px`} backgroundColor={"white"}>
-                250px
+                  <FoodH3 food={food} active={sliderIndex === 0} />
                 </FoodDescriptionItem>
             </FoodDescriptionContent>
         </Interactable.View>

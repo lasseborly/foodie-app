@@ -11,7 +11,11 @@ export const colors = {
     themeDark2: "#270101",
     themeDark3: "#2c2221",
     lightBrown1: "#F0DBB5",
-    lightBrown2: "#FFD819"
+    lightBrown2: "#FFD819",
+    grey1: "#EDE4E3",
+    grey2: "#C0C0C0",
+    grey3: "#999999"
+
 }
 
 export const shadows = {

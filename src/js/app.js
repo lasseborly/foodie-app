@@ -35,7 +35,7 @@ const Main = styled.div(() => ({
   flex: 1,
   overflowY: "auto",
   backgroundColor: colors.themeRed1,
-  "-webkit-overflow-scrolling": "touch"
+  "WebkitOverflowScrolling": "touch"
   // position: "relative",
 }))
 
