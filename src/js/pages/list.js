@@ -15,6 +15,7 @@ import { setStatusbarColor } from '../utility/utility.js'
 import { listCardHeader, listCardSubHeader, headerFoodTitle, listSubHeader } from '../components/typography'
 
 import { IconAdd  } from '../../img/icons/Icons'
+import {useTrail, animated, config} from 'react-spring'
 
 const food1 = {
   id: "1",
@@ -24,6 +25,7 @@ const food1 = {
   subTitle: "King of fruits",
   description: "A fruit with a thick peel, such as a citrus fruit, is called a hesperidium. In hesperidia, the inner layer is peeled off together with the outer layer.",
   img: imgDurian,
+  tags: ["organic", "fairtrade", "africa"],
   price: "9.99",
   nutrition: {
     fat: 8,
@@ -40,6 +42,7 @@ const food2 = {
   subTitle: "Rosids Eudicots",
   description: "The papaya is a small, sparsely branched tree, usually with a single stem growing from 5 to 10 m tall, with spirally arranged leaves confined to the top of the trunk. ",
   img: imgPapaya,
+  tags: ["fresh", "peru"],
   price: "8.99",
   nutrition: {
     fat: 28,
@@ -56,6 +59,7 @@ const food3 = {
   subTitle: "Citrullus seeds",
   description: "Citrullus lanatus is a plant species in the family Cucurbitaceae, a vine-like flowering plant originating in West Africa.",
   img: imgWatermelon,
+  tags: ["local", "healthy","brazil"],
   price: "12.99",
   nutrition: {
     fat: 12,
@@ -72,6 +76,7 @@ const food4 = {
   subTitle: "Dragon fruit",
   description: "These fruits are commonly known in English as dragon fruit, a name used since around 1993, apparently resulting from the leather-like skin and prominent scaly spikes on the fruit exterior.",
   img: imgPitaya,
+  tags: ["solidarity", "fresh","brazil", "agriculture"],
   price: "7.99",
   nutrition: {
     fat: 35,
@@ -123,13 +128,27 @@ const List = ({ history }) => {
     })
   }
 
+  const trail = useTrail(foodItems.length, {
+    opacity: 1,
+    y: 0,
+    from: { opacity: 0, y: 20 },
+    config: config.stiff	
+  })
+
   return (
     <Div backgroundColor="themeLight2" flexWrap="wrap" p="4">
       <h1 style={headerFoodTitle}>Exotic fruits</h1>
       <h2 style={listSubHeader}>More than 70 exotic fruits</h2>
       <Div flexWrap="wrap" justifyContent="space-between" mt="3">
-        {
+        {/* {
           foodItems.map((i, index) => <FoodItem key={index} item={i} navigateToDetails={navigateToDetails} /> )
+        } */}
+             {
+          trail.map(({ y, opacity }, index) => <animated.div 
+            style={{opacity, transform: y.interpolate(y => `translate3d(0,${y}px,0)`)}}
+            key={index}>
+            <FoodItem item={foodItems[index]} navigateToDetails={navigateToDetails} />
+          </animated.div> )
         }
       </Div>
     </Div>

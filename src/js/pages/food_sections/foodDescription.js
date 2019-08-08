@@ -70,7 +70,7 @@ const FoodH2 = ({food, addProductToBasket}) => {
       <Div flexWrap="wrap">
         <Div alignSelf="flex-start">
           {
-            ["organic", "fairtrade", "africa"].map(bagde => <Badge text={bagde} key={bagde}/>)
+            food.tags.map(bagde => <Badge text={bagde} key={bagde}/>)
           }
         </Div>
         <Div mt="4">
@@ -160,7 +160,6 @@ class FoodH3 extends React.Component {
   
   componentDidUpdate() {
     if (this.props.active && this.state.animatedStarted === false) {
-    console.log("SETT")
 
       this.setState({
         animatedStarted: true,
