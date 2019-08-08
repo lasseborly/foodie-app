@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Div } from '../layouts/layout'
 import styled from '@emotion/styled'
 import { colors, space, shadows } from '../../style/theme'
 import { IconArrow, IconCart } from '../../img/icons/Icons'
-import { Spring, animated, config } from "react-spring/renderprops";
+import { Spring, animated, interpolate } from "react-spring/renderprops";
 
 import { Link, withRouter } from 'react-router-dom'
 import imgsrc1 from '../../img/images/food/durian-monthong001.png'
@@ -11,11 +11,10 @@ import imgsrc1 from '../../img/images/food/durian-monthong001.png'
 import { textBagdeCounter } from '../components/typography'
 import { connect } from "react-redux";
 
-import { addProductToBasket } from '../store/actions/action_basket'
 import debounce from 'debounce'
 
 const NAVTOP_HEIGHT = 50
-const POPUP_DURATION = 2500
+const POPUP_DURATION = 1500
 
 const NavTopContainer = styled(Div)({
   position: "fixed",
@@ -48,7 +47,6 @@ const StyledLink = styled(Link)(({to}) => {
 })
 const CartMenu = styled(Div)(({ active }) => ({
   backgroundColor: colors.grey1,
-  // border: `1px solid ${colors.themeRed1}`,
   height: `60px`,
   width: "120px",
   borderTopLeftRadius: "30px",
@@ -77,42 +75,47 @@ const CartCounter = styled(Div)(({ count }) => ({
 }))
 
 const CartFoodItem = React.memo(({ active }) => {
-  console.log(active)
   return (
-    <Div>
-      <img src={imgsrc1} alt="" style={{
-        height: "40px", 
-        width: "40px", 
-        objectFit: "cover", 
-        backgroundColor: "white",
-        position: "absolute",
-        zIndex: "-1",
-        borderRadius: "100%",
-        padding: "5px"
-      }}/>
      <Spring
       native
       reset={active}
-      from={{ x: 125 }}
-      to={{ x: 0 }}
-      config={{duration: POPUP_DURATION}}
+      from={{ s: 0.5 }}
+      to={{ s: 1 }}
+      config={{tension: 800, mass: 3 }}
       >
-      {({ x }) => (
-        <animated.svg
-          height="40" width="40"
-          fill="transparent"
-          strokeDasharray={125}
-          strokeDashoffset={x}
-          stroke="#FFD819"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2" 
-        >
-          <circle cx="20" cy="20" r="18" />
-        </animated.svg>
-      )}
+      {({ s }) => <animated.div style={{ transform: interpolate([s], scale => `scale(${scale})`), display: "flex"}}>
+              <img src={imgsrc1} alt="" style={{
+                height: "40px", 
+                width: "40px", 
+                objectFit: "cover", 
+                backgroundColor: "white",
+                position: "absolute",
+                zIndex: "-1",
+                borderRadius: "100%",
+                padding: "6px"
+              }}/>
+          <Spring
+            native
+            reset={active}
+            from={{ x: 125 }}
+            to={{ x: 0 }}
+            config={{duration: POPUP_DURATION}}
+          >
+            {({ x }) => <animated.svg
+              height="40" width="40"
+              fill="transparent"
+              strokeDasharray={125}
+              strokeDashoffset={x}
+              stroke="#FFD819"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2" 
+            >
+              <circle cx="20" cy="20" r="18" />
+            </animated.svg>}
+          </Spring>
+          </animated.div>}
     </Spring>
-  </Div>
   )
 })
 
