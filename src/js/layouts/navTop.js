@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Div } from '../layouts/layout'
 import styled from '@emotion/styled'
 import { colors, space, shadows } from '../../style/theme'
 import { IconArrow, IconCart } from '../../img/icons/Icons'
+import { Spring, animated, config } from "react-spring/renderprops";
 
 import { Link, withRouter } from 'react-router-dom'
 import imgsrc1 from '../../img/images/food/durian-monthong001.png'
@@ -11,8 +12,10 @@ import { textBagdeCounter } from '../components/typography'
 import { connect } from "react-redux";
 
 import { addProductToBasket } from '../store/actions/action_basket'
+import debounce from 'debounce'
 
 const NAVTOP_HEIGHT = 50
+const POPUP_DURATION = 2500
 
 const NavTopContainer = styled(Div)({
   position: "fixed",
@@ -73,31 +76,72 @@ const CartCounter = styled(Div)(({ count }) => ({
   transform: count ? "scale(1)" : "scale(0)"
 }))
 
+const CartFoodItem = React.memo(({ active }) => {
+  console.log(active)
+  return (
+    <Div>
+      <img src={imgsrc1} alt="" style={{
+        height: "40px", 
+        width: "40px", 
+        objectFit: "cover", 
+        backgroundColor: "white",
+        position: "absolute",
+        zIndex: "-1",
+        borderRadius: "100%",
+        padding: "5px"
+      }}/>
+     <Spring
+      native
+      reset={active}
+      from={{ x: 125 }}
+      to={{ x: 0 }}
+      config={{duration: POPUP_DURATION}}
+      >
+      {({ x }) => (
+        <animated.svg
+          height="40" width="40"
+          fill="transparent"
+          strokeDasharray={125}
+          strokeDashoffset={x}
+          stroke="#FFD819"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2" 
+        >
+          <circle cx="20" cy="20" r="18" />
+        </animated.svg>
+      )}
+    </Spring>
+  </Div>
+  )
+})
+
 const numbers = [0,1,2,3,4,5,6,7,8,9, 10]
+const setPopoutDebounce = debounce((fn, newState) => fn(newState), POPUP_DURATION)
 
 const NavTop = (props) => {
-  const [popout, setPopout] = useState({
-    active: false,
-    key: undefined
-  })
-  const { history, items } = props
 
+  const { history, items } = props
   const showNavTop = history.location.pathname === "/detail/food/10"
   const slideNavTop = showNavTop ? "0px" : "100px"
   const iconColor = colors.themeDark3
   const maxNumber = 9
   const totalItemsInBasket = Object.values(items).reduce((acc, item) => acc + item.quantity,0)
+
+  const [popout, setPopout] = useState({
+    active: false,
+    key: totalItemsInBasket
+  })
   
   if (totalItemsInBasket && (totalItemsInBasket !== popout.key)) {
     setPopout({active: true, key: totalItemsInBasket})
-    setTimeout(() => setPopout({active: false, key: totalItemsInBasket}), 2500)
+    setPopoutDebounce(setPopout, {active: false, key: totalItemsInBasket})
   }
 
   return <NavTopContainer>
     <StyledLink to={{pathname: "/", state: {showNavTop, slideNavTop: "-" + slideNavTop}}}>
       <IconArrow stroke={iconColor} fill={iconColor} />
     </StyledLink>
-
     <CartMenu active={popout.active}>
       <Div style={{...styledLinks, position: "relative"}} onClick={() => history.push('/')}>
         <IconCart stroke={iconColor} fill={iconColor} />
@@ -117,14 +161,7 @@ const NavTop = (props) => {
           </Div>
         </CartCounter>
       </Div>
-      <img src={imgsrc1} alt="" style={{
-        height: "40px", 
-        width: "40px", 
-        objectFit: "cover", 
-        borderRadius: "50%", 
-        backgroundColor: colors.white, 
-        padding: "5px"
-        }}/>
+      <CartFoodItem active={popout.key} />
     </CartMenu>
 
   </NavTopContainer>
