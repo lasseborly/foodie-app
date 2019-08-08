@@ -37,14 +37,6 @@ const styledLinks = {
   margin: `0px ${space[2]}`
 }
 
-const StyledLink = styled(Link)(({to}) => {
-  const { slideNavTop, showNavTop } = to.state
-  return {
-    ...styledLinks,
-    transform: `translateX(${slideNavTop})`,
-    transition: showNavTop ? "0.5s" : "0s",
-  }
-})
 const CartMenu = styled(Div)(({ active }) => ({
   backgroundColor: colors.grey1,
   height: `60px`,
@@ -74,7 +66,7 @@ const CartCounter = styled(Div)(({ count }) => ({
   transform: count ? "scale(1)" : "scale(0)"
 }))
 
-const CartFoodItem = React.memo(({ active }) => {
+const CartFoodItem = React.memo(({active, foodImg}) => {
   return (
      <Spring
       native
@@ -84,7 +76,7 @@ const CartFoodItem = React.memo(({ active }) => {
       config={{tension: 800, mass: 3 }}
       >
       {({ s }) => <animated.div style={{ transform: interpolate([s], scale => `scale(${scale})`), display: "flex"}}>
-              <img src={imgsrc1} alt="" style={{
+              <img src={foodImg} alt="" style={{
                 height: "40px", 
                 width: "40px", 
                 objectFit: "cover", 
@@ -123,10 +115,9 @@ const numbers = [0,1,2,3,4,5,6,7,8,9, 10]
 const setPopoutDebounce = debounce((fn, newState) => fn(newState), POPUP_DURATION)
 
 const NavTop = (props) => {
-
+  const foodImg = props.location.state.food && props.location.state.food.img
+  
   const { history, items } = props
-  const showNavTop = history.location.pathname === "/detail/food/10"
-  const slideNavTop = showNavTop ? "0px" : "100px"
   const iconColor = colors.themeDark3
   const maxNumber = 9
   const totalItemsInBasket = Object.values(items).reduce((acc, item) => acc + item.quantity,0)
@@ -142,11 +133,11 @@ const NavTop = (props) => {
   }
 
   return <NavTopContainer>
-    <StyledLink to={{pathname: "/", state: {showNavTop, slideNavTop: "-" + slideNavTop}}}>
+    <Div style={{...styledLinks, transition: "0.5s" }} onClick={ () => history.goBack() }>
       <IconArrow stroke={iconColor} fill={iconColor} />
-    </StyledLink>
+    </Div>
     <CartMenu active={popout.active}>
-      <Div style={{...styledLinks, position: "relative"}} onClick={() => history.push('/')}>
+      <Div style={{...styledLinks, position: "relative"}} onClick={() => history.push('/order')}>
         <IconCart stroke={iconColor} fill={iconColor} />
         <CartCounter count={totalItemsInBasket}>
           <Div 
@@ -164,7 +155,7 @@ const NavTop = (props) => {
           </Div>
         </CartCounter>
       </Div>
-      <CartFoodItem active={popout.key} />
+      <CartFoodItem active={popout.key} foodImg={foodImg} />
     </CartMenu>
 
   </NavTopContainer>

@@ -41,7 +41,7 @@ const SliderItem = styled(Div)({
     display: "block",
     width: "140px",
     borderRadius: "10px",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
+    boxShadow: shadows.cardShadow,
     marginRight: "20px",
     backgroundColor: "white",
 })

@@ -18,10 +18,7 @@ import Food from './pages/food'
 
 import Page404 from './pages/page404'
 
-import { Div } from './layouts/layout'
-
 import { colors } from '../style/theme'
-import { setStatusbarColor } from './utility/utility'
 
 const ContainerApp = styled.div({
   display: "flex",
@@ -34,7 +31,6 @@ const ContainerApp = styled.div({
 const Main = styled.div(() => ({
   flex: 1,
   overflowY: "auto",
-  backgroundColor: colors.themeRed1,
   "WebkitOverflowScrolling": "touch"
   // position: "relative",
 }))
@@ -47,15 +43,14 @@ const Dummy = styled.div({
   backgroundColor: "red"
 })
 
-const navTopRoutesAllowed = ["/detail/food/10"]
+const navTopRoutesAllowed = ["/detail/food/:id"]
 
 class App extends React.Component {
   render() {
-    setStatusbarColor("themeRed1")
     const currentRoute = this.props.history.location.pathname
-    const showNavTop = navTopRoutesAllowed.every(route => matchPath(route, {
-      path: currentRoute,
-      exact: true,
+    const showNavTop = navTopRoutesAllowed.every(allowedRoutes => matchPath(currentRoute, {
+      path: allowedRoutes,
+      exact: false,
       strict: false
     }))
 

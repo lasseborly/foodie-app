@@ -6,7 +6,11 @@ import HomeSlider from './home_sections/homeSlider'
 import HomeRecommendations from './home_sections/homeRecommendations'
 import HomeWeeklyRecipes from './home_sections/homeWeeklyRecipes'
 
+import { setStatusbarColor } from '../utility/utility.js'
+
 const Home = () => {
+  setStatusbarColor("themeRed1")
+
     return (
       <Div flexDirection="column" bg={"themeLight2"}>
         <HomeTop />

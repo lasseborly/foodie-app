@@ -56,7 +56,7 @@ const FoodH1 = ({food}) => {
   const [props, set, stop] = useSpring(() => ({transform: 'translate3d(0,20px,0)', opacity: 1 }))
   set({transform: 'translate3d(0,0,0)', opacity: 1})
   return (
-    <Div flexWrap="wrap">
+    <Div flexDirection="column">
       <animatedSpring.div style={props}><h1 style={headerFoodTitle}>{food.title}</h1></animatedSpring.div>
       <animatedSpring.div style={props}><h1 style={headerFoodSubTitle}>{food.subTitle}</h1></animatedSpring.div>
     </Div>
@@ -88,7 +88,7 @@ const FoodH2 = ({food, addProductToBasket}) => {
         Tilføj til kurv
         <IconAddToBasket />
          </Button>
-        <h2 style={headerFoodTitle}>$6</h2>
+        <h2 style={headerFoodTitle}>${Math.round(Number(food.price))}</h2>
       </Div>
     </Div>
   )

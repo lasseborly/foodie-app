@@ -37,7 +37,7 @@ const links = [
     text: "home"
   },
   {
-    to: "/detail/food/10",
+    to: "/list",
     icon: <IconBasket />,
     iconActive: <IconBasketActive />,
     text: "mad"
@@ -66,10 +66,10 @@ const NavBottomLinks = ({to, icon, iconActive, text, active}) => {
 }
 
 const NavBottom = ({history}) => {
-    return <NavBottomContainer>
-      { links.map(i =>  <NavBottomLinks active={i.to === history.location.pathname} key={i.to} {...i} /> ) }
-    </NavBottomContainer>
-  }
+  return <NavBottomContainer>
+    { links.map(i =>  <NavBottomLinks active={i.to === history.location.pathname} key={i.to} {...i} /> ) }
+  </NavBottomContainer>
+}
 
 export default NavBottom
 

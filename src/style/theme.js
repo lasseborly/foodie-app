@@ -14,11 +14,21 @@ export const colors = {
     lightBrown2: "#FFD819",
     grey1: "#EDE4E3",
     grey2: "#C0C0C0",
-    grey3: "#999999"
+    grey3: "#999999",
+    grey4: "#6b6b6b",
+    cardColor1a: "#FFC599",
+    cardColor1b: "#F18603",
+    cardColor2a: "#F0DBB5",
+    cardColor2b: "#FFD819",
+    cardColor3a: "#DAE69B",
+    cardColor3B: "#d7f249",
+    cardColor4a: "#FFF5F0",
+    cardColor4b: "#831B4C"
 
 }
 
 export const shadows = {
+    cardShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
     bottomNavigationShadow: "0px -4px 4px rgba(0, 0, 0, 0.05)",
     sectionShadow: "0px 3px 4px rgba(0, 0, 0, 0.02)",
     // buttonShadow: (color = "231, 47, 47") => `0px 3px 8px ${chroma(color).rgba().alpha(0.2).css()}`,
