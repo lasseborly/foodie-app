@@ -203,6 +203,7 @@ const Underlay = styled.div(() => ({
 const FoodDescriptionItem = styled(Div)({
   borderBottom: `1px solid ${colors.themeLight2}`, 
   padding: "30px",
+  paddingTop: "20px",
   width: "100%"
 })
 
