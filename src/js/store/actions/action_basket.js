@@ -1,8 +1,8 @@
-export function addProductToBasket(text) {
+export function addProductToBasket(id) {
     return {
       type: "ADD_PRODUCT_TO_BASKET",
       payload: {
-          id: "5124",
+          id,
           quantity: 1
       }
     }

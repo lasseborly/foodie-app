@@ -38,7 +38,7 @@ const food2 = {
   id: "2",
   bgColor: colors.cardColor2a,
   ctaColor: colors.cardColor2b,
-  title: "Papaya",
+  title: "Papaya Carica",
   subTitle: "Rosids Eudicots",
   description: "The papaya is a small, sparsely branched tree, usually with a single stem growing from 5 to 10 m tall, with spirally arranged leaves confined to the top of the trunk. ",
   img: imgPapaya,
@@ -55,7 +55,7 @@ const food3 = {
   id: "3",
   bgColor: colors.cardColor3a,
   ctaColor: colors.cardColor3b,
-  title: "Watermelon",
+  title: "Watermelon Lanatus",
   subTitle: "Citrullus seeds",
   description: "Citrullus lanatus is a plant species in the family Cucurbitaceae, a vine-like flowering plant originating in West Africa.",
   img: imgWatermelon,
@@ -72,7 +72,7 @@ const food4 = {
   id: "4",
   bgColor: colors.cardColor4a,
   ctaColor: colors.cardColor4b,
-  title: "Pitaya",
+  title: "Pitaya Hylocereus",
   subTitle: "Dragon fruit",
   description: "These fruits are commonly known in English as dragon fruit, a name used since around 1993, apparently resulting from the leather-like skin and prominent scaly spikes on the fruit exterior.",
   img: imgPitaya,
@@ -102,11 +102,11 @@ const FoodItem = ({item, navigateToDetails}) => {
   return (
     <FoodItemContainer backgroundColor={item.bgColor} onClick={() => { navigateToDetails(item.id, item) }}>
       <Div height="100px" mt="3" position="relative" width="100%">
-        <img src={item.img} style={{width: "70%", height: "80%", objectFit: "contain", margin: "0px auto", position: "relative", zIndex: "1"}}/>
-        <img src={item.img} style={{width: "100%", height: "80%", objectFit: "contain", margin: "0px auto", left: 0, right: 0, bottom: "15px", position: "absolute", filter: "blur(8px)", opacity: 0.75}}/>
+        <img src={item.img} style={{width: "70%", height: "80%", objectFit: "contain", margin: "0px auto", position: "relative", zIndex: "1" }}/>
+        {/* <img src={item.img} style={{width: "100%", height: "80%", objectFit: "contain", margin: "0px auto", left: 0, right: 0, bottom: "15px", position: "absolute", filter: "blur(8px)", opacity: 0.75}}/> */}
       </Div>
       <Div flexWrap="wrap" flex="1" p="2">
-        <h1 style={{...listCardHeader, width: "100%"}}>{item.title}</h1>
+        <h2 style={{...listCardHeader, width: "100%", opacity: 0.65}}>{item.title}</h2>
         <Div justifyContent="space-between" flex="1" alignItems="center">
           <h6 style={{...listCardSubHeader, color: colors.themeDark1 }}>${item.price}</h6>
           <IconAdd color={colors.themeDark1} strokeWidth="2" />
@@ -131,12 +131,12 @@ const List = ({ history }) => {
   const trail = useTrail(foodItems.length, {
     opacity: 1,
     y: 0,
-    from: { opacity: 0, y: 20 },
-    config: config.stiff	
+    from: { opacity: 0, y: 40 },
+    config: config.gentle	
   })
 
   return (
-    <Div backgroundColor="themeLight2" flexWrap="wrap" p="4">
+    <Div backgroundColor="themeLight2" flexWrap="wrap" p="4" height="100%">
       <h1 style={headerFoodTitle}>Exotic fruits</h1>
       <h2 style={listSubHeader}>More than 70 exotic fruits</h2>
       <Div flexWrap="wrap" justifyContent="space-between" mt="3">

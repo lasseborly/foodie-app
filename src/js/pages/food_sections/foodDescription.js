@@ -81,7 +81,7 @@ const FoodH2 = ({food, addProductToBasket}) => {
       </Div>
       <Div mt="4" alignItems="center" justifyContent="space-between">
         <Button
-          onClick={addProductToBasket}
+          onClick={() => addProductToBasket(food.id)}
           bgColor={colors.lightBrown2}
           color={colors.themeDark2}
         > 

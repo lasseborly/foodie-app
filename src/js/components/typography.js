@@ -51,7 +51,7 @@ export const headerCardTiny = {
 
 export const headerFoodTitle = {
     fontFamily: "FFTisa, sans-serif",
-    fontSize: "2rem",
+    fontSize: "1.9rem",
     fontWeight: 600,
     color: "black"
 }
@@ -90,7 +90,7 @@ export const textBadge = {
 export const buttonDefault = {
     fontFamily: "Montserrat, sans-serif",
     fontSize: "0.9rem",
-    fontWeight: 600,
+    fontWeight: 400,
     lineHeight: "1.2rem"
 }
 
@@ -131,7 +131,7 @@ export const textBagdeCounter = {
 }
 
 export const listCardHeader = {
-    fontFamily: "FFTisa",
+    fontFamily: "Montserrat, sans-serif",
     fontSize: "1rem",
     fontWeight: 600,
     lineHeight: "1.2rem"
