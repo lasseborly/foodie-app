@@ -126,7 +126,7 @@ export const textBagdeCounter = {
     fontFamily: "Montserrat, sans-serif",
     fontSize: "8px",
     fontWeight: 600,
-    color: "black",
+    color: "white",
     lineHeight: "13px"
 }
 

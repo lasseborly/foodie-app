@@ -1,13 +1,13 @@
 const initialState = {
     items: {
-        f1: {
-            id: "f1",
-            quantity: 3
-        },
-        f3: {
-            id: "f3",
-            quantity: 2
-        }
+        // f1: {
+        //     id: "f1",
+        //     quantity: 3
+        // },
+        // f3: {
+        //     id: "f3",
+        //     quantity: 2
+        // }
     }
 }
 

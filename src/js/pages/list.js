@@ -44,7 +44,7 @@ const FoodItem = ({item, navigateToDetails}) => {
 
 const List = ({ history, foodItems }) => {
   
-  setStatusbarColor("themeDark1")
+  setStatusbarColor("themeRed1")
 
   function navigateToDetails (id, food) {
     history.push({

@@ -36,7 +36,7 @@ const FoodListItem = ({ foodItem, basketItem, navigateToDetails }) => {
 }
 
 const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
-    setStatusbarColor("themeDark1")
+    setStatusbarColor("themeRed1")
     const totalPrice = Object.values(basket).reduce((acc, i) => Number(foodItems[i.id]["price"]) * i.quantity + acc, 0).toFixed(2)
 
     function navigateToDetails (id, food) {
@@ -54,11 +54,14 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
       />
     ) )
 
-    console.log(FoodListItems);
-    
+      const FoodListItemFallback = () => {
+        return <Div p="5" justifyContent="center" alignItems="center" height="300px">
+          <h2 style={{...listSubHeader, width:"100%", display: "block"}}>Ingen ting i din kurv</h2>
+        </Div>
+      }
 
-    return <Div backgroundColor="themeLight2" flexDirection="column" height="100%">
-      <Div px="4" mb="4" justifyContent="space-between" height="125px" alignItems="center">
+    return <Div backgroundColor="themeLight2" flexDirection="column" height="100%" pt="4">
+      <Div px="4" mb="4" justifyContent="space-between" height="125px">
         <Div flexWrap="wrap">
           <h1 style={{...headerFoodTitle, width:"100%", display: "block"}}>Order</h1>
           <h2 style={{...listSubHeader, width:"100%", display: "block"}}>Your products selected</h2>
@@ -72,7 +75,7 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
 
       <Div alignSelf="start" height="100%" flexDirection="column">
         {
-          FoodListItems.length ? FoodListItems : "Du mangler at tilføje nogle varer til din kurv"
+          FoodListItems.length ? FoodListItems : <FoodListItemFallback />
         }
       </Div>
 

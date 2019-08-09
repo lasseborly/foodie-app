@@ -82,8 +82,8 @@ const FoodH2 = ({food, addProductToBasket}) => {
       <Div mt="4" alignItems="center" justifyContent="space-between">
         <Button
           onClick={() => addProductToBasket(food.id)}
-          bgColor={colors.lightBrown2}
-          color={colors.themeDark2}
+          bgColor={colors.themeRed3}
+          color={colors.white}
         > 
         Tilføj til kurv
         <IconAddToBasket />
@@ -171,10 +171,6 @@ class FoodH3 extends React.Component {
   render() {
       return (
         <Div width="100%" flexDirection="column">
-          {/* <Div flexDirection="column" mb="3">
-            <h2 style={foodNutritionHeader}>Nutrition for {this.props.food.title}</h2>
-            <h5 style={foodNutritionSubHeader}>Consist of 18% of total energy</h5>
-          </Div> */}
           <Trail 
             native 
             items={Object.entries(this.props.food.nutrition)} 

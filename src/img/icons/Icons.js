@@ -151,7 +151,7 @@ export const IconCart = ({fill = "white", stroke = "white"}) => {
     )
 }
 
-export const IconAddToBasket = ({color = "black"}) => {
+export const IconAddToBasket = ({color = "white"}) => {
     return (
         <svg width="21" height="17" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1 4.18896H20.2405" stroke={color} strokeLinecap="round" strokeLinejoin="round"/>

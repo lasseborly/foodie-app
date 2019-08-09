@@ -53,7 +53,7 @@ const COUNTER_HEIGHT = 15
 
 const CartCounter = styled(Div)(({ count }) => ({
   borderRadius: "100%",
-  backgroundColor: colors.lightBrown2, 
+  backgroundColor: colors.themeRed3, 
   width: `${15}px`,
   height: `${15}px`,
   justifyContent: "center",
@@ -98,7 +98,7 @@ const CartFoodItem = React.memo(({active, foodImg}) => {
               fill="transparent"
               strokeDasharray={125}
               strokeDashoffset={x}
-              stroke="#FFD819"
+              stroke={colors.themeRed1}
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2" 
