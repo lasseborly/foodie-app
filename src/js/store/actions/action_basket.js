@@ -7,3 +7,9 @@ export function addProductToBasket(id) {
       }
     }
   }
+
+export function clearProductsFromBasket() {
+  return {
+    type: "CLEAR_PRODUCTS_FROM_BASKET"
+  }
+}

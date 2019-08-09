@@ -151,3 +151,17 @@ export const listSubHeader = {
     color: colors.grey4,
     opacity: "0.75",
 }
+
+export const orderTotal = {
+    fontFamily: "FFTisa",
+    fontSize: "1.4rem",
+    fontWeight: 400,
+    lineHeight: "1.4rem"
+}
+
+export const orderPrice = {
+    fontFamily: "FFTisa",
+    fontSize: "1.4rem",
+    fontWeight: 600,
+    lineHeight: "1.4rem"
+}
