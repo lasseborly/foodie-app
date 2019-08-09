@@ -11,25 +11,25 @@ import { listCardHeader, listCardSubHeader, headerFoodTitle, listSubHeader } fro
 import Button from '../ui/button'
 
 const FoodListItem = ({item}) => {
+  console.log(item);
+  
   return (
     <Div>
-    { item.id }
-  </Div>
+      { item.id }
+    </Div>
   )
 }
 
-const Order = ({foodItems}) => {
-  console.log(foodItems);
-  
+const Order = ({basket, foodItems}) => {
   setStatusbarColor("themeDark1")
     return <Div backgroundColor="themeLight2" flexDirection="column" height="100%">
       <Div p="4" flexDirection="column">
         <h1 style={headerFoodTitle}>Order</h1>
         <h2 style={listSubHeader}>Your selected products</h2>
       </Div>
-      <Div alignSelf="start" height="100%">
+      <Div alignSelf="start" height="100%" flexDirection="column">
         {
-          Object.values(foodItems).map(item => <FoodListItem item={item} key={item.id} /> )
+          Object.values(basket).map(item => <FoodListItem item={foodItems[item.id]} key={item.id} /> )
         }
       </Div>
       <Div minHeight="125px" backgroundColor="white" px="4" py="3" flexDirection="column" justifyContent="space-between" borderTop={`1px solid ${colors.grey1}`}>
@@ -46,7 +46,8 @@ const Order = ({foodItems}) => {
 
 function mapStateToProps (store) {
   return {
-    foodItems: store.basket.items
+    basket: store.basket.items,
+    foodItems: store.app.foodItems
   }
 }
 

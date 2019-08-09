@@ -5,87 +5,13 @@ import { colors, shadows } from '../../style/theme'
 
 import { withRouter } from 'react-router-dom'
 
-import imgDurian from '../../img/images/food/durian-monthong001.png' 
-import imgPapaya from '../../img/images/food/papaya001.png' 
-import imgPitaya from '../../img/images/food/pitaya001.png' 
-import imgWatermelon from '../../img/images/food/watermelon001.png' 
-
 import { setStatusbarColor } from '../utility/utility.js'
 
 import { listCardHeader, listCardSubHeader, headerFoodTitle, listSubHeader } from '../components/typography'
 
 import { IconAdd  } from '../../img/icons/Icons'
 import {useTrail, animated, config} from 'react-spring'
-
-const food1 = {
-  id: "1",
-  bgColor: colors.cardColor1a,
-  ctaColor: colors.cardColor1a,
-  title: "Durian Montong",
-  subTitle: "King of fruits",
-  description: "A fruit with a thick peel, such as a citrus fruit, is called a hesperidium. In hesperidia, the inner layer is peeled off together with the outer layer.",
-  img: imgDurian,
-  tags: ["organic", "fairtrade", "africa"],
-  price: "9.99",
-  nutrition: {
-    fat: 8,
-    protein: 25,
-    carb: 24
-  }
-}
-
-const food2 = {
-  id: "2",
-  bgColor: colors.cardColor2a,
-  ctaColor: colors.cardColor2b,
-  title: "Papaya Carica",
-  subTitle: "Rosids Eudicots",
-  description: "The papaya is a small, sparsely branched tree, usually with a single stem growing from 5 to 10 m tall, with spirally arranged leaves confined to the top of the trunk. ",
-  img: imgPapaya,
-  tags: ["fresh", "peru"],
-  price: "8.99",
-  nutrition: {
-    fat: 28,
-    protein: 35,
-    carb: 60
-  }
-}
-
-const food3 = {
-  id: "3",
-  bgColor: colors.cardColor3a,
-  ctaColor: colors.cardColor3b,
-  title: "Watermelon Lanatus",
-  subTitle: "Citrullus seeds",
-  description: "Citrullus lanatus is a plant species in the family Cucurbitaceae, a vine-like flowering plant originating in West Africa.",
-  img: imgWatermelon,
-  tags: ["local", "healthy","brazil"],
-  price: "12.99",
-  nutrition: {
-    fat: 12,
-    protein: 34,
-    carb: 39
-  }
-}
-
-const food4 = {
-  id: "4",
-  bgColor: colors.cardColor4a,
-  ctaColor: colors.cardColor4b,
-  title: "Pitaya Hylocereus",
-  subTitle: "Dragon fruit",
-  description: "These fruits are commonly known in English as dragon fruit, a name used since around 1993, apparently resulting from the leather-like skin and prominent scaly spikes on the fruit exterior.",
-  img: imgPitaya,
-  tags: ["solidarity", "fresh","brazil", "agriculture"],
-  price: "7.99",
-  nutrition: {
-    fat: 35,
-    protein: 21,
-    carb: 60
-  }
-}
-
-const foodItems = [food1, food2, food3, food4]
+import { connect } from 'react-redux'
 
 const FoodItemContainer = styled(Div)((item) => {
   return {
@@ -116,7 +42,7 @@ const FoodItem = ({item, navigateToDetails}) => {
   )
 }
 
-const List = ({ history }) => {
+const List = ({ history, foodItems }) => {
   
   setStatusbarColor("themeDark1")
 
@@ -128,11 +54,11 @@ const List = ({ history }) => {
     })
   }
 
-  const trail = useTrail(foodItems.length, {
+  const trail = useTrail(Object.values(foodItems).length, {
     opacity: 1,
     y: 0,
     from: { opacity: 0, y: 40 },
-    config: config.gentle	
+    config: { mass: 0.7, tension: 210, friction: 14 }
   })
 
   return (
@@ -140,14 +66,11 @@ const List = ({ history }) => {
       <h1 style={headerFoodTitle}>Exotic fruits</h1>
       <h2 style={listSubHeader}>More than 70 exotic fruits</h2>
       <Div flexWrap="wrap" justifyContent="space-between" mt="3">
-        {/* {
-          foodItems.map((i, index) => <FoodItem key={index} item={i} navigateToDetails={navigateToDetails} /> )
-        } */}
-             {
+        {
           trail.map(({ y, opacity }, index) => <animated.div 
             style={{opacity, transform: y.interpolate(y => `translate3d(0,${y}px,0)`)}}
             key={index}>
-            <FoodItem item={foodItems[index]} navigateToDetails={navigateToDetails} />
+            <FoodItem item={Object.values(foodItems)[index]} navigateToDetails={navigateToDetails} />
           </animated.div> )
         }
       </Div>
@@ -156,4 +79,10 @@ const List = ({ history }) => {
   
   }
 
-export default withRouter(List);
+function mapStateToProps (store) {
+  return {
+    foodItems: store.app.foodItems
+  }
+}
+
+export default connect(mapStateToProps)(withRouter(List));
