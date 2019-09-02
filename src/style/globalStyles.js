@@ -51,8 +51,4 @@ export default {
             color: 'white'
         }
     },
-
-    '.desktop': {
-        display: "none"
-    }
 }

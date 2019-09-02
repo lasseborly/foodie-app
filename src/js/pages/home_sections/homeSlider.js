@@ -25,25 +25,26 @@ const SliderNavigationBar = styled(Div)(({active}) => ({
   width: "60%",
   height: "2px",
   backgroundColor: active ? colors.themeRed2 : "transparent",
-  display: "block",
   borderRadius: "4px"
 }))
 
 const SliderContainer = styled(Div)({
-  // scrollSnapType: "mandatory",
-  // scrollSnapPointsY: "repeat(300px)",
-  // scrollSnapType: "y mandatory",
-  display: "flex",
+  scrollSnapType: "mandatory",
+  scrollSnapPointsY: "repeat(300px)",
+  scrollSnapType: "x mandatory",
+  overflowX: "scroll",
+  "-webkit-overflow-scrolling": "touch",
   flex: 1
 })
 
 const SliderItem = styled(Div)({
     display: "block",
-    width: "140px",
+    minWidth: "140px",
     borderRadius: "10px",
     boxShadow: shadows.cardShadow,
     marginRight: "20px",
     backgroundColor: "white",
+    "scroll-snap-align": "start"
 })
 
 const sliderNavigationData= [
@@ -126,8 +127,8 @@ const HomeSlider = () => {
             }
         </Div>
 
-        <Div style={{overflow: "scroll"}}>
-          <SliderContainer p={4} pt={2}>
+        <Div style={{overflow: "scroll"}} px={4}>
+          <SliderContainer py={4} pt={2}>
             {
               sliderItemData.map((i,index) => {
                   return <SliderItem p={2} key={index}>
