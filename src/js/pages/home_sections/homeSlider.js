@@ -42,9 +42,15 @@ const SliderItem = styled(Div)({
     minWidth: "140px",
     borderRadius: "10px",
     boxShadow: shadows.cardShadow,
-    marginRight: "20px",
+    margin: "0px 10px",
     backgroundColor: "white",
-    "scroll-snap-align": "start"
+    "scroll-snap-align": "start",
+    "&:first-child": {
+      marginLeft: "20px"
+    },
+    "&:last-child": {
+      marginRight: "20px"
+    }
 })
 
 const sliderNavigationData= [
@@ -127,7 +133,7 @@ const HomeSlider = () => {
             }
         </Div>
 
-        <Div style={{overflow: "scroll"}} px={4}>
+        <Div style={{overflow: "scroll"}}>
           <SliderContainer py={4} pt={2}>
             {
               sliderItemData.map((i,index) => {
