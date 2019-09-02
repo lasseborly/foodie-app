@@ -22,7 +22,8 @@ export default {
     },
 
     "*": { 
-        boxSizing: "border-box" 
+        boxSizing: "border-box",
+        '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)'
     }, 
 
     "a": {
@@ -35,5 +36,23 @@ export default {
         fontStyle: "normal",
         padding: 0,
         margin: 0
-      }
+      },
+
+    '@media only screen and (min-width: 650px)': {
+        '#root': {
+            display: "none"
+        },
+        '.desktop': {
+            width: '100vw',
+            height: '100vh',
+            display: 'flex !important',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white'
+        }
+    },
+
+    '.desktop': {
+        display: "none"
+    }
 }

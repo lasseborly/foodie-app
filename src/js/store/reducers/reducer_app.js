@@ -1,9 +1,11 @@
 import { colors } from '../../../style/theme'
 
-import imgDurian from '../../../img/images/food/durian-monthong001.png' 
+import imgDurian from '../../../img/images/food/durian001.png' 
 import imgPapaya from '../../../img/images/food/papaya001.png' 
 import imgPitaya from '../../../img/images/food/pitaya001.png' 
 import imgWatermelon from '../../../img/images/food/watermelon001.png' 
+import imgKiwano from '../../../img/images/food/kiwano001.png' 
+import imgRambutan from '../../../img/images/food/rambutan001.png' 
 
 const food1 = {
   id: "f1",
@@ -73,12 +75,48 @@ const food4 = {
   }
 }
 
+const food5 = {
+  id: "f5",
+  bgColor: colors.cardColor5a,
+  ctaColor: colors.cardColor5b,
+  title: "Cucumis metuliferus",
+  subTitle: "Spiked melon",
+  description: "Kiwano is a traditional food plant in Africa. Along with the Gemsbok cucumber  and Tsamma.",
+  img: imgKiwano,
+  tags: ["dietary fiber", "snack","salad"],
+  price: "7.99",
+  nutrition: {
+    fat: 22,
+    protein: 55,
+    carb: 19
+  }
+}
+
+const food6 = {
+  id: "f6",
+  bgColor: colors.cardColor6a,
+  ctaColor: colors.cardColor6b,
+  title: "Rambutan",
+  subTitle: "	Eudicots",
+  description: "The name 'rambutan' is derived from the Malay word rambut meaning 'hair', a reference to the numerous hairy protuberances of the fruit.",
+  img: imgRambutan,
+  tags: ["vietnam", "speciel","saturated"],
+  price: "12.99",
+  nutrition: {
+    fat: 61,
+    protein: 33,
+    carb: 38
+  }
+}
+
 const initialState = {
   foodItems: {
     f1: food1,
     f2: food2,
     f3: food3,
-    f4: food4
+    f4: food4,
+    f5: food5,
+    f6: food6
   }
 }
 

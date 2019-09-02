@@ -43,29 +43,26 @@ const Dummy = styled.div({
   backgroundColor: "red"
 })
 
-const navTopRoutesAllowed = ["/detail/food/:id"]
+
+const DesktopFallback = styled.div({
+
+})
+
+
 
 class App extends React.Component {
   render() {
-    const currentRoute = this.props.history.location.pathname
-    const showNavTop = navTopRoutesAllowed.every(allowedRoutes => matchPath(currentRoute, {
-      path: allowedRoutes,
-      exact: false,
-      strict: false
-    }))
-
     return (
       <ContainerApp>
         <Global styles={globalStyles} />
-        {showNavTop && <NavTop />}
         <Main>
           <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/detail/food/:id" component={Food} />
-            <Route path="/detail/recipes/:id" component={Recipes} />
-            <Route path="/profile" exact component={Profile} />
-            <Route path="/list" exact component={List} />
-            <Route path="/order" exact component={Order} />
+            <Route path="/" exact render={() => <Home />} />
+            <Route path="/detail/food/:id" render={(props) => <Food {...props} />} />
+            <Route path="/detail/recipes/:id" render={(props) => <Recipes {...props} />} />
+            <Route path="/profile" exact render={() => <Profile />} />
+            <Route path="/list" exact render={() => <List />} />
+            <Route path="/order" exact render={() => <Order />} />
             <Route component={Page404}/>
           </Switch>
         </Main>

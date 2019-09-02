@@ -6,7 +6,7 @@ import { IconArrow, IconCart } from '../../img/icons/Icons'
 import { Spring, animated, interpolate } from "react-spring/renderprops";
 
 import { Link, withRouter } from 'react-router-dom'
-import imgsrc1 from '../../img/images/food/durian-monthong001.png'
+import imgsrc1 from '../../img/images/food/durian001.png'
 
 import { textBagdeCounter } from '../components/typography'
 import { connect } from "react-redux";

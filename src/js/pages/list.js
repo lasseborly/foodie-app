@@ -53,25 +53,16 @@ const List = ({ history, foodItems }) => {
       state: { food }
     })
   }
-
-  const trail = useTrail(Object.values(foodItems).length, {
-    opacity: 1,
-    y: 0,
-    from: { opacity: 0, y: 40 },
-    config: { mass: 0.7, tension: 210, friction: 14 }
-  })
-
+  
   return (
-    <Div backgroundColor="themeLight2" flexWrap="wrap" p="4" height="100%">
+    <Div backgroundColor="themeLight2" flexWrap="wrap" p="4">
       <h1 style={headerFoodTitle}>Exotic fruits</h1>
       <h2 style={listSubHeader}>More than 70 exotic fruits</h2>
       <Div flexWrap="wrap" justifyContent="space-between" mt="3">
         {
-          trail.map(({ y, opacity }, index) => <animated.div 
-            style={{opacity, transform: y.interpolate(y => `translate3d(0,${y}px,0)`)}}
-            key={index}>
-            <FoodItem item={Object.values(foodItems)[index]} navigateToDetails={navigateToDetails} />
-          </animated.div> )
+          Object.values(foodItems).map((item) => 
+            <FoodItem key={item.id} item={item} navigateToDetails={navigateToDetails} />
+            )
         }
       </Div>
     </Div>
