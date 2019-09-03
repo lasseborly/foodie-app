@@ -31,6 +31,8 @@ const SliderNavigationBar = styled(Div)(({active}) => ({
 const SliderContainer = styled(Div)({
   scrollSnapType: "mandatory",
   scrollSnapPointsY: "repeat(300px)",
+  scrollPaddingLeft: "20px",
+  scrollPaddingRight: "20px",
   scrollSnapType: "x mandatory",
   overflowX: "scroll",
   "-webkit-overflow-scrolling": "touch",
@@ -85,6 +87,35 @@ const sliderNavigationData= [
 ]
 
 const sliderItemData = [
+  {
+    header: "Strawberry Cream Waffles",
+    price: "$7.0",
+    kcal: 274,
+    img: imgDessert1
+  },
+  {
+    header: "Croissant blue berry fruit",
+    price: "$17.0",
+    kcal: 351,
+    img: imgDessert2
+  },{
+    header: "Chocolate lemon cupcake",
+    price: "$17.0",
+    kcal: 442,
+    img: imgDessert3
+  },
+  {
+    header: "Strawberry Cream Waffles",
+    price: "$7.0",
+    kcal: 274,
+    img: imgDessert1
+  },
+  {
+    header: "Croissant blue berry fruit",
+    price: "$17.0",
+    kcal: 351,
+    img: imgDessert2
+  },
   {
     header: "Strawberry Cream Waffles",
     price: "$7.0",

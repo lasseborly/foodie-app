@@ -28,17 +28,6 @@ const DetailsTop = ({food}) => {
               zIndex: 1,
               pointerEvents: "none"
               }}/>
-            <img src={food.img} alt="" style={{
-              width: "60%",
-              objectFit: "contain",
-              height: "40vh",
-              position: "absolute",
-              top: "0px",
-              filter: "blur(10px)",
-              transform: "scale(1.2) translateY(15px)",
-              opacity: 0.35,
-              pointerEvents: "none"
-              }}/>
           </Div>
         </animated.div>
         <Div flex="1" />

@@ -3,11 +3,10 @@ import styled from '@emotion/styled'
 import { colors, shadows } from '../../style/theme'
 import { buttonDefault } from '../components/typography'
 
-const Button = styled.button(({bgColor, color, ...props}) => {
+const Button = styled.button(({color, ...props}) => {
   return {
-    backgroundColor: bgColor || colors.themeRed3,
+    backgroundColor: colors.themeRed3,
     border: "none",
-    // boxShadow: shadows.buttonShadow(bgColor || colors.themeRed3),
     borderRadius: "22px",
     height: "45px",
     padding: "0px 18px",
@@ -16,8 +15,12 @@ const Button = styled.button(({bgColor, color, ...props}) => {
     justifyContent: "space-between",
     color: color || "white",
     minWidth: "200px",
+    transition: "0.15s",
     ...buttonDefault,
-    ...props
+    ...props,
+    "&:active": {
+      backgroundColor: colors.themeRed1
+    }
   }
 })
 

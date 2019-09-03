@@ -6,5 +6,6 @@ const Recipes = () => {
       <h1>recipes</h1>
     </div>
   }
+ 
 
 export default Recipes

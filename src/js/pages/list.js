@@ -6,11 +6,11 @@ import { colors, shadows } from '../../style/theme'
 import { withRouter } from 'react-router-dom'
 
 import { setStatusbarColor } from '../utility/utility.js'
+import { headerCardPrimary, headerCardSecondary } from '../components/typography'
 
-import { listCardHeader, listCardSubHeader, headerFoodTitle, listSubHeader } from '../components/typography'
+import { listCardHeader,  listCardSubHeader, headerFoodTitle, listSubHeader } from '../components/typography'
 
 import { IconAdd  } from '../../img/icons/Icons'
-import {useTrail, animated, config} from 'react-spring'
 import { connect } from 'react-redux'
 
 const FoodItemContainer = styled(Div)((item) => {
@@ -20,21 +20,26 @@ const FoodItemContainer = styled(Div)((item) => {
     borderRadius: "10px",
     flexWrap: "wrap",
     boxShadow: shadows.cardShadow,
-    margin: "15px 0px"
+    margin: "15px 0px",
+    backgroundColor: "white",
+    transition: "transform 0.2s",
+    "&:active": {
+      transform: "scale(1.05)"
+    }
   }
 })
 
 const FoodItem = ({item, navigateToDetails}) => {
   return (
-    <FoodItemContainer backgroundColor={item.bgColor} onClick={() => { navigateToDetails(item.id, item) }}>
+    <FoodItemContainer onClick={() => { navigateToDetails(item.id, item) }}>
       <Div height="100px" mt="3" position="relative" width="100%">
         <img src={item.img} style={{width: "70%", height: "80%", objectFit: "contain", margin: "0px auto", position: "relative", zIndex: "1" }}/>
         {/* <img src={item.img} style={{width: "100%", height: "80%", objectFit: "contain", margin: "0px auto", left: 0, right: 0, bottom: "15px", position: "absolute", filter: "blur(8px)", opacity: 0.75}}/> */}
       </Div>
-      <Div flexWrap="wrap" flex="1" p="2">
-        <h2 style={{...listCardHeader, width: "100%", opacity: 0.65}}>{item.title}</h2>
+      <Div flexDirection="column" flex="1" p="2">
+        <h2 style={{...headerCardPrimary }} >{item.title}</h2>
         <Div justifyContent="space-between" flex="1" alignItems="center">
-          <h6 style={{...listCardSubHeader, color: colors.themeDark1 }}>${item.price}</h6>
+          <h6 style={{...headerCardSecondary }}>${item.price}</h6>
           <IconAdd color={colors.themeDark1} strokeWidth="2" />
         </Div>
       </Div>

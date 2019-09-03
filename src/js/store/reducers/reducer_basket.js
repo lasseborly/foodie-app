@@ -1,13 +1,29 @@
 const initialState = {
     items: {
-        // f1: {
-        //     id: "f1",
-        //     quantity: 3
-        // },
-        // f3: {
-        //     id: "f3",
-        //     quantity: 2
-        // }
+        f1: {
+            id: 'f1',
+            quantity: 3
+        },
+        f4: {
+            id: 'f4',
+            quantity: 2
+        },
+        f2: {
+            id: 'f2',
+            quantity: 3
+        },
+        f3: {
+            id: 'f3',
+            quantity: 3
+        },
+        f5: {
+            id: 'f5',
+            quantity: 2
+        },
+        f6: {
+            id: 'f6',
+            quantity: 6
+        }
     }
 }
 
