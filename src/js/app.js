@@ -43,13 +43,6 @@ const Dummy = styled.div({
   backgroundColor: "red"
 })
 
-
-const DesktopFallback = styled.div({
-
-})
-
-
-
 class App extends React.Component {
   render() {
     return (
@@ -69,6 +62,7 @@ class App extends React.Component {
         
         {/* <Dummy /> */}
         <NavBottom history={this.props.history}/>
+        
       </ContainerApp>
     );
   }

@@ -30,7 +30,6 @@ const SliderNavigationBar = styled(Div)(({active}) => ({
 
 const SliderContainer = styled(Div)({
   scrollSnapType: "mandatory",
-  scrollSnapPointsY: "repeat(300px)",
   scrollPaddingLeft: "20px",
   scrollPaddingRight: "20px",
   scrollSnapType: "x mandatory",
@@ -46,7 +45,7 @@ const SliderItem = styled(Div)({
     boxShadow: shadows.cardShadow,
     margin: "0px 10px",
     backgroundColor: "white",
-    "scroll-snap-align": "start",
+    "scrollSnapAlign": "start",
     "&:first-child": {
       marginLeft: "20px"
     },

@@ -54,6 +54,7 @@
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-spring": "^8.0.23",
+    "react-with-gesture": "^4.0.8",
     "redux": "^4.0.4",
     "serviceworker-webpack-plugin": "^1.0.1",
     "styled-system": "^5.0.16"

@@ -6,8 +6,6 @@ import { Div } from '../layouts/layout'
 import { colors, shadows } from '../../style/theme'
 import debounce from 'debounce'
 
-const debounceSetState3 = debounce((fn, newState) => {fn(newState)}, 250)
-
 const RowIcon = ({ title }) => {
     return <Div style={{
         width: 75,
@@ -40,6 +38,7 @@ class Row extends React.Component {
         // } else {
         //     console.log("DRAG")
         // }
+
       return (
         <Div 
             flex="1"
@@ -48,7 +47,7 @@ class Row extends React.Component {
             height="75px"
             width="100vw"
             borderBottom={`1px solid ${colors.grey1}`}
-            style={{boxShadow: shadows.sectionShadow}}>
+            style={{boxShadow: shadows.sectionShadow, "scrollSnapAlign": "start" }}>
                 
           <RowIconContainer>
             <RowIcon title="h1" />
@@ -61,7 +60,7 @@ class Row extends React.Component {
 
   
           <Interactable.View
-            dragEnabled={this.props.scrollActive === false}
+            dragEnabled={this.props.touchActive}
             ref={el => this.interactableElem = el}
             horizontalOnly={true}
             snapPoints={[
@@ -101,13 +100,13 @@ class Row extends React.Component {
     }
     onDrag(nativeEvent) {
       if (nativeEvent.state === 'start') {
-        debounceSetState3(this.props.handleDrag, true)
         this.setState({isMoving: true});
       }
     }
 
     onStopMoving() {
       this.setState({isMoving: false});
+      const test = document.getElementById("test")
     }
 }
 

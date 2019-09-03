@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState} from "react";
 import styled from '@emotion/styled'
 
 import { Div } from '../layouts/layout'
@@ -15,17 +15,15 @@ import { clearProductsFromBasket } from '../store/actions/action_basket'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
+import touchMonitor from '../utility/swipe'
+
 import RowInteraction from '../components/rowInteraction'
 import debounce from 'debounce'
 
-const debounceSetState = debounce((fn, newState) => {fn(newState)}, 1000)
-const debounceSetState2 = debounce((fn, newState) => {fn(newState)}, 500)
-
-const FoodListItem = ({ foodItem, basketItem, navigateToDetails, scrollActive, handleDrag }) => {
+const FoodListItem = ({ foodItem, basketItem, navigateToDetails, touchActive }) => {
   const { quantity } = basketItem
-
   return (
-    <RowInteraction damping={0.4} tension={400} scrollActive={scrollActive} handleDrag={handleDrag}>
+    <RowInteraction damping={0.4} tension={400} touchActive={touchActive}>
       <Div flex="1" p="2" backgroundColor="themeLight1" height="75px" borderBottom={`1px solid ${colors.grey1}`} style={{boxShadow: shadows.sectionShadow}}>
         <Div width="120px">
           <img 
@@ -51,21 +49,17 @@ const FoodListItemFallback = () => {
 }
 
 const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
-    let touchStatusActive = false
-    let scrollStarted = false
-    // document.addEventListener("touchstart", () =>  {
-    //   touchStatusActive = true
-    // })
-    // document.addEventListener("touchend", () =>  {
-    //   touchStatusActive = false
-    // })
-    
+
     setStatusbarColor("themeRed1")
-    const [scrollActive, setScrollStatus] = useState(false)
-    const [dragActive, setDragStatus] = useState(false)
-    let inputRef = useRef(null);
+    const [touchStatus, setTouchStatus] = useState("scroll")
+    const [touchListen, setTouchListen] = useState(false)
 
     const totalPrice = Object.values(basket).reduce((acc, i) => Number(foodItems[i.id]["price"]) * i.quantity + acc, 0).toFixed(2)
+
+    if (touchListen === false) {
+      touchMonitor(setTouchStatus);
+      setTouchListen(true)
+    }
 
     function navigateToDetails (id, food) {
       history.push({
@@ -74,33 +68,6 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
       })
     }
 
-    const handleScroll = (e) => {
-      if (dragActive) { return }
-      if (!inputRef) { return }
-      if (scrollActive === false) {
-        console.log("-------------");
-        console.log("SCROLL: START");
-        document.addEventListener("touchend", () =>  {
-          debounceSetState(() => {
-            console.log("SCROLL: END");
-            setScrollStatus(false)
-          })
-        }, {once: true})
-        setScrollStatus(true)
-      }
-    }  
-
-    const handleDrag = (newState) => {
-      // if (scrollActive) {return}
-
-      // if (dragActive === false) {
-      //   setDragStatus(true)
-      // }
-      // debounceSetState2(setDragStatus, false)
-    }
-    
-    // console.log("scrollActive", scrollActive)
-    // console.log("dragActive", dragActive)
 
     return <Div backgroundColor="themeLight2" flexDirection="column" height="100%" pt="4">
         {/* HEADER */}
@@ -117,26 +84,38 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
         </Div>
 
       {/* PRODUCT ITEMS */}
-      <Div width="100vw" height="65vh" display="block" style={{position:"relative", overflowY: dragActive ? "hidden" : "scroll", overflowX: "hidden", borderBottom: `3px solid ${scrollActive ? "blue" : dragActive ? "red" : "transparent"}`}} 
-        onScroll={handleScroll}
-        ref={inputRef}
+      <Div 
+        id="test"
+        width="100vw" 
+        height="68vh" 
+        display="block" 
+        style={{
+          position:"relative", 
+          overflowY: touchStatus === "scroll" ? "scroll" : "hidden", 
+          overflowX: "hidden", 
+          borderBottom: `3px solid ${touchStatus === "scroll" ? "blue" : (touchStatus === "drag") ? "red" : "transparent"}`,
+          scrollSnapType: "mandatory",
+          scrollSnapPointsY: "repeat(125px)",
+          scrollSnapType: "y mandatory",
+          // overflowY: "scroll",
+          "WebkitOverflowScrolling": "touch",
+        }}
         >
         {
           basket.length === 0 
             ? <FoodListItemFallback />
-            : Object.values(basket).map(item => <FoodListItem 
+            : [...Object.values(basket), ...Object.values(basket)].map(item => <FoodListItem 
               foodItem={foodItems[item.id]} 
               basketItem={item} key={item.id} 
               navigateToDetails={navigateToDetails}
-              scrollActive={scrollActive}
-              handleDrag={handleDrag}
+              touchActive={touchStatus === "drag"}
             />
           )
         }
       </Div>
 
       {/* TOTAL PRICE */}
-      <Div minHeight="20vh" backgroundColor="white" px="4" py="3" flexDirection="column" justifyContent="space-between" borderTop={`1px solid ${colors.grey1}`}>
+      <Div minHeight="18vh" backgroundColor="white" px="4" py="3" flexDirection="column" justifyContent="space-between" borderTop={`1px solid ${colors.grey1}`}>
         <Div justifyContent="space-between">
           <h4 style={orderTotal}>Total</h4>
           <h4 style={orderPrice}>{"$" + totalPrice }</h4>
