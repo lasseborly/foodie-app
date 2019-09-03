@@ -12,8 +12,8 @@ export default function touchMonitor (touchStatusControl) {
         let yDeltaAbsolute = Math.abs(yDelta)
            
         if (yDeltaAbsolute >= xDeltaAbsolute) {
-          touchStatusControl("scroll")
-          touchControl = "scroll"
+            touchStatusControl("scroll")
+            touchControl = "scroll"
         } else {
           touchStatusControl("drag")
           touchControl = "drag"
@@ -24,18 +24,19 @@ export default function touchMonitor (touchStatusControl) {
         // console.log("touchstart ", e);
         const { pageX, pageY } = e.touches[0]
         startCoords = [pageX, pageY]
-        document.addEventListener('touchmove', handleTouchMove, { once: true })
     })
+    document.addEventListener('touchmove', handleTouchMove )
     
     document.addEventListener('touchend', function(e){
         startCoords = null
         secondaryCoords = null
-        if(touchControl === "drag") {
-            setTimeout(() => touchStatusControl("scroll"), 500)
-        }
+        // if(touchControl === "drag") {
+        //     setTimeout(() => touchStatusControl("scroll"), 800)
+        // }
     })
       
     function handleTouchMove (e) {
+        if (secondaryCoords) { return }
         const { pageX, pageY } = e.touches[0]
         secondaryCoords = [pageX, pageY]
         getSwipeDirection(startCoords, secondaryCoords)

@@ -20,10 +20,10 @@ import touchMonitor from '../utility/swipe'
 import RowInteraction from '../components/rowInteraction'
 import debounce from 'debounce'
 
-const FoodListItem = ({ foodItem, basketItem, navigateToDetails, touchActive }) => {
+const FoodListItem = ({ foodItem, basketItem, navigateToDetails, touchActive, index }) => {
   const { quantity } = basketItem
   return (
-    <RowInteraction damping={0.4} tension={400} touchActive={touchActive}>
+    <RowInteraction touchActive={touchActive} key={index}>
       <Div flex="1" p="2" backgroundColor="themeLight1" height="75px" borderBottom={`1px solid ${colors.grey1}`} style={{boxShadow: shadows.sectionShadow}}>
         <Div width="120px">
           <img 
@@ -104,7 +104,8 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
         {
           basket.length === 0 
             ? <FoodListItemFallback />
-            : [...Object.values(basket), ...Object.values(basket)].map(item => <FoodListItem 
+            : [...Object.values(basket), ...Object.values(basket)].map((item, index) => <FoodListItem 
+              index={index}  
               foodItem={foodItems[item.id]} 
               basketItem={item} key={item.id} 
               navigateToDetails={navigateToDetails}

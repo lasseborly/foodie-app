@@ -5,17 +5,28 @@ import Interactable from 'react-interactable/noNative'
 import { Div } from '../layouts/layout'
 import { colors, shadows } from '../../style/theme'
 import debounce from 'debounce'
+import { IconTrash } from '../../img/icons/Icons'
 
-const RowIcon = ({ title }) => {
-    return <Div style={{
-        width: 75,
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "lightgrey"
-        }}>
-        <h1>{title}</h1>
-    </Div>
+
+const RowIconStyled = styled(Div)(({ bgColor }) => {
+  return {
+    width: 75,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: bgColor,
+    color: "white",
+    transition: "opacity 0.2s",
+    "&:active": {
+      opacity: "0.5"
+    }
+  }
+})
+
+const RowIcon = ({title, ...props}) => {
+  return <RowIconStyled {...props}>
+  <h1>{title}</h1>
+</RowIconStyled>
 }
 
 const RowIconContainer = styled.div(({side}) => ({
@@ -33,29 +44,26 @@ class Row extends React.Component {
     }
 
     render() {
-        // if(this.props.scrollActive) {
-        //     console.log("SCROLL")
-        // } else {
-        //     console.log("DRAG")
-        // }
+      const tension = 400
+      const damping = 0.4
 
       return (
         <Div 
             flex="1"
             justifyContent="space-between"
-            backgroundColor="themeLight1" 
+            backgroundColor="themeLight2" 
             height="75px"
             width="100vw"
             borderBottom={`1px solid ${colors.grey1}`}
             style={{boxShadow: shadows.sectionShadow, "scrollSnapAlign": "start" }}>
                 
           <RowIconContainer>
-            <RowIcon title="h1" />
+            <RowIcon title={ <IconTrash  /> } bgColor="#FFD819"/>
           </RowIconContainer>
 
           <RowIconContainer>
-            <RowIcon title="t1" />
-            <RowIcon title="t2" />
+            <RowIcon title="+" bgColor="#DAE69B" />
+            <RowIcon title="-" bgColor="#FF8B7C" />
           </RowIconContainer>
 
   
@@ -64,9 +72,9 @@ class Row extends React.Component {
             ref={el => this.interactableElem = el}
             horizontalOnly={true}
             snapPoints={[
-              {x: 75, damping: 1-this.props.damping, tension: this.props.tension},
-              {x: 0, damping: 1-this.props.damping, tension: this.props.tension},
-              {x: -150, damping: 1-this.props.damping, tension: this.props.tension}
+              {x: 75, damping: 1 - damping, tension},
+              {x: 0, damping: 1 - damping, tension: tension},
+              {x: -150, damping: 1 - damping, tension}
             ]}
             onSnap={this.onSnap.bind(this)}
             onDrag={this.onDrag.bind(this)}
@@ -74,11 +82,9 @@ class Row extends React.Component {
             dragToss={0.5}
             style={{
                 width: "100vw",
-                backgroundColor: "red",
                 position: "absolute",
-                left: 0
+                left: 0,
             }}
-            // animatedValueX={this._deltaX}
             >
             <Div onMouseUp={this.onRowPress.bind(this)} width="100%">
                 {this.props.children}
