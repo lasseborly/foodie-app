@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useRef, useEffect, useState} from "react";
 import styled from '@emotion/styled'
 import { Global } from '@emotion/core'
 import { Route, Switch, withRouter, matchPath} from "react-router-dom";
+import { useSpring, animated } from 'react-spring'
+import { useDrag, useScroll } from 'react-use-gesture'
 
 import globalStyles from '../style/globalStyles'
 
@@ -28,45 +30,82 @@ const ContainerApp = styled.div({
   flexDirection: "column"
 })
 
-const Main = styled.div(() => ({
+const Main = styled(animated.div)(() => ({
   flex: 1,
   overflowY: "auto",
   "WebkitOverflowScrolling": "touch"
   // position: "relative",
 }))
 
-const Dummy = styled.div({
-  position: "fixed",
-  top: 0,
-  width: "100vw",
-  height: "300px",
-  backgroundColor: "red"
+
+const Item = styled.div({
+  height: "150px",
+  backgroundColor: "tomato",
+  marginBottom: "20px",
+  padding: "20px",
+  display: "flex",
+  overflowX: "scroll",
+  "WebkitOverflowScrolling": "auto",
+
+})
+const Item2 = styled.div({
+  minWidth: "33vw",
+  height: "100%",
+  backgroundColor: "red",
+  marginLeft: "20px",
 })
 
-class App extends React.Component {
-  render() {
-    console.log("RENDER: APP")
-    return (
-      <ContainerApp>
-        <Global styles={globalStyles} />
-        <Main>
-          <Switch>
-            <Route path="/" exact render={() => <Home />} />
-            <Route path="/detail/food/:id" render={(props) => <Food {...props} />} />
-            <Route path="/detail/recipes/:id" render={(props) => <Recipes {...props} />} />
-            <Route path="/profile" exact render={() => <Profile />} />
-            <Route path="/list" exact render={() => <List />} />
-            <Route path="/order" exact render={() => <Order />} />
-            <Route component={Page404}/>
-          </Switch>
-        </Main>
-        
-        {/* <Dummy /> */}
-        <NavBottom history={this.props.history}/>
-        
-      </ContainerApp>
-    );
-  }
+
+const App = (props) => {
+  const myRef = React.useRef(null)
+  const [toggle, setToggle] = useState(true)
+  const [springState, setSpringState] = useSpring(() => ({opacity: 1}))
+  const scrollState = useScroll((event) => {
+    console.log(event)
+    set({ 
+      pos: add(delta, memo), 
+      immediate: down, 
+      config: { velocity: scale(direction, velocity), 
+      decay: true } 
+    })
+
+  }, {scroll: true, domTarget: myRef })
+  React.useEffect(scrollState, [scrollState])
+  
+  console.log(setSpringState);
+
+  return (
+    <ContainerApp>
+      <Global styles={globalStyles} />
+      <button onClick={() => {
+        console.log(springState);
+      }}>Toggle</button>
+      <Main ref={myRef} style={springState}>
+        <div style={{height: "300vh", border: "1px solid blue"}} >
+          {
+            [1,1,1,1,1,1,,1,1,1].map((i, index) => <Item key={index} >
+              {
+                [1,1,1,1,1,1,,1,1,1].map((i,index2) => <Item2 key={index2}>{index2}</Item2>)
+              }
+            </Item>)
+          }
+        </div>
+        {/* <Switch>
+          <Route path="/" exact render={() => <Home />} />
+          <Route path="/detail/food/:id" render={(props) => <Food {...props} />} />
+          <Route path="/detail/recipes/:id" render={(props) => <Recipes {...props} />} />
+          <Route path="/profile" exact render={() => <Profile />} />
+          <Route path="/list" exact render={() => <List />} />
+          <Route path="/order" exact render={() => <Order />} />
+          <Route component={Page404}/>
+        </Switch> */}
+      </Main>
+      
+      {/* <Dummy /> */}
+      <NavBottom history={props.history}/>
+      
+    </ContainerApp>
+  );
 }
 
 export default withRouter(App);
