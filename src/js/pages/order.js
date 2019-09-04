@@ -18,29 +18,6 @@ import { withRouter } from 'react-router-dom'
 import touchMonitor from '../utility/swipe'
 
 import RowInteraction from '../components/rowInteraction'
-import debounce from 'debounce'
-
-const FoodListItem = ({ foodItem, basketItem, navigateToDetails, touchActive, index }) => {
-  const { quantity } = basketItem
-  return (
-    <RowInteraction touchActive={touchActive} key={index}>
-      <Div flex="1" p="2" backgroundColor="themeLight1" height="75px" borderBottom={`1px solid ${colors.grey1}`} style={{boxShadow: shadows.sectionShadow}}>
-        <Div width="120px">
-          <img 
-            onClick={() => navigateToDetails(foodItem.id, foodItem)}
-            src={foodItem.img} alt="" width="100%" style={{objectFit: "contain", height:"50px"}}
-          />
-        </Div>
-        <Div justifyContent="space-between" width="100%"alignItems="center">
-          <Div p="1"><span style={headerCardPrimary}>{quantity}</span></Div>
-          <Div px="0"><span style={{...headerCardPrimary, fontWeight: 100, fontSize: "0.6rem"}}>✖</span></Div>
-          <Div px="1" flex="1"><span style={headerCardPrimary}>{foodItem.title}</span></Div>
-          <Div pl="2"><span style={headerCardPrimary}>{foodItem.price * quantity}</span></Div>
-        </Div>
-      </Div>
-    </RowInteraction>
-  )
-}
 
 const FoodListItemFallback = () => {
   return <Div p="5" justifyContent="center" alignItems="center" height="300px">
@@ -53,11 +30,10 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
     setStatusbarColor("themeRed1")
     const [touchStatus, setTouchStatus] = useState("scroll")
     const [touchListen, setTouchListen] = useState(false)
-
     const totalPrice = Object.values(basket).reduce((acc, i) => Number(foodItems[i.id]["price"]) * i.quantity + acc, 0).toFixed(2)
 
     if (touchListen === false) {
-      touchMonitor(setTouchStatus);
+      touchMonitor(setTouchStatus)
       setTouchListen(true)
     }
 
@@ -67,14 +43,15 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
         state: { food }
       })
     }
-
-
+    
     return <Div backgroundColor="themeLight2" flexDirection="column" height="100%" pt="4">
         {/* HEADER */}
         <Div px="4" pb="3" justifyContent="space-between" height="15vh" borderBottom={`1px solid ${colors.grey1}`}>
           <Div flexWrap="wrap">
             <h1 style={{...headerFoodTitle, width:"100%", display: "block"}}>Order</h1>
-            <h2 style={{...listSubHeader, width:"100%", display: "block"}}>Your products selected</h2>
+            <h2 style={{...listSubHeader, width:"100%", display: "block"}}>{
+              "Products in basket"
+            }</h2>
           </Div>
           <Div alignItems="center">
             <Div onClick={clearProductsFromBasket} height="50px" width="50px" alignItems="center" justifyContent="center">
@@ -91,23 +68,22 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
         display="block" 
         style={{
           position:"relative", 
-          overflowY: touchStatus === "scroll" ? "scroll" : "hidden", 
+          overflowY: "scroll", 
           overflowX: "hidden", 
           borderBottom: `3px solid ${touchStatus === "scroll" ? "blue" : (touchStatus === "drag") ? "red" : "transparent"}`,
-          scrollSnapType: "mandatory",
-          scrollSnapPointsY: "repeat(125px)",
-          scrollSnapType: "y mandatory",
-          // overflowY: "scroll",
+          // scrollSnapType: "mandatory",
+          // scrollSnapPointsY: "repeat(125px)",
+          // scrollSnapType: "y mandatory",
           "WebkitOverflowScrolling": "touch",
         }}
         >
         {
           basket.length === 0 
             ? <FoodListItemFallback />
-            : [...Object.values(basket), ...Object.values(basket)].map((item, index) => <FoodListItem 
-              index={index}  
+            : Object.values(basket).sort().map(item => <RowInteraction
+              key={item.id} 
               foodItem={foodItems[item.id]} 
-              basketItem={item} key={item.id} 
+              basketItem={item} 
               navigateToDetails={navigateToDetails}
               touchActive={touchStatus === "drag"}
             />

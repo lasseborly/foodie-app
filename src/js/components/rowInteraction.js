@@ -4,9 +4,13 @@ import Interactable from 'react-interactable/noNative'
 
 import { Div } from '../layouts/layout'
 import { colors, shadows } from '../../style/theme'
-import debounce from 'debounce'
 import { IconTrash } from '../../img/icons/Icons'
+import { connect } from "react-redux";
 
+import {incrementProductFromBasket, decrementProductFromBasket, removeProductFromBasket} from '../store/actions/action_basket'
+import { headerCardPrimary } from '../components/typography'
+
+window.direction = null
 
 const RowIconStyled = styled(Div)(({ bgColor }) => {
   return {
@@ -36,16 +40,47 @@ const RowIconContainer = styled.div(({side}) => ({
     alignItems: 'center',
 }))
 
-class Row extends React.Component {
+class Row extends React.PureComponent {
     constructor(props) {
       super(props);
     //   this._deltaX = new Animated.Value(0);
       this.state = {isMoving: false, position: 1};
     }
 
+    // shouldComponentUpdate(nextProps, nextState) {
+    //   // console.log(nextProps, nextState)
+    //   const { touchActive } = this.props
+    //   if (nextState.isMoving === this.state.isMoving && nextState.position === this.state.position) {
+    //       console.log(nextProps.basketItem.id, nextState, this.state)
+    //       return false
+    //     }
+    //     // this.interactableElem.snapTo({index: 1})
+    //     // console.log(this.interactableElem);
+        
+    //   return true
+    // }
+
+    // componentDidUpdate () {
+    //   // Snapping items back in place when start scrolling
+    //   if (this.props.touchActive === false && this.interactableElem) {
+    //     if (this.interactableElem.lastEnd.x !== 0) {
+    //       this.interactableElem.snapTo({index: 1})
+    //       console.log("SNAPPING ", this.props.foodItem.id)
+    //     }
+    //   }
+    // }
+
     render() {
-      const tension = 400
-      const damping = 0.4
+      const tension = 800
+      const { 
+        incrementProductFromBasket, 
+        decrementProductFromBasket, 
+        removeProductFromBasket,
+        navigateToDetails,
+        foodItem,
+        basketItem,
+        touchActive
+      } = this.props
 
       return (
         <Div 
@@ -58,28 +93,28 @@ class Row extends React.Component {
             style={{boxShadow: shadows.sectionShadow, "scrollSnapAlign": "start" }}>
                 
           <RowIconContainer>
-            <RowIcon title={ <IconTrash  /> } bgColor="#FFD819"/>
+            <RowIcon title={ <IconTrash  /> } bgColor="#FFD819" onClick={() => removeProductFromBasket(foodItem.id)} />
           </RowIconContainer>
 
           <RowIconContainer>
-            <RowIcon title="+" bgColor="#DAE69B" />
-            <RowIcon title="-" bgColor="#FF8B7C" />
+            <RowIcon title="+" bgColor="#DAE69B" onClick={() => incrementProductFromBasket(foodItem.id)}/>
+            <RowIcon title="-" bgColor="#FF8B7C" onClick={() => decrementProductFromBasket(foodItem.id)}/>
           </RowIconContainer>
 
-  
           <Interactable.View
-            dragEnabled={this.props.touchActive}
+            dragEnabled={touchActive}
+            // boundaries={boundary}
             ref={el => this.interactableElem = el}
             horizontalOnly={true}
             snapPoints={[
-              {x: 75, damping: 1 - damping, tension},
-              {x: 0, damping: 1 - damping, tension: tension},
-              {x: -150, damping: 1 - damping, tension}
+              {x: 75, damping: 0.6, tension},
+              {x: 0, damping: 0.6, tension},
+              {x: -150, damping: 0.6, tension}
             ]}
             onSnap={this.onSnap.bind(this)}
             onDrag={this.onDrag.bind(this)}
             onStop={this.onStopMoving.bind(this)}
-            dragToss={0.5}
+            // dragToss={0.5}
             style={{
                 width: "100vw",
                 position: "absolute",
@@ -87,7 +122,20 @@ class Row extends React.Component {
             }}
             >
             <Div onMouseUp={this.onRowPress.bind(this)} width="100%">
-                {this.props.children}
+              <Div flex="1" p="2" backgroundColor="themeLight1" height="75px" borderBottom={`1px solid ${colors.grey1}`} style={{boxShadow: shadows.sectionShadow}}>
+                <Div width="120px">
+                  <img 
+                    onClick={() => navigateToDetails(foodItem.id, foodItem)}
+                    src={foodItem.img} alt="" width="100%" style={{objectFit: "contain", height:"50px"}}
+                  />
+                </Div>
+                <Div justifyContent="space-between" width="100%"alignItems="center">
+                  <Div p="1"><span style={headerCardPrimary}>{basketItem.quantity}</span></Div>
+                  <Div px="0"><span style={{...headerCardPrimary, fontWeight: 100, fontSize: "0.6rem"}}>✖</span></Div>
+                  <Div px="1" flex="1"><span style={headerCardPrimary}>{foodItem.title}</span></Div>
+                  <Div pl="2"><span style={headerCardPrimary}>{foodItem.price * basketItem.quantity}</span></Div>
+                </Div>
+              </Div>
             </Div>
           </Interactable.View>
   
@@ -116,4 +164,4 @@ class Row extends React.Component {
     }
 }
 
-export default Row
+export default connect(null, {incrementProductFromBasket, decrementProductFromBasket, removeProductFromBasket})(Row)

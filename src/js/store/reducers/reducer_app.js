@@ -109,6 +109,74 @@ const food6 = {
   }
 }
 
+const food7 = {
+  id: "f7",
+  bgColor: colors.cardColor6a,
+  ctaColor: colors.cardColor6b,
+  title: "Rambutan",
+  subTitle: "	Eudicots",
+  description: "The name 'rambutan' is derived from the Malay word rambut meaning 'hair', a reference to the numerous hairy protuberances of the fruit.",
+  img: imgRambutan,
+  tags: ["vietnam", "speciel","saturated"],
+  price: "12.99",
+  nutrition: {
+    fat: 61,
+    protein: 33,
+    carb: 38
+  }
+}
+
+const food8 = {
+  id: "f8",
+  bgColor: colors.cardColor6a,
+  ctaColor: colors.cardColor6b,
+  title: "Rambutan",
+  subTitle: "	Eudicots",
+  description: "The name 'rambutan' is derived from the Malay word rambut meaning 'hair', a reference to the numerous hairy protuberances of the fruit.",
+  img: imgRambutan,
+  tags: ["vietnam", "speciel","saturated"],
+  price: "12.99",
+  nutrition: {
+    fat: 61,
+    protein: 33,
+    carb: 38
+  }
+}
+
+const food9 = {
+  id: "f9",
+  bgColor: colors.cardColor6a,
+  ctaColor: colors.cardColor6b,
+  title: "Rambutan",
+  subTitle: "	Eudicots",
+  description: "The name 'rambutan' is derived from the Malay word rambut meaning 'hair', a reference to the numerous hairy protuberances of the fruit.",
+  img: imgRambutan,
+  tags: ["vietnam", "speciel","saturated"],
+  price: "12.99",
+  nutrition: {
+    fat: 61,
+    protein: 33,
+    carb: 38
+  }
+}
+
+const food10 = {
+  id: "f10",
+  bgColor: colors.cardColor6a,
+  ctaColor: colors.cardColor6b,
+  title: "Rambutan",
+  subTitle: "	Eudicots",
+  description: "The name 'rambutan' is derived from the Malay word rambut meaning 'hair', a reference to the numerous hairy protuberances of the fruit.",
+  img: imgRambutan,
+  tags: ["vietnam", "speciel","saturated"],
+  price: "12.99",
+  nutrition: {
+    fat: 61,
+    protein: 33,
+    carb: 38
+  }
+}
+
 const initialState = {
   foodItems: {
     f1: food1,
@@ -116,7 +184,11 @@ const initialState = {
     f3: food3,
     f4: food4,
     f5: food5,
-    f6: food6
+    f6: food6,
+    f7: food7,
+    f8: food8,
+    f9: food9,
+    f10: food10,
   }
 }
 

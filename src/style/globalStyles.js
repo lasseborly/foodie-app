@@ -38,6 +38,10 @@ export default {
         margin: 0
       },
 
+      ".lock": {
+        overflowY: "hidden !important"
+      },
+
     '@media only screen and (min-width: 650px)': {
         '#root': {
             display: "none"
