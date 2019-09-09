@@ -38,7 +38,6 @@ class Sliders extends React.Component {
         return (
             <ContainerSlider>
                 <div style={{border: "1px solid black", fontSize: "16px"}} onClick={() => {
-                    console.log("SNAPPING");
                     this.interactableRef.snapTo({index: 0});
                 }}>
                     Snap to

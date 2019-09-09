@@ -70,7 +70,7 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
           position:"relative", 
           overflowY: "scroll", 
           overflowX: "hidden", 
-          borderBottom: `3px solid ${touchStatus === "scroll" ? "blue" : (touchStatus === "drag") ? "red" : "transparent"}`,
+          // borderBottom: `3px solid ${touchStatus === "scroll" ? "blue" : (touchStatus === "drag") ? "red" : "transparent"}`,
           // scrollSnapType: "mandatory",
           // scrollSnapPointsY: "repeat(125px)",
           // scrollSnapType: "y mandatory",

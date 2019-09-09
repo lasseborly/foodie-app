@@ -61,7 +61,6 @@ const App = (props) => {
   const [toggle, setToggle] = useState(true)
   const [springState, setSpringState] = useSpring(() => ({opacity: 1}))
   const scrollState = useScroll((event) => {
-    console.log(event)
     set({ 
       pos: add(delta, memo), 
       immediate: down, 
@@ -72,25 +71,11 @@ const App = (props) => {
   }, {scroll: true, domTarget: myRef })
   React.useEffect(scrollState, [scrollState])
   
-  console.log(setSpringState);
-
   return (
     <ContainerApp>
       <Global styles={globalStyles} />
-      <button onClick={() => {
-        console.log(springState);
-      }}>Toggle</button>
       <Main ref={myRef} style={springState}>
-        <div style={{height: "300vh", border: "1px solid blue"}} >
-          {
-            [1,1,1,1,1,1,,1,1,1].map((i, index) => <Item key={index} >
-              {
-                [1,1,1,1,1,1,,1,1,1].map((i,index2) => <Item2 key={index2}>{index2}</Item2>)
-              }
-            </Item>)
-          }
-        </div>
-        {/* <Switch>
+        <Switch>
           <Route path="/" exact render={() => <Home />} />
           <Route path="/detail/food/:id" render={(props) => <Food {...props} />} />
           <Route path="/detail/recipes/:id" render={(props) => <Recipes {...props} />} />
@@ -98,7 +83,7 @@ const App = (props) => {
           <Route path="/list" exact render={() => <List />} />
           <Route path="/order" exact render={() => <Order />} />
           <Route component={Page404}/>
-        </Switch> */}
+        </Switch>
       </Main>
       
       {/* <Dummy /> */}

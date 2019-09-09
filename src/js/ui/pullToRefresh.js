@@ -39,7 +39,6 @@ class PullToRefresh extends React.Component {
         }, 100)
     }
     render () {
-        console.log(Animated)
         return (
             <ContainerDrawer>
                 <Interactable.View

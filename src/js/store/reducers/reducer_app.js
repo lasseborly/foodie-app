@@ -185,10 +185,10 @@ const initialState = {
     f4: food4,
     f5: food5,
     f6: food6,
-    f7: food7,
-    f8: food8,
-    f9: food9,
-    f10: food10,
+    // f7: food7,
+    // f8: food8,
+    // f9: food9,
+    // f10: food10,
   }
 }
 

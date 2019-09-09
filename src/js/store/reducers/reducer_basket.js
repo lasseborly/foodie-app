@@ -1,45 +1,45 @@
 const initialState = {
     items: {
-        f1: {
-            id: 'f1',
-            quantity: 3
-        },
-        f2: {
-            id: 'f2',
-            quantity: 3
-        },
-        f3: {
-            id: 'f3',
-            quantity: 3
-        },
-        f4: {
-            id: 'f4',
-            quantity: 2
-        },
-        f5: {
-            id: 'f5',
-            quantity: 2
-        },
-        f6: {
-            id: 'f6',
-            quantity: 6
-        },
-        f7: {
-            id: 'f7',
-            quantity: 2
-        },
-        f8: {
-            id: 'f8',
-            quantity: 2
-        },
-        f9: {
-            id: 'f9',
-            quantity: 6
-        },
-        f10: {
-            id: 'f10',
-            quantity: 6
-        }
+        // f1: {
+        //     id: 'f1',
+        //     quantity: 3
+        // },
+        // f2: {
+        //     id: 'f2',
+        //     quantity: 3
+        // },
+        // f3: {
+        //     id: 'f3',
+        //     quantity: 3
+        // },
+        // f4: {
+        //     id: 'f4',
+        //     quantity: 2
+        // },
+        // f5: {
+        //     id: 'f5',
+        //     quantity: 2
+        // },
+        // f6: {
+        //     id: 'f6',
+        //     quantity: 6
+        // },
+        // f7: {
+        //     id: 'f7',
+        //     quantity: 2
+        // },
+        // f8: {
+        //     id: 'f8',
+        //     quantity: 2
+        // },
+        // f9: {
+        //     id: 'f9',
+        //     quantity: 6
+        // },
+        // f10: {
+        //     id: 'f10',
+        //     quantity: 6
+        // }
     }
 }
 
