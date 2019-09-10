@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { Div } from '../layouts/layout'
 import HomeTop from './home_sections/homeTop'
 import HomeSlider from './home_sections/homeSlider'
+import HomeTrendy from './home_sections/homeTrendy'
 import HomeRecommendations from './home_sections/homeRecommendations'
 import HomeWeeklyRecipes from './home_sections/homeWeeklyRecipes'
 
@@ -15,6 +16,7 @@ const Home = () => {
       <Div flexDirection="column" bg={"themeLight2"}>
         <HomeTop />
         <HomeSlider />
+        <HomeTrendy />
         <HomeRecommendations />
         <HomeWeeklyRecipes />
       </Div>

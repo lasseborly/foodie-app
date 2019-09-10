@@ -8,6 +8,7 @@ import { IconKcal, IconHeart, IconPeople } from '../../../img/icons/Icons'
 import imgDessert5 from '../../../img/images/dessert5.png'
 import imgDessert10 from '../../../img/images/dessert10.png'
 
+import Image from '../../components/image'
 
 const RecommendationContainer = styled(Div)({
   width: "100vw",
@@ -59,14 +60,14 @@ const HomeRecommendations = () => {
   }
     return (
       <Div flexWrap="wrap">
-        <P p="4" style={headerSliderNavigation}>Recommended</P>
+        <P p="4" style={headerSliderNavigation}>Anbefalet</P>
         <RecommendationContainer>
           {
             recommendationsData.map((i, index) => (
               <Div key={index} flexDirection="column" width={"calc(100% - 1.5rem)"} mb="3" alignItems="flex-end">
                 <RecommendationItem alignItems="center" p={3}>
                   <Div>
-                    <img src={i.img} style={{width: "100px", height: "100px", objectFit: "contain"}} alt=""/>
+                    <Image src={i.img} style={{width: "100px", height: "100px", objectFit: "contain"}} alt=""/>
                   </Div>
                   <Div flexDirection="column" pl={4}>
                     <P style={headerCardPrimary}>{i.header}</P>

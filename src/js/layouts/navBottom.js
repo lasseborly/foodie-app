@@ -9,7 +9,7 @@ import { colors, shadows } from '../../style/theme'
 export const NAVBOTTOM_HEIGHT = 50
 
 const NavBottomContainer = styled.div({
-  height: `${NAVBOTTOM_HEIGHT}px`, 
+  height: `${NAVBOTTOM_HEIGHT}px`,
   display: "flex", 
   backgroundColor: colors.white, 
   justifyContent: "space-between",
@@ -56,18 +56,16 @@ const links = [
   }
 ]
 
-const NavBottomLinks = ({to, icon, iconActive, text, active}) => {
-  return (
-    <StyledLink to={to} >
-      <div>{ (active && iconActive)? iconActive : icon }</div>
-      <StyledNavText>{ text }</StyledNavText>
-    </StyledLink>
-  )
-}
-
 const NavBottom = ({history}) => {
   return <NavBottomContainer>
-    { links.map(i =>  <NavBottomLinks active={i.to === history.location.pathname} key={i.to} {...i} /> ) }
+    { links.map(i => {
+      const {text, iconActive, icon, to} = i
+      return (
+        <StyledLink to={to} key={to}>
+          <div>{ (to === history.location.pathname && iconActive)? iconActive : icon }</div>
+          <StyledNavText>{ text }</StyledNavText>
+        </StyledLink>
+      )} ) }
   </NavBottomContainer>
 }
 

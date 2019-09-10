@@ -42,6 +42,13 @@ export const headerCardSecondary = {
     color: colors.themeRed1
 }
 
+export const headerCardPrimaryTrendy = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "1rem",
+    fontWeight: 600,
+    color: colors.white
+}
+
 export const headerCardTiny = {
     fontFamily: "Montserrat, sans-serif",
     fontSize: "0.6rem",

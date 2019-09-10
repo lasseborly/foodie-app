@@ -10,6 +10,7 @@ import imgDessert1 from '../../../img/images/dessert1.png'
 import imgDessert2 from '../../../img/images/dessert2.png'
 import imgDessert3 from '../../../img/images/dessert3.png'
 
+import Image from '../../components/image'
 
 const SliderNavigationItem = styled(Link)({
   ...headerSliderNavigation,
@@ -168,7 +169,7 @@ const HomeSlider = () => {
             {
               sliderItemData.map((i,index) => {
                   return <SliderItem p={2} key={index}>
-                    <img src={i.img} style={{width: "100%", height: "100px", objectFit: "cover"}} alt=""/>
+                    <Image src={i.img} style={{width: "100%", height: "100px", objectFit: "cover"}} alt=""/>
                     <P style={headerCardPrimary}>{i.header}</P>
                     <P style={headerCardSecondary}>{i.price}</P>
                     <Div mt={1}>

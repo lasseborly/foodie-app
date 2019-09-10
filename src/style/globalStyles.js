@@ -9,7 +9,7 @@ export default {
         width: "100%",
         position: "fixed",
         overflow: "hidden",
-        display: "flex"
+        display: "flex",
     },
 
     '#root': {

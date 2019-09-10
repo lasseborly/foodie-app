@@ -3,6 +3,8 @@ import styled from '@emotion/styled'
 import { Div } from '../../layouts/layout'
 import {useSpring, animated, interpolate, config} from 'react-spring'
 
+import Image from '../../components/image'
+
 export const NAVTOP_HEIGHT = 50
 
 const HeroContainer = styled(Div)({
@@ -20,7 +22,7 @@ const DetailsTop = ({food}) => {
       <HeroContainer bg={bgColor}>
         <animated.div style={{ opacity: opacity, transform: interpolate([transform], (y) => `translate3d(0px, ${y}px, 0px)` )}}>
           <Div alignSelf="flex-start" flexWrap="wrap" justifyContent="center">
-            <img src={food.img} alt="" style={{
+            <Image src={food.img} alt="" style={{
               width: "60%",
               objectFit: "contain",
               height: "40vh",

@@ -1,8 +1,9 @@
 import React from "react";
 import styled from '@emotion/styled'
 import { Div, P } from '../../layouts/layout'
-import { headerCardPrimary, headerSliderNavigation, textDefault } from '../../components/typography'
 import { shadows } from '../../../style/theme'
+import { headerCardPrimary, headerSliderNavigation, textDefault } from '../../components/typography'
+import Image from '../../components/image'
 
 import Button from '../../ui/button'
 
@@ -13,7 +14,7 @@ const HomeWeeklyRecipes = () => {
       <Div p="4" mb="4" flexWrap="wrap">
         <P mb="4" style={headerSliderNavigation}>Ugens opskrift</P>
         <Div py="4" bg="white" borderRadius="20px" flexWrap="wrap" justifyContent="center" style={{boxShadow: shadows.sectionShadow}}>
-          <img src={imgDessert} style={{height: "150px", objectFit: "contain"}} alt=""/>
+          <Image src={imgDessert} style={{height: "150px", objectFit: "contain"}} alt=""/>
           <Div flexDirection="column" mt="3" width="100%">
             <Div p="4" flexWrap="wrap">
               <P style={headerCardPrimary}>{"Honey salat with almonds"}</P>

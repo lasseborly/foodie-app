@@ -13,6 +13,8 @@ import { listCardHeader,  listCardSubHeader, headerFoodTitle, listSubHeader } fr
 import { IconAdd  } from '../../img/icons/Icons'
 import { connect } from 'react-redux'
 
+import Image from '../components/image'
+
 const FoodItemContainer = styled(Div)((item) => {
   return {
     width: "150px",
@@ -33,8 +35,7 @@ const FoodItem = ({item, navigateToDetails}) => {
   return (
     <FoodItemContainer onClick={() => { navigateToDetails(item.id, item) }}>
       <Div height="100px" mt="3" position="relative" width="100%">
-        <img src={item.img} style={{width: "70%", height: "80%", objectFit: "contain", margin: "0px auto", position: "relative", zIndex: "1" }}/>
-        {/* <img src={item.img} style={{width: "100%", height: "80%", objectFit: "contain", margin: "0px auto", left: 0, right: 0, bottom: "15px", position: "absolute", filter: "blur(8px)", opacity: 0.75}}/> */}
+        <Image src={item.img} style={{width: "70%", height: "80%", objectFit: "contain", margin: "0px auto", position: "relative", zIndex: "1" }} />
       </Div>
       <Div flexDirection="column" flex="1" p="2">
         <h2 style={{...headerCardPrimary }} >{item.title}</h2>

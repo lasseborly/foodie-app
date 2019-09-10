@@ -57,24 +57,10 @@ const Item2 = styled.div({
 
 
 const App = (props) => {
-  const myRef = React.useRef(null)
-  const [toggle, setToggle] = useState(true)
-  const [springState, setSpringState] = useSpring(() => ({opacity: 1}))
-  const scrollState = useScroll((event) => {
-    set({ 
-      pos: add(delta, memo), 
-      immediate: down, 
-      config: { velocity: scale(direction, velocity), 
-      decay: true } 
-    })
-
-  }, {scroll: true, domTarget: myRef })
-  React.useEffect(scrollState, [scrollState])
-  
   return (
     <ContainerApp>
       <Global styles={globalStyles} />
-      <Main ref={myRef} style={springState}>
+      <Main id="test">
         <Switch>
           <Route path="/" exact render={() => <Home />} />
           <Route path="/detail/food/:id" render={(props) => <Food {...props} />} />

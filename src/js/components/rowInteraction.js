@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import {incrementProductFromBasket, decrementProductFromBasket, removeProductFromBasket} from '../store/actions/action_basket'
 import { headerCardPrimary } from '../components/typography'
 
+import Image from '../components/image'
+
 window.direction = null
 
 const RowIconStyled = styled(Div)(({ bgColor }) => {
@@ -124,7 +126,7 @@ class Row extends React.PureComponent {
             <Div onMouseUp={this.onRowPress.bind(this)} width="100%">
               <Div flex="1" p="2" backgroundColor="themeLight1" height="75px" borderBottom={`1px solid ${colors.grey1}`} style={{boxShadow: shadows.sectionShadow}}>
                 <Div width="120px">
-                  <img 
+                  <Image 
                     onClick={() => navigateToDetails(foodItem.id, foodItem)}
                     src={foodItem.img} alt="" width="100%" style={{objectFit: "contain", height:"50px"}}
                   />

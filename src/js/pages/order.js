@@ -19,6 +19,16 @@ import touchMonitor from '../utility/swipe'
 
 import RowInteraction from '../components/rowInteraction'
 
+function sortKeys ( a, b ) {
+  if ( a.id < b.id ){
+    return -1;
+  }
+  if ( a.id > b.id ){
+    return 1;
+  }
+  return 0;
+}
+
 const FoodListItemFallback = () => {
   return <Div p="5" justifyContent="center" alignItems="center" height="300px">
     <h2 style={{...listSubHeader, width:"100%", display: "block"}}>Ingen ting i din kurv</h2>
@@ -42,8 +52,8 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
         pathname: `/detail/food/${id}`,
         state: { food }
       })
-    }
-    
+    }    
+
     return <Div backgroundColor="themeLight2" flexDirection="column" height="100%" pt="4">
         {/* HEADER */}
         <Div px="4" pb="3" justifyContent="space-between" height="15vh" borderBottom={`1px solid ${colors.grey1}`}>
@@ -80,7 +90,7 @@ const Order = ({basket, foodItems, clearProductsFromBasket, history}) => {
         {
           basket.length === 0 
             ? <FoodListItemFallback />
-            : Object.values(basket).sort().map(item => <RowInteraction
+            : Object.values(basket).sort(sortKeys).map(item => <RowInteraction
               key={item.id} 
               foodItem={foodItems[item.id]} 
               basketItem={item} 
