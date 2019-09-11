@@ -33,7 +33,7 @@ export const colors = {
 
 export const shadows = {
     cardShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
-    cardShadowWide: "0px 2px 4px rgba(0, 0, 0, 0.5)",
+    cardShadowWide: "0px 52px 70px -23px rgba(122,122,122,0.39)",
     bottomNavigationShadow: "0px -4px 4px rgba(0, 0, 0, 0.05)",
     sectionShadow: "0px 3px 4px rgba(0, 0, 0, 0.02)",
     // buttonShadow: (color = "231, 47, 47") => `0px 3px 8px ${chroma(color).rgba().alpha(0.2).css()}`,

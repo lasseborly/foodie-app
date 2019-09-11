@@ -6,6 +6,7 @@ import { colors, shadows } from "../../../style/theme";
 import { IconKcal, IconHeart, IconPeople } from "../../../img/icons/Icons";
 import { useInView } from "react-intersection-observer";
 import { useSpring, animated, interpolate } from "react-spring";
+import { useDrag } from 'react-use-gesture'
 
 import { Link } from "react-router-dom";
 
@@ -15,6 +16,7 @@ import img2 from "../../../img/images/recipes/recipes2.jpg";
 import Image from "../../components/image";
 import { setStatusbarColor } from "../../utility/utility.js";
 
+import { NAVBOTTOM_HEIGHT } from '../../layouts/navBottom'
 
 const SubItem = ({ icon }) => {
   const IconComp = icon;
@@ -74,62 +76,78 @@ const styleBackgroundDim = {
   height: "100vh",
   width: "100vw",
   position: "fixed",
-  backgroundColor: "white",
   top: "0px",
   left: "0px",
+  backgroundColor: colors.navy1
 }
+
+const CHAR_WIDTH = 11;
+const HEIGHT_CARD_CLOSED = 200;
+const HEIGHT_CARD_OPEN = 500;
+const HEIGHT_DETAIL_BAR = window.innerHeight - NAVBOTTOM_HEIGHT - HEIGHT_CARD_OPEN
+
+const dragConfigMove = {tension: 0, friction: 0, mass: 0}
+const dragConfigToss = {tension: 450, friction: 40}
+
+let dragging = false;
+let running = false;
 
 const HomePopularCard = ({ img, title, chef }) => {
   const ref = React.useRef(null);
   const [animation, setAnimation] = useState({
-    animationStatus: "resting",   // running, resting,
     animationState: "closed"      // opened, closed
   });
-  const [active, setState] = useState(false);
   const [clientRect, setBoundState] = useState({ card: { y: 0, x: 0 } });
-
+  const [springStateDetails, setSpringStateDetails] = useSpring(() => ({
+    height: HEIGHT_DETAIL_BAR,
+    config: {tension: 0, friction: 0, mass: 0}
+  }))
   const [springState, setSpringState] = useSpring(() => ({
     o: 0,
     xy: [0, 0],
-    onStart: () => {
-      setAnimation({
-        ...animation,
-        animationStatus: "running",
-      })
-    },
-    onRest: (e) => {
-      setAnimation({
-        animationStatus: "resting",
-        animationState: e && e.o === 0 ? "closed" : "opened"
-      })
-    },
+    onRest: handleRest,
     config: {tension: 700, friction: 50}
   }));
 
-  function handleCardClick() {
-    const {animationStatus, animationState} = animation
-    if (animationStatus === "running") {
+  const dragBind = useDrag((dragProps) => {
+    const {delta, last} = dragProps;
+    const deltaY = delta[1] * -1
+    const snapPoints = [HEIGHT_DETAIL_BAR, 400]
+    
+    if (last) {
+      setSpringStateDetails({height: deltaY > 50 ? snapPoints[1] : snapPoints[0], config: dragConfigToss })
       return
     }
-    if (animationState === "closed") {
+
+    setSpringStateDetails({height: (deltaY >= 0 ? deltaY : 0) + HEIGHT_DETAIL_BAR, config: dragConfigMove })
+  })
+
+  
+  function handleRest (e) {
+    running = false
+    setAnimation({
+      animationState: e && e.o === 0 ? "closed" : "opened"
+    })
+  }
+
+  function handleCardClick() {
+    if (running) { return }
+    running = true
+    if (animation.animationState === "closed") {
       const boundingBoxStart = ref.current && ref.current.getBoundingClientRect();
       setBoundState({ card: boundingBoxStart });
       setSpringState({
         o: 1,
         xy: [boundingBoxStart.x, boundingBoxStart.y * -1]
       });
-      return
+    } else {
+      setSpringState({
+        o: 0,
+        xy: [0,0]
+      });
     }
-
-    setSpringState({
-      o: 0,
-      xy: [0 , 0]
-    });
   }
 
-  const CHAR_WIDTH = 11;
-  const HEIGHT_CARD_CLOSED = 200;
-  const HEIGHT_CARD_OPEN = 500;
   const titleLength = title.split(" ").map(i => i.length);
 
   function calcFromTo(value, from, to) {
@@ -147,16 +165,16 @@ const HomePopularCard = ({ img, title, chef }) => {
     return totalChars;
   }
 
-  const { animationState, animationStatus } = animation
+  const { animationState } = animation
   const mainElement = document.getElementById("main")
-  const animationRunningOrOpen = (animationState === "opened" || animationStatus === "running")
   if (mainElement) {
-    mainElement.classList[animationRunningOrOpen ? "add" : "remove"]("lock")
+    mainElement.classList[animationState === "opened" || running ? "add" : "remove"]("lock")
   }
-  animationRunningOrOpen ? setStatusbarColor("navy1") : setStatusbarColor("themeRed1")
+  animationState === "opened"  || running ? setStatusbarColor("navy1") : setStatusbarColor("themeRed1")
 
   return (
     <DivAnimated
+      {...dragBind}
       style={{
         position: "relative",
         height: `${HEIGHT_CARD_CLOSED}px`,
@@ -165,19 +183,22 @@ const HomePopularCard = ({ img, title, chef }) => {
         marginBottom: "25px",
         // border: "3px solid red",
         // opacity: 0.5,
-        zIndex: animationRunningOrOpen ? 2 : 1
+        zIndex: (animationState === "opened" || running) ? 2 : 1 
       }}
     >
-      <DivAnimated style={{
-        ...styleBackgroundDim,
-        opacity: springState.o.interpolate(o => o),
-        visibility: springState.o.interpolate(o => Boolean(o) ? "visible" : "hidden"),
-      }} />
-        <DivAnimated
+      <DivAnimated
+        style={{
+          ...styleBackgroundDim,
+          opacity: springState.o.interpolate(o => o),
+          visibility: springState.o.interpolate(o => Boolean(o) ? "visible" : "hidden"),
+        }}
+      />
+      <DivAnimated
           ref={ref}
           onClick={handleCardClick}
           style={{
             // border: "2px solid blue",
+            boxShadow: shadows.cardShadowWide,
             backgroundImage: `url(${img})`,
             backgroundSize: "100vw",
             backgroundPosition: "center",
@@ -232,6 +253,34 @@ const HomePopularCard = ({ img, title, chef }) => {
           >
             <IconHeart height="20" width="20" fill="white" />
           </DivAnimated>
+      </DivAnimated>
+      <DivAnimated 
+      {...dragBind()}
+      style={{
+        display: "block",
+        position: "fixed",
+        zIndex: 3,
+        width: "100vw",
+        height: springStateDetails.height.interpolate(h => `${h}px`),
+        left: 0,
+        bottom: `${NAVBOTTOM_HEIGHT}px`,
+        backgroundColor: "rgba(255,255,255,0.1)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        opacity: springState.o.interpolate(o => o),
+        visibility: springState.o.interpolate(o => Boolean(o) ? "visible" : "hidden"),
+      }}>
+        <Div css={{width: "100vw", justifyContent: "center"}} mt="1" mb="2">
+          <Div css={{width: "10vw", height: "4px", backgroundColor: colors.themeDark1, borderRadius: "4px"}} />
+        </Div>
+        <Div justifyContent="space-between" m="2" mt="4">
+          {
+            [ "Opskrift", "Mad", "Tilberedning" ].map(i => <span key={i} 
+              style={{color: "white", height: "30px",border:"1px solid white", borderRadius: "4px", padding: "5px"}}>
+              {i}
+              </span>)
+          }
+        </Div>
       </DivAnimated>
     </DivAnimated>
   );
