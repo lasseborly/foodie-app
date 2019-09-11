@@ -28,6 +28,7 @@ export const colors = {
     cardColor5b: "#EFA007",
     cardColor6a: "#EDD9DA",
     cardColor6b: "#A7424A",
+    navy1: "#081724"
 }
 
 export const shadows = {

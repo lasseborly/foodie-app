@@ -18,7 +18,7 @@ const Home = () => {
       <HomeSlider />
       <HomeTrendy />
       <HomeRecommendations />
-      <HomeWeeklyRecipes />
+      {/* <HomeWeeklyRecipes /> */}
     </Div>
   );
 };

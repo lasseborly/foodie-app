@@ -60,7 +60,7 @@ const App = (props) => {
   return (
     <ContainerApp>
       <Global styles={globalStyles} />
-      <Main id="test">
+      <Main id="main">
         <Switch>
           <Route path="/" exact render={() => <Home />} />
           <Route path="/detail/food/:id" render={(props) => <Food {...props} />} />
