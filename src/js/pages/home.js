@@ -16,9 +16,9 @@ const Home = () => {
     <Div flexDirection="column" bg={"themeLight2"}>
       <HomeTop />
       <HomeSlider />
-      <HomeTrendy />
+      {/* <HomeTrendy /> */}
       <HomeRecommendations />
-      {/* <HomeWeeklyRecipes /> */}
+      <HomeWeeklyRecipes />
     </Div>
   );
 };

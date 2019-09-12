@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom'
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { Div, P } from "../../layouts/layout";
@@ -10,7 +11,7 @@ import { useDrag } from 'react-use-gesture'
 
 import { Link } from "react-router-dom";
 
-import img1 from "../../../img/images/recipes/recipes1.jpeg";
+import img1 from "../../../img/images/recipes/recipes1.jpg";
 import img2 from "../../../img/images/recipes/recipes2.jpg";
 
 import Image from "../../components/image";
@@ -83,7 +84,7 @@ const styleBackgroundDim = {
 
 const CHAR_WIDTH = 11;
 const HEIGHT_CARD_CLOSED = 200;
-const HEIGHT_CARD_OPEN = 500;
+const HEIGHT_CARD_OPEN = window.innerHeight;
 const HEIGHT_DETAIL_BAR = window.innerHeight - NAVBOTTOM_HEIGHT - HEIGHT_CARD_OPEN
 
 const dragConfigMove = {tension: 0, friction: 0, mass: 0}
@@ -92,36 +93,20 @@ const dragConfigToss = {tension: 450, friction: 40}
 let dragging = false;
 let running = false;
 
+const TestB = () => <h1>hej</h1>
+
 const HomePopularCard = ({ img, title, chef }) => {
   const ref = React.useRef(null);
   const [animation, setAnimation] = useState({
     animationState: "closed"      // opened, closed
   });
   const [clientRect, setBoundState] = useState({ card: { y: 0, x: 0 } });
-  const [springStateDetails, setSpringStateDetails] = useSpring(() => ({
-    height: HEIGHT_DETAIL_BAR,
-    config: {tension: 0, friction: 0, mass: 0}
-  }))
   const [springState, setSpringState] = useSpring(() => ({
     o: 0,
     xy: [0, 0],
     onRest: handleRest,
     config: {tension: 700, friction: 50}
   }));
-
-  const dragBind = useDrag((dragProps) => {
-    const {delta, last} = dragProps;
-    const deltaY = delta[1] * -1
-    const snapPoints = [HEIGHT_DETAIL_BAR, 400]
-    
-    if (last) {
-      setSpringStateDetails({height: deltaY > 50 ? snapPoints[1] : snapPoints[0], config: dragConfigToss })
-      return
-    }
-
-    setSpringStateDetails({height: (deltaY >= 0 ? deltaY : 0) + HEIGHT_DETAIL_BAR, config: dragConfigMove })
-  })
-
   
   function handleRest (e) {
     running = false
@@ -174,7 +159,6 @@ const HomePopularCard = ({ img, title, chef }) => {
 
   return (
     <DivAnimated
-      {...dragBind}
       style={{
         position: "relative",
         height: `${HEIGHT_CARD_CLOSED}px`,
@@ -186,8 +170,7 @@ const HomePopularCard = ({ img, title, chef }) => {
         zIndex: (animationState === "opened" || running) ? 2 : 1 
       }}
     >
-      <DivAnimated
-        style={{
+      <DivAnimated style={{
           ...styleBackgroundDim,
           opacity: springState.o.interpolate(o => o),
           visibility: springState.o.interpolate(o => Boolean(o) ? "visible" : "hidden"),
@@ -254,37 +237,63 @@ const HomePopularCard = ({ img, title, chef }) => {
             <IconHeart height="20" width="20" fill="white" />
           </DivAnimated>
       </DivAnimated>
-      <DivAnimated 
-      {...dragBind()}
-      style={{
-        display: "block",
-        position: "fixed",
-        zIndex: 3,
-        width: "100vw",
-        height: springStateDetails.height.interpolate(h => `${h}px`),
-        left: 0,
-        bottom: `${NAVBOTTOM_HEIGHT}px`,
-        backgroundColor: "rgba(255,255,255,0.1)",
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
-        opacity: springState.o.interpolate(o => o),
-        visibility: springState.o.interpolate(o => Boolean(o) ? "visible" : "hidden"),
-      }}>
-        <Div css={{width: "100vw", justifyContent: "center"}} mt="1" mb="2">
-          <Div css={{width: "10vw", height: "4px", backgroundColor: colors.themeDark1, borderRadius: "4px"}} />
-        </Div>
-        <Div justifyContent="space-between" m="2" mt="4">
-          {
-            [ "Opskrift", "Mad", "Tilberedning" ].map(i => <span key={i} 
-              style={{color: "white", height: "30px",border:"1px solid white", borderRadius: "4px", padding: "5px"}}>
-              {i}
-              </span>)
-          }
-        </Div>
-      </DivAnimated>
+      {/* <HomeFoodDetails springState={springState} /> */}
     </DivAnimated>
   );
 };
+
+const HomeFoodDetails = ({springState}) => {
+  const [springStateDetails, setSpringStateDetails] = useSpring(() => ({
+    height: HEIGHT_DETAIL_BAR,
+    config: {tension: 0, friction: 0, mass: 0}
+  }))
+
+  const dragBind = useDrag((dragProps) => {
+    const {delta, last} = dragProps;
+    const deltaY = delta[1] * -1
+    const snapPoints = [HEIGHT_DETAIL_BAR, 400]
+    
+    if (last) {
+      setSpringStateDetails({height: deltaY > 50 ? snapPoints[1] : snapPoints[0], config: dragConfigToss })
+      return
+    }
+
+    setSpringStateDetails({height: (deltaY >= 0 ? deltaY : 0) + HEIGHT_DETAIL_BAR, config: dragConfigMove })
+  })
+
+
+  return ReactDOM.createPortal(
+    <DivAnimated 
+    {...dragBind()}
+    style={{
+      display: "block",
+      position: "fixed",
+      zIndex: 3,
+      width: "100vw",
+      height: springStateDetails.height.interpolate(h => `${h}px`),
+      left: 0,
+      bottom: `0px`,
+      backgroundColor: "rgba(255,255,255,0.1)",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+      opacity: springState.o.interpolate(o => o),
+      visibility: springState.o.interpolate(o => Boolean(o) ? "visible" : "hidden"),
+    }}>
+      <Div css={{width: "100vw", justifyContent: "center"}} mt="1" mb="2">
+        <Div css={{width: "10vw", height: "4px", backgroundColor: colors.themeDark1, borderRadius: "4px"}} />
+      </Div>
+      <Div justifyContent="space-between" m="2" mt="4">
+        {
+          [ "Opskrift", "Mad", "Tilberedning" ].map(i => <span key={i} 
+            style={{color: "white", height: "30px",border:"1px solid white", borderRadius: "4px", padding: "5px"}}>
+            {i}
+            </span>)
+        }
+      </Div>
+    </DivAnimated>,
+    document.getElementById("root")
+  )
+}
 
 const HomePopular = () => {  
   return (

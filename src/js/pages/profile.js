@@ -8,9 +8,18 @@ import { headerCardPrimary, headerFoodTitle, listSubHeader, orderTotal, orderPri
 
 const Profile = () => {
     setStatusbarColor("themeRed1")
-
-    return <Div p="4">
+    console.log("window.ReactNativeWebView", window.ReactNativeWebView)
+    return <Div p="4" css={{display: "block"}}>
         <h1 style={{...headerFoodTitle, width:"100%", display: "block"}}>Profile</h1>
+        <Div >
+          <h4>ReactNativeWebView btn:</h4>
+          <p>{JSON.stringify(window.ReactNativeWebView)}</p>
+        {
+          window.ReactNativeWebView && <button onClick={() => {
+            window.ReactNativeWebView.postMessage("Vibrate!")
+          }}>Vibrate</button>
+          }
+        </Div>
     </Div>
   }
 
