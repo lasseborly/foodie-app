@@ -1,4 +1,8 @@
 {
     "version": 2,
-    "name": "PWA - Foodie"
+    "name": "PWA - Foodie",
+    "routes": [
+      { "src": "(.*/..*)", "dest": "$1" },
+      { "src": ".*", "dest": "/index.html" }
+    ]
   }

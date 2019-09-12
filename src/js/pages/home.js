@@ -15,10 +15,10 @@ const Home = () => {
   return (
     <Div flexDirection="column" bg={"themeLight2"}>
       <HomeTop />
-      <HomeSlider />
-      {/* <HomeTrendy /> */}
+      {/* <HomeSlider /> */}
+      <HomeTrendy />
       <HomeRecommendations />
-      <HomeWeeklyRecipes />
+      {/* <HomeWeeklyRecipes /> */}
     </Div>
   );
 };
