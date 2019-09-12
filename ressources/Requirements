@@ -69,7 +69,5 @@ Limitation:
 --
 Todo:
 
-- navbottom farve skift active route
-- remove "focus" effect on a elements
-- scroll block debugging
-- url now
+- fix image ratio
+- max one active card

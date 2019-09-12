@@ -7,7 +7,7 @@ import { colors, shadows } from "../../../style/theme";
 import { IconKcal, IconHeart, IconPeople } from "../../../img/icons/Icons";
 import { useInView } from "react-intersection-observer";
 import { useSpring, animated, interpolate } from "react-spring";
-import { useDrag } from 'react-use-gesture'
+import { useDrag, useGesture } from 'react-use-gesture'
 
 import { Link } from "react-router-dom";
 
@@ -92,7 +92,7 @@ const HEIGHT_DETAIL_BAR = window.innerHeight - NAVBOTTOM_HEIGHT - HEIGHT_CARD_OP
 const dragConfigMove = {tension: 0, friction: 0, mass: 0}
 const dragConfigToss = {tension: 450, friction: 40}
 
-const HomePopularCard = ({ img, title, chef, setNavBottomShow }) => {  
+const HomePopularCard = ({ img, title, chef, setNavBottomShow }) => {
   const ref = React.useRef(null);
   const [animation, setAnimation] = useState({
     animationState: "closed"      // opened, closed, opening, closing
@@ -111,7 +111,6 @@ const HomePopularCard = ({ img, title, chef, setNavBottomShow }) => {
   }
 
   function handleCardClick () {
-    console.log("CLICK");
     const {animationState} = animation
     if (animationState === "opening" || animationState === "closing") {
       console.log("RETURN")
@@ -154,7 +153,6 @@ const HomePopularCard = ({ img, title, chef, setNavBottomShow }) => {
   }
 
   const { animationState } = animation
-  const mainElement = document.getElementById("main")
 
   if (animationState === "opened") {
   }
@@ -163,19 +161,17 @@ const HomePopularCard = ({ img, title, chef, setNavBottomShow }) => {
   }
 
   if (animationState === "opening") {
-    mainElement.classList.add("lock")
+    document.getElementById("main").classList.add("lock")
     setStatusbarColor("navy1") 
     setNavBottomShow(false)
   }
 
   if (animationState === "closing") {
-    mainElement.classList.add("lock")
+    document.getElementById("main").classList.remove("lock")
     setStatusbarColor("themeRed1")
     setNavBottomShow(true)
   }
 
-  console.log("animationState ", animationState);
-  
   return (
     <DivAnimated
       style={{
@@ -254,40 +250,51 @@ const HomePopularCard = ({ img, title, chef, setNavBottomShow }) => {
             <IconHeart height="20" width="20" fill="white" />
           </DivAnimated>
       </DivAnimated>
-      <HomeFoodDetails springState={springState} show={animationState === "opened"} />
+      <HomeFoodDetails springState={springState} show={animationState === "opening" || animationState === "opened"} />
     </DivAnimated>
   );
 };
 
 
 const HEIGHT_SNAPPOINTS_OVERLAY = [100, 500]
+const SNAPPOINT_DIFF = 400
 
 const HomeFoodDetails = ({ springState, show }) => {
   let lastSnappointSelected = HEIGHT_SNAPPOINTS_OVERLAY[0]
   const [springStateDetails, setSpringStateDetails] = useSpring(() => ({
     height: HEIGHT_SNAPPOINTS_OVERLAY[0],
-    config: {tension: 0, friction: 0, mass: 0}
+    config: dragConfigToss
   }))
 
   const dragBind = useDrag((dragProps) => {
-    const {delta, last} = dragProps;
+    const {delta, first, last, distance} = dragProps;
     const deltaY = delta[1] * -1
-    console.log(deltaY + lastSnappointSelected);
-    
-    if (last) {
-      const snapPointSelected = deltaY > 50 ? HEIGHT_SNAPPOINTS_OVERLAY[1] : HEIGHT_SNAPPOINTS_OVERLAY[0]
-      lastSnappointSelected = snapPointSelected;
-      setSpringStateDetails({height: lastSnappointSelected, config: dragConfigToss })
+
+    if (first) { return }
+    if (last && distance === 0) {
+      // Click
+
       return
     }
-
-    setSpringStateDetails({height: deltaY + lastSnappointSelected, config: dragConfigMove })
+    
+    if (last) {
+      const snapPointSelected = ((SNAPPOINT_DIFF + deltaY) > SNAPPOINT_DIFF / 2) ? 1 : 0
+      lastSnappointSelected = HEIGHT_SNAPPOINTS_OVERLAY[snapPointSelected];
+      setSpringStateDetails({height: lastSnappointSelected, config: dragConfigToss })
+    } else {
+      setSpringStateDetails({height: deltaY + lastSnappointSelected, config: dragConfigToss })
+    }
   })
-
 
   return ReactDOM.createPortal(
     <DivAnimated 
     {...dragBind()}
+    onClick={(e) => {
+      e.preventDefault()
+      console.log("tapp", lastSnappointSelected)
+      const nextSnappointSelected = lastSnappointSelected === 500 ? 0 : 1
+      setSpringStateDetails({height: HEIGHT_SNAPPOINTS_OVERLAY[nextSnappointSelected ] })
+    }}
     style={{
       display: "block",
       position: "fixed",
@@ -300,10 +307,13 @@ const HomeFoodDetails = ({ springState, show }) => {
       backdropFilter: "blur(10px)",
       WebkitBackdropFilter: "blur(10px)",
       opacity: springState.o.interpolate(o => o),
+      transform: `translateY(${show ? 0 : 100}px)`,
+      transition: 'transform 0.5s',
+      boxShadow: shadows.overlayMenu,
       visibility: springState.o.interpolate(o => Boolean(o) ? "visible" : "hidden"),
     }}>
       <Div css={{width: "100vw", justifyContent: "center"}} mt="1" mb="2">
-        <Div css={{width: "10vw", height: "4px", backgroundColor: colors.themeDark1, borderRadius: "4px"}} />
+        <Div css={{width: "10vw", height: "4px", opacity: 0.3, backgroundColor: colors.themeLight2, borderRadius: "4px"}} />
       </Div>
       <Div justifyContent="space-between" m="2" mt="4">
         {

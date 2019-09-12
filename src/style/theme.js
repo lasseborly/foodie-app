@@ -39,7 +39,8 @@ export const shadows = {
     // buttonShadow: (color = "231, 47, 47") => `0px 3px 8px ${chroma(color).rgba().alpha(0.2).css()}`,
     badgeShadow: `0px 3px 8px #87686350`,
     uiCompOuterShadow: "0px 1px 1px rgba(0, 0, 0, 0.25)",
-    uiCompShadow: "0px 1px 1px rgba(0, 0, 0, 0.5), inset 0px 1px 0.5px rgba(0, 0, 0, 0.02)"
+    uiCompShadow: "0px 1px 1px rgba(0, 0, 0, 0.5), inset 0px 1px 0.5px rgba(0, 0, 0, 0.02)",
+    overlayMenu: "0px -10px 4px rgba(0, 0, 0, 0.05)"
 }
 
 export const breakpoints = ['40em', '52em', '64em', '80em']
