@@ -1,9 +1,9 @@
 import React from "react";
-import styled from '@emotion/styled'
-import { colors, shadows } from '../../style/theme'
-import { buttonDefault } from '../components/typography'
+import styled from "@emotion/styled";
+import { colors, shadows } from "../../style/theme";
+import { buttonDefault } from "../components/typography";
 
-const Button = styled.button(({color, bg, ...props}) => {
+const Button = styled.button(({ color, bg, ...props }) => {
   return {
     backgroundColor: bg || colors.themeRed3,
     border: "none",
@@ -21,7 +21,17 @@ const Button = styled.button(({color, bg, ...props}) => {
     "&:active": {
       backgroundColor: colors.themeRed1
     }
-  }
-})
+  };
+});
 
-  export default Button
+export const ButtonUI = styled.button(({ ...props }) => {
+  return {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "inherit",
+    border: "none"
+  };
+});
+
+export default Button;

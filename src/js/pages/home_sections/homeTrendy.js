@@ -43,7 +43,7 @@ import { connect } from "react-redux";
 
 import chroma from "chroma-js";
 
-import Button from "../../ui/button";
+import Button, { ButtonUI } from "../../ui/button";
 
 const SubItem = ({ icon }) => {
   const IconComp = icon;
@@ -325,13 +325,13 @@ const HomePopularCard = recipe => {
   );
 };
 
-const HEIGHT_SNAPPOINTS_OVERLAY = [80, 600];
-const SNAPPOINT_INTERSECTION = 400 / 2;
+const HEIGHT_SNAPPOINTS_OVERLAY = [50, 600];
 
 // "Detaljer", "Ingredienser", "Tilberedning"
 
 const HomeFoodDetailSection = ({ ...props }) => <Div mb="2" style={{ position: "relative" }} {...props} />;
 
+let didMove = false;
 const HomeFoodDetails = ({ springState, show, recipe }) => {
   const [springStateSnapPoint, setSpringSnapPoint] = useState(0);
   const [springStateDetails, setSpringStateDetails] = useSpring(() => ({
@@ -342,15 +342,20 @@ const HomeFoodDetails = ({ springState, show, recipe }) => {
 
   const dragBind = useDrag(dragProps => {
     const eventType = dragProps.event.type;
-    if (eventType === "mousedown" || eventType === "mouseup") {
-      return;
-    }
-    // console.log("drag", dragProps.velocities);
+    const { delta, last, distance, velocities } = dragProps;
 
-    const { delta, first, last, distance, velocities } = dragProps;
+    // This is against single click which trigger touch events
+    if (didMove === false) {
+      if (eventType !== "touchmove") {
+        return;
+      }
+      didMove = true;
+    }
+
     const deltaY = delta[1] * -1;
 
     if (last) {
+      didMove = false;
       const nextSnapPointSelected = velocities[1] < 0 ? 1 : 0;
       updateStateLastEvent(nextSnapPointSelected);
     } else {
@@ -371,6 +376,21 @@ const HomeFoodDetails = ({ springState, show, recipe }) => {
       config: dragConfigToss
     });
     setSpringSnapPoint(snapPointSelected);
+  }
+
+  function handleWebShare(e) {
+    e.stopPropagation();
+    if (window.navigator.share) {
+      window.navigator
+        .share({
+          title: "Foodie Webshare Demo",
+          url: window.location.host
+        })
+        .then(() => {
+          console.log("1Thanks for sharing!");
+        })
+        .catch(console.error);
+    }
   }
 
   const HEIGHT_OVERLAY = `${window.innerHeight - HEIGHT_SNAPPOINTS_OVERLAY[1]}px`;
@@ -486,23 +506,19 @@ const HomeFoodDetails = ({ springState, show, recipe }) => {
           </Button>
         </HomeFoodDetailSection>
         <HomeFoodDetailSection height="50px" alignItems="center" justifyContent="space-between">
-          <Div alignItems="center">
+          <Div alignItems="center" p="2">
             <IconHeartFill />
             <span style={{ marginLeft: "8px", ...overlayStatus }}>{recipe.status.likes}</span>
           </Div>
-          <Div alignItems="center">
+          <Div alignItems="center" p="2">
             <IconMessage />
             <span style={{ marginLeft: "8px", ...overlayStatus }}>{recipe.status.comments}</span>
           </Div>
-          <Div
-            alignItems="center"
-            onClick={e => {
-              console.log("child");
-              e.stopPropagation();
-            }}
-          >
-            <IconShare />
-            <span style={{ marginLeft: "8px", ...overlayStatus }}>{recipe.status.shared}</span>
+          <Div alignItems="center" p="2">
+            <ButtonUI onClick={handleWebShare}>
+              <IconShare />
+              <span style={{ marginLeft: "8px", ...overlayStatus }}>{recipe.status.shared}</span>
+            </ButtonUI>
           </Div>
         </HomeFoodDetailSection>
       </DivAnimated>
