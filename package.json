@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack --mode=production --progress",
-    "start": "NODE_ENV=development webpack-dev-server --colors --open"
+    "start": "NODE_ENV=development webpack-dev-server --colors"
   },
   "keywords": [],
   "author": "",

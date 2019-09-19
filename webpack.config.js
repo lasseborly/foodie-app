@@ -1,14 +1,15 @@
 // Webpack
 const path = require("path");
 const webpack = require("webpack");
+const fs = require("fs");
 
 // Plugins
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
-const CopyPlugin = require('copy-webpack-plugin');
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
+const ServiceWorkerWebpackPlugin = require("serviceworker-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 /* ------------------------------------------------------ */
 // COMMON
@@ -32,23 +33,23 @@ const config = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env"],
-            plugins: ['@babel/plugin-proposal-object-rest-spread']
+            plugins: ["@babel/plugin-proposal-object-rest-spread"]
           }
         }
       },
       {
         test: /\.(scss|sass|css)$/,
         use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                hmr: process.env.NODE_ENV === 'development',
-              },
-            },
-            {loader: "css-loader"},
-            {loader: "postcss-loader"},
-            {loader: "sass-loader"}
-          ],
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === "development"
+            }
+          },
+          { loader: "css-loader" },
+          { loader: "postcss-loader" },
+          { loader: "sass-loader" }
+        ]
       },
       {
         test: /\.html$/,
@@ -99,16 +100,13 @@ const config = {
       filename: "css/style.[chunkhash].css",
       disable: process.env.NODE_ENV === "development"
     }),
-    new CopyPlugin([
-      { from: './src/img', to: './img' },
-      { from: './src/manifest.json', to: './manifest.json' }
-    ]),
+    new CopyPlugin([{ from: "./src/img", to: "./img" }, { from: "./src/manifest.json", to: "./manifest.json" }]),
     new HtmlWebpackPlugin({
       template: "src/index.html" // Duplicating and injecting script tags for our output files
     }),
     new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'src/sw.js'),
-    }),
+      entry: path.join(__dirname, "src/sw.js")
+    })
   ]
 };
 
@@ -121,8 +119,12 @@ if (process.env.NODE_ENV == "development") {
       {
         host: "localhost",
         port: 3000,
-        proxy: "http://localhost:8080/",
-        notify: false
+        proxy: "https://localhost:8080/",
+        notify: false,
+        https: {
+          key: "./localhost-key.pem",
+          cert: "./localhost.pem"
+        }
       },
       {
         reload: true
@@ -131,15 +133,18 @@ if (process.env.NODE_ENV == "development") {
     new webpack.HotModuleReplacementPlugin()
   );
 
-  config.devtool = process.env.NODE_ENV == "development" 
-    ? "cheap-eval-source-map"
-    : "source-map"
+  config.devtool = process.env.NODE_ENV == "development" ? "cheap-eval-source-map" : "source-map";
 
   config.devServer = {
     historyApiFallback: true,
     contentBase: "./dist", // Which root-folder devServer should serve
     watchContentBase: true,
     hot: true,
+    open: false,
+    https: {
+      key: fs.readFileSync("./localhost-key.pem"),
+      cert: fs.readFileSync("./localhost.pem")
+    },
     stats: {
       assets: false,
       hash: false,
