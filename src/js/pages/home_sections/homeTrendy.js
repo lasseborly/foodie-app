@@ -224,9 +224,11 @@ const HomePopularCard = recipe => {
     setStatusbarColor("navy1");
     setNavBottomShow(false);
   }
-
+  10;
   if (animationState === "closing") {
+    10;
     document.getElementById("main").classList.remove("lock");
+    10;
     setStatusbarColor("themeRed1");
     setNavBottomShow(true);
   }
@@ -241,7 +243,7 @@ const HomePopularCard = recipe => {
         marginBottom: "25px",
         // border: "3px solid red",
         // opacity: 0.5,
-        zIndex: animationState === "opened" || animationState === "opening" ? 2 : 1
+        zIndex: animationState === "opened" || animationState === "opening" ? 3 : 1
       }}
     >
       <DivAnimated
@@ -413,7 +415,7 @@ const HomeFoodDetails = ({ springState, show, recipe }) => {
       style={{
         display: "block",
         position: "fixed",
-        zIndex: 3,
+        zIndex: 4,
         width: "100vw",
         height: springStateDetails.height.interpolate(h => `${h}px`),
         left: 0,
@@ -448,7 +450,7 @@ const HomeFoodDetails = ({ springState, show, recipe }) => {
         height="600px"
         postion="relative"
         style={{
-          zIndex: 4,
+          zIndex: 5,
           transform: springStateDetails.o.interpolate(o => `translateY(${calcFromTo(o, 25, 0)}px)`),
           opacity: springStateDetails.o.interpolate(o => `${o}`)
         }}

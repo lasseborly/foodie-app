@@ -2,68 +2,36 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { Div } from "../../layouts/layout";
-import { headerHome, headerSearchField } from "../../components/typography";
+import { overlayTitle, overlayDescription, headerSearchField } from "../../components/typography";
 import { IconSearch, IconFoodie } from "../../../img/icons/Icons";
-
+import { ButtonUI } from "../../ui/button";
+import { shadows } from "../../../style/theme";
 const HEIGHT_INPUT = 50;
-
-const InputContainer = styled.div({
-  position: "absolute",
-  bottom: `-${HEIGHT_INPUT / 2}px`,
-  width: "70%",
-  display: "flex"
-});
-
-const InputSearchIcon = styled.div({
-  height: `${HEIGHT_INPUT}px`,
-  backgroundColor: "white",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  paddingLeft: "20px",
-  borderTopLeftRadius: "4px",
-  borderBottomLeftRadius: "4px"
-});
-
-const InputSearchField = styled.input({
-  height: `${HEIGHT_INPUT}px`,
-  width: "100%",
-  fontSize: "18px",
-  borderRadius: "0px", // resetting border radius on iOS
-  borderTopRightRadius: "4px",
-  borderBottomRightRadius: "70px",
-  border: "none",
-  paddingLeft: "20px",
-  outline: "none",
-  ...headerSearchField
-});
 
 const HomeTop = () => {
   return (
-    <Div bg="themeRed2" pb={"20px"} flex="1" css={{ borderBottomRightRadius: "140px" }}>
+    <Div position="relative" height="65px">
       <Div
-        bg="themeRed1"
+        bg="themeRed2"
         flex="1"
-        IconFoodie
-        height="150px"
+        p="3"
         alignItems="center"
-        px="4"
-        position="relative"
-        css={{ borderBottomRightRadius: "140px" }}
+        justifyContent="center"
+        css={{
+          width: "100%",
+          boxShadow: shadows.topNavigationShadow,
+          overflow: "hidden",
+          position: "fixed",
+          zIndex: 2,
+          backgroundImage: `radial-gradient( 150px 40px at 195px bottom,  rgba(255,154,98,1) 0%, #FF8B7C  100.2% )`
+        }}
       >
-        <Div mr="2">
+        <ButtonUI css={{ backgroundColor: "transparent", position: "absolute", left: 0 }}>
           <IconFoodie />
+        </ButtonUI>
+        <Div display="flex" justifyContent="center">
+          <h1 style={{ ...overlayTitle, fontSize: "1.4rem" }}>Foodie</h1>
         </Div>
-        <Div display="block">
-          <h1 style={headerHome}>God eftermiddag</h1>
-          <h1 style={headerHome}>Find dine madvarer!</h1>
-        </Div>
-        {/* <InputContainer>
-            <InputSearchIcon>
-              <IconSearch/>
-            </InputSearchIcon>
-            <InputSearchField type="text" placeholder="Søg efter produkter" />
-          </InputContainer> */}
       </Div>
     </Div>
   );
