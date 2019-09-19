@@ -2,12 +2,31 @@ import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Div, P } from "../../layouts/layout";
-import { headerCardSecondary, headerCardPrimaryTrendy, headerSliderNavigation } from "../../components/typography";
 import { colors, shadows } from "../../../style/theme";
-import { IconKcal, IconHeart, IconPeople } from "../../../img/icons/Icons";
+import { 
+  IconKcal, 
+  IconHeart, 
+  IconPeople, 
+  IconShare,
+  IconMessage,
+  IconHeartFill,
+  IconStar,
+  IconStarFull, } from "../../../img/icons/Icons";
 import { useInView } from "react-intersection-observer";
 import { useSpring, animated, interpolate } from "react-spring";
 import { useDrag, useGesture } from "react-use-gesture";
+import { 
+  headerCardSecondary, 
+  headerCardPrimaryTrendy, 
+  headerSliderNavigation, 
+  overlayTitle,
+  overlayPeopleScore,
+  overlayTags,
+  overlayDescription,
+  overlayIngredients,
+  overlayIngredientsTitle,
+  overlayStatus,
+} from "../../components/typography";
 
 import { Link } from "react-router-dom";
 
@@ -20,6 +39,10 @@ import { setStatusbarColor } from "../../utility/utility.js";
 import { NAVBOTTOM_HEIGHT } from "../../layouts/navBottom";
 import { setNavBottomShow, setNavBottomDisplay } from "../../store/actions/action_app";
 import { connect } from "react-redux";
+
+import chroma from 'chroma-js'
+
+import Button from '../../ui/button'
 
 const SubItem = ({ icon }) => {
   const IconComp = icon;
@@ -35,12 +58,42 @@ const dataPopularCard = [
   {
     img: img1,
     title: "Eggs and salmon",
-    chef: "Joan Williams"
+    chef: "Joan Williams",
+    rating: 4,
+    score: 874,
+    tags: ["Light food cooking", "Daily", "Salad"],
+    preparation: "Stir the sause ingredients until smmoth. Refregereate before serving. Spread lettuce and frut evenly over the plate. Scape the mazzarella cheese with a spoon.",
+    ingredients: [
+      {foodItem: "Avocado", foodAmount: "0.5kg"},
+      {foodItem: "Cauliflower", foodAmount: "0.5kg"},
+      {foodItem: "Purple potato", foodAmount: "0.3kg"},
+      {foodItem: "Broccoli", foodAmount: "0.5kg"}
+    ],
+    status: {
+      likes: 435,
+      comments: 531,
+      shared: 488
+    }
   },
   {
     img: img2,
     title: "Salad with avocado",
-    chef: "Preben Arentoft"
+    chef: "Preben Arentoft",
+    rating: 4,
+    score: 874,
+    tags: ["Light food cooking", "Daily", "Salad"],
+    preparation: "Stir the sause ingredients until smmoth. Refregereate before serving. Spread lettuce and frut evenly over the plate. Scape the mazzarella cheese with a spoon.",
+    ingredients: [
+      {foodItem: "Avocado", foodAmount: "0.5kg"},
+      {foodItem: "Cauliflower", foodAmount: "0.5kg"},
+      {foodItem: "Purple potato", foodAmount: "0.3kg"},
+      {foodItem: "Broccoli", foodAmount: "0.5kg"}
+    ],
+    status: {
+      likes: 435,
+      comments: 531,
+      shared: 488
+    }
   }
 ];
 
@@ -92,7 +145,13 @@ const HEIGHT_DETAIL_BAR = window.innerHeight - NAVBOTTOM_HEIGHT - HEIGHT_CARD_OP
 const dragConfigMove = { tension: 900, friction: 40 };
 const dragConfigToss = { tension: 450, friction: 40 };
 
-const HomePopularCard = ({ img, title, chef, setNavBottomShow }) => {
+function calcFromTo(value, from, to) {
+  const val = (to - from) * value + from;
+  return val;
+}
+
+const HomePopularCard = (recipe) => {
+  const { img, title, chef, setNavBottomShow } = recipe
   const ref = React.useRef(null);
   const [animation, setAnimation] = useState({
     animationState: "closed" // opened, closed, opening, closing
@@ -136,11 +195,6 @@ const HomePopularCard = ({ img, title, chef, setNavBottomShow }) => {
   }
 
   const titleLength = title.split(" ").map(i => i.length);
-
-  function calcFromTo(value, from, to) {
-    const val = (to - from) * value + from;
-    return val;
-  }
 
   function getTranslateAmount(index) {
     const totalChars = titleLength.reduce((acc, i, arrayIndex) => {
@@ -257,53 +311,81 @@ const HomePopularCard = ({ img, title, chef, setNavBottomShow }) => {
           <IconHeart height="20" width="20" fill="white" />
         </DivAnimated>
       </DivAnimated>
-      <HomeFoodDetails springState={springState} show={animationState === "opening" || animationState === "opened"} />
+      <HomeFoodDetails 
+        recipe={recipe}
+        springState={springState} 
+        show={animationState === "opening" || animationState === "opened"}
+      />
     </DivAnimated>
   );
 };
 
-const HEIGHT_SNAPPOINTS_OVERLAY = [100, 500];
+const HEIGHT_SNAPPOINTS_OVERLAY = [80, 600];
 const SNAPPOINT_INTERSECTION = 400 / 2;
 
-const HomeFoodDetails = ({ springState, show }) => {
+// "Detaljer", "Ingredienser", "Tilberedning"
+
+const HomeFoodDetailSection = ({...props}) => (
+  <Div mb="2" style={{position: "relative"}} {...props}  />
+)
+
+const HomeFoodDetails = ({ springState, show, recipe}) => {
   const [springStateSnapPoint, setSpringSnapPoint] = useState(0);
   const [springStateDetails, setSpringStateDetails] = useSpring(() => ({
     height: HEIGHT_SNAPPOINTS_OVERLAY[0],
-    config: dragConfigToss
+    config: dragConfigToss,
+    o: 0
   }));
 
   const dragBind = useDrag(dragProps => {
-    console.log("drag");
-
-    const { delta, first, last, distance } = dragProps;
+    const eventType = dragProps.event.type
+    if (eventType === "mousedown" || eventType === "mouseup") {
+      return
+    }
+    // console.log("drag", dragProps.velocities);
+    
+    const { delta, first, last, distance, velocities } = dragProps;
     const deltaY = delta[1] * -1;
 
     if (last) {
-      const nextSnapPointSelected =
-        deltaY + HEIGHT_SNAPPOINTS_OVERLAY[springStateSnapPoint] > SNAPPOINT_INTERSECTION ? 1 : 0;
+      const nextSnapPointSelected = velocities[1] < 0 ? 1 : 0;
       updateStateLastEvent(nextSnapPointSelected);
     } else {
+      const height = deltaY + HEIGHT_SNAPPOINTS_OVERLAY[springStateSnapPoint]
+      const fullOpacity = 800 // Number for when overlay should be completely visible 
       setSpringStateDetails({
-        height: deltaY + HEIGHT_SNAPPOINTS_OVERLAY[springStateSnapPoint],
-        config: dragConfigMove
+        height,
+        o: 1 / fullOpacity * height,
+        config: dragConfigMove,
       });
     }
   });
 
   function updateStateLastEvent(snapPointSelected) {
-    setSpringStateDetails({ height: HEIGHT_SNAPPOINTS_OVERLAY[snapPointSelected], config: dragConfigToss });
+    setSpringStateDetails({ 
+      height: HEIGHT_SNAPPOINTS_OVERLAY[snapPointSelected], 
+      o: snapPointSelected,
+      config: dragConfigToss, 
+    });
     setSpringSnapPoint(snapPointSelected);
   }
 
   const HEIGHT_OVERLAY = `${window.innerHeight - HEIGHT_SNAPPOINTS_OVERLAY[1]}px`;
 
+  const ratingStars = Array(5).fill(true).reduce((arr, i, index) => {
+    index > (recipe.rating - 1)
+      ? arr.push(IconStar)
+      : arr.push(IconStarFull);
+    return arr
+  }, [])
+
   return ReactDOM.createPortal(
     <DivAnimated
       {...dragBind()}
       onClick={e => {
+        console.log("parent");
         const nextSnappointSelected = Boolean(springStateSnapPoint) ? 0 : 1;
         updateStateLastEvent(nextSnappointSelected);
-        console.log("tapp", springStateSnapPoint);
       }}
       style={{
         display: "block",
@@ -317,7 +399,7 @@ const HomeFoodDetails = ({ springState, show }) => {
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
         opacity: springState.o.interpolate(o => o),
-        transform: `translateY(${show ? 0 : 100}px)`,
+        transform: `translateY(${show ? 0 : HEIGHT_SNAPPOINTS_OVERLAY[0]}px)`,
         transition: "transform 0.5s",
         boxShadow: shadows.overlayMenu,
         visibility: springState.o.interpolate(o => (Boolean(o) ? "visible" : "hidden"))
@@ -337,16 +419,81 @@ const HomeFoodDetails = ({ springState, show }) => {
           css={{ width: "10vw", height: "4px", opacity: 0.3, backgroundColor: colors.themeLight2, borderRadius: "4px" }}
         />
       </Div>
-      <Div justifyContent="space-between" m="2" mt="4">
-        {["Detaljer", "Ingredienser", "Tilberedning"].map(i => (
-          <span
-            key={i}
-            style={{ color: "white", height: "30px", border: "1px solid white", borderRadius: "4px", padding: "5px" }}
-          >
-            {i}
-          </span>
-        ))}
-      </Div>
+      <DivAnimated
+        flexDirection="column" 
+        p="4" 
+        height="600px"
+        postion="relative" 
+        style={{
+          zIndex: 4,
+          transform: springStateDetails.o.interpolate(o => `translateY(${calcFromTo(o, 25, 0)}px)`),
+          opacity: springStateDetails.o.interpolate(o => `${o}`),
+          }}>
+        <HomeFoodDetailSection>
+            <h1 style={overlayTitle}>{recipe.title}</h1>
+        </HomeFoodDetailSection>
+        <HomeFoodDetailSection mt="1" mb="3">
+          {
+            ratingStars.map(RatingStar => (
+              <span style={{marginRight: "4px"}}><RatingStar /></span>
+            ))
+          }
+          <span style={overlayPeopleScore}>{recipe.score} People score</span>
+        </HomeFoodDetailSection>
+        <HomeFoodDetailSection>
+          {
+            recipe.tags.map(i => <span 
+              key={i}
+              style={{
+                borderRadius: "3px",
+                padding: "6px 15px",
+                backgroundColor: chroma(colors.themeDark4).alpha(0.45),
+                marginRight: "10px",
+                ...overlayTags
+              }}
+              >{i}</span>)
+          }
+        </HomeFoodDetailSection>
+        <HomeFoodDetailSection>
+          {
+            <p style={overlayDescription}>{recipe.preparation}</p>
+          }
+        </HomeFoodDetailSection>
+        <hr style={{width: "100%", borderColor: chroma(colors.themeLight2).alpha(0.25), borderBottom: "none", margin: "15px 0px" }}/>
+        <HomeFoodDetailSection flexDirection="column">
+          <h2 style={overlayIngredientsTitle}>Ingredients</h2>
+          <Div style={{flexWrap: "wrap"}}>
+            {
+              recipe.ingredients.map(i => <Div style={{flexWrap: "wrap", marginTop: "10px"}}width="50%">
+                <span style={{...overlayIngredients, marginRight: "5px"}} key={i.foodItem}>{i.foodItem}</span>
+                <span style={{...overlayIngredients, marginRight: "5px"}} key={i.foodItem}>{i.foodAmount}</span>
+              </Div>)
+            }
+          </Div>
+        </HomeFoodDetailSection>
+        <HomeFoodDetailSection alignItems="flex-end" flex="1">
+          <Button color="white" bg="black" width="100%" justifyContent="center">
+            Tilføj opskrift
+          </Button>
+        </HomeFoodDetailSection>
+        <HomeFoodDetailSection height="50px" alignItems="center" justifyContent="space-between">
+          <Div alignItems="center">
+            <IconHeartFill />
+            <span style={{marginLeft: "8px", ...overlayStatus}}>{recipe.status.likes}</span>
+          </Div>
+          <Div alignItems="center">
+            <IconMessage />
+            <span style={{marginLeft: "8px", ...overlayStatus}}>{recipe.status.comments}</span>
+          </Div>
+          <Div alignItems="center" onClick={(e) => {
+            console.log("child")
+            e.stopPropagation()
+          }}>
+            <IconShare />
+            <span style={{marginLeft: "8px", ...overlayStatus}}>{recipe.status.shared}</span>
+          </Div>
+        </HomeFoodDetailSection>
+      </DivAnimated>
     </DivAnimated>,
     document.getElementById("root")
   );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { colors } from '../../style/theme'
+import chroma from 'chroma-js'
 
 export const headerHome = {
     fontSize: "1.5rem", 
@@ -96,8 +97,8 @@ export const textBadge = {
 
 export const buttonDefault = {
     fontFamily: "Montserrat, sans-serif",
-    fontSize: "0.9rem",
-    fontWeight: 400,
+    fontSize: "15px",
+    fontWeight: 500,
     lineHeight: "1.2rem"
 }
 
@@ -171,4 +172,57 @@ export const orderPrice = {
     fontSize: "1.4rem",
     fontWeight: 600,
     lineHeight: "1.4rem"
+}
+
+// -----
+
+export const overlayTitle = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "1.7rem",
+    fontWeight: 600,
+    color: "white"
+}
+
+export const overlayPeopleScore = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.7rem",
+    fontWeight: 400,
+    color: "white"
+}
+
+export const overlayTags = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.7rem",
+    fontWeight: 400,
+    color: chroma("white").alpha(0.6)
+}
+
+export const overlayDescription = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.8rem",
+    fontWeight: 400,
+    color: chroma("white"),
+    lineHeight: "1.25rem"
+}
+
+
+export const overlayIngredientsTitle = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "1rem",
+    fontWeight: 600,
+    color: chroma("white")
+}
+
+export const overlayIngredients = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.8rem",
+    fontWeight: 400,
+    color: chroma("white")
+}
+
+export const overlayStatus = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "1rem",
+    fontWeight: 400,
+    color: chroma("white")
 }

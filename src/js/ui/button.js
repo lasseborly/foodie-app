@@ -3,11 +3,11 @@ import styled from '@emotion/styled'
 import { colors, shadows } from '../../style/theme'
 import { buttonDefault } from '../components/typography'
 
-const Button = styled.button(({color, ...props}) => {
+const Button = styled.button(({color, bg, ...props}) => {
   return {
-    backgroundColor: colors.themeRed3,
+    backgroundColor: bg || colors.themeRed3,
     border: "none",
-    borderRadius: "22px",
+    borderRadius: "8px",
     height: "45px",
     padding: "0px 18px",
     display: "flex",

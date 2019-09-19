@@ -10,6 +10,7 @@ export const colors = {
     themeDark1: "#876863",
     themeDark2: "#270101",
     themeDark3: "#2c2221",
+    themeDark4: "#4A4643",
     lightBrown1: "#F0DBB5",
     lightBrown2: "#FFD819",
     grey1: "#EDE4E3",
