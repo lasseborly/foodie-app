@@ -1,0 +1,8 @@
+{
+  "appId": "com.reload.foodie",
+  "appName": "foodie",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh"
+}

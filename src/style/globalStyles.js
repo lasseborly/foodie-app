@@ -40,19 +40,5 @@ export default {
 
       ".lock": {
         overflowY: "hidden !important"
-      },
-
-    '@media only screen and (min-width: 650px)': {
-        '#root': {
-            display: "none"
-        },
-        '.desktop': {
-            width: '100vw',
-            height: '100vh',
-            display: 'flex !important',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white'
-        }
-    },
+      }
 }

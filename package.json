@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack --mode=production --progress",
+    "build:android": "npm run build && npx cap sync android && npx cap open android",
     "start": "NODE_ENV=development webpack-dev-server --colors"
   },
   "keywords": [],
@@ -39,6 +40,9 @@
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
+    "@capacitor/android": "^1.2.1",
+    "@capacitor/cli": "^1.2.1",
+    "@capacitor/core": "^1.2.1",
     "@emotion/babel-preset-css-prop": "^10.0.9",
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.11",
